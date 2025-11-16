@@ -1,11 +1,40 @@
-Lily-Feng.github.io
-===================
+### Hi there, I'm Lily! 👋
 
-曾经有过好多零零散散的blog，随着互联网的起起伏伏也日渐衰落。
-转眼就要2015了，30岁这个突兀的年龄如大军压境……内心也因为工作、宝宝变得复杂了许多。
-但是细想起来，无论互联网怎么变，生活环境怎么变，真实的自己才是核心竞争力。
+I'm a developer diving into the new frontier of software engineering in the age of AI. 🤖✨
 
-真实的自己什么样？
-------------------
-想来挺复杂：有或多或少的技术，不多不少的想法，努力的感知音乐艺术，偶尔来之的突发奇想和珍惜无比的灵感
-具体呢？记记看
+My mission is to explore, build, and understand how modern AI tools and Large Language Models (LLMs) are fundamentally changing how we create software. This profile serves as my digital notebook and project portfolio as I share what I learn.
+
+---
+
+### 🚀 What I'm Exploring
+
+My current focus is on building full-stack, "AI-native" applications. This means understanding everything from the core agentic logic to the final user interface.
+
+* **Agent Orchestration:** Building multi-agent workflows with the **OpenAI Agent SDK (Assistants API)** to create autonomous systems that can reason, delegate tasks, and use tools.
+* **Database Interaction:** Using **Vanna.ai** to create specialized agents that can safely and accurately translate natural language questions into SQL queries, turning chat into a powerful BI tool.
+* **Conversational UI:** Leveraging **ChatKit** to build polished, production-ready chat interfaces, handling all the complexities of streaming, attachments, and state management right out of the box.
+
+---
+
+### 🌱 My Current Projects
+
+I'm currently designing and building a "Text-to-SQL" chat application. The goal is to combine these cutting-edge tools into a single, seamless experience:
+
+1.  **Frontend:** Use **ChatKit** as the drop-in user interface.
+2.  **Backend Agent:** Use the **OpenAI Agent SDK** to manage the conversation and orchestrate tasks.
+3.  **Specialized Tool:** When the user asks a question about data, the main agent will hand off the request to a specialized agent powered by **Vanna.ai**, which will:
+    * Generate a safe SQL query based on its training.
+    * Run the query against a database.
+    * Return the natural language answer to the main agent, which then streams it to the user via ChatKit.
+
+---
+
+
+I'm documenting my journey and I'm always open to chatting, sharing ideas, or collaborating on a project.
+
+* **LinkedIn:** `[Lily Feng](https://www.linkedin.com/in/lilyf/)`
+* **Personal Site:** `https://Lily-Feng.github.io`
+
+---
+
+### 📊 My GitHub Stats

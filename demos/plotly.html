@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Plotly Demo</title>
+  <div id="chart" style="max-width:900px;margin:2rem auto;"></div>
+
+  <!-- Load Plotly from CDN -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script>
+    const x = Array.from({length:50}, (_,i)=>i);
+    const y = x.map(n => Math.sin(n/5));
+    Plotly.newPlot('chart', [{x, y, mode:'lines+markers', name:'sin'}], {
+      title: 'Hover, zoom, toggle traces'
+    });
+  </script>
+</html>

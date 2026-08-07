@@ -1,0 +1,27 @@
+{
+  "name": "lily-feng-digital-garden",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "check": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "dompurify": "latest",
+    "lucide-react": "latest",
+    "marked": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest",
+    "yaml": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
+  }
+}

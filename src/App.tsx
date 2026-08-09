@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BookOpen,
@@ -17,9 +18,10 @@ import { documents, domains, getDocument, getRelated, searchDocuments, type Cont
 
 type View = "knowledge" | "writing" | "about";
 
-function getHashRoute() {
-  const match = window.location.hash.match(/^#\/read\/(.+)$/);
-  return match ? decodeURIComponent(match[1]) : null;
+function getView(pathname: string): View {
+  if (pathname === "/knowledge") return "knowledge";
+  if (pathname === "/writing") return "writing";
+  return "about";
 }
 
 function formatDate(date: string) {
@@ -44,18 +46,13 @@ function ContentCard({ document, onOpen }: { document: ContentDocument; onOpen: 
 }
 
 function App() {
-  const [view, setView] = useState<View>("knowledge");
+  const location = useLocation();
+  const routerNavigate = useNavigate();
+  const view = getView(location.pathname);
   const [activeDomain, setActiveDomain] = useState(domains[0] ?? "Knowledge");
   const [query, setQuery] = useState("");
-  const [articleSlug, setArticleSlug] = useState<string | null>(() => getHashRoute());
   const [menuOpen, setMenuOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const onHashChange = () => setArticleSlug(getHashRoute());
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -69,22 +66,20 @@ function App() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [query]);
 
+  const articleSlug = matchPath("/read/:slug", location.pathname)?.params.slug;
   const activeDocument = articleSlug ? getDocument(articleSlug) : undefined;
   const graphDocuments = useMemo(() => documents.filter((document) => document.domain === activeDomain), [activeDomain]);
   const searchResults = useMemo(() => searchDocuments(query).slice(0, 12), [query]);
   const writing = documents.filter((document) => document.kind === "post" || document.kind === "project");
 
   const openDocument = (slug: string) => {
-    window.location.hash = `/read/${encodeURIComponent(slug)}`;
-    setArticleSlug(slug);
+    routerNavigate(`/read/${encodeURIComponent(slug)}`);
     setQuery("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const navigate = (nextView: View) => {
-    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
-    setArticleSlug(null);
-    setView(nextView);
+    routerNavigate(`/${nextView}`);
     setQuery("");
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -218,7 +213,7 @@ function App() {
 function Header({ view, onNavigate, menuOpen, setMenuOpen }: { view: View; onNavigate: (view: View) => void; menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
   return (
     <header className="site-header">
-      <button className="brand" onClick={() => onNavigate("knowledge")} aria-label="Lily Feng home"><span>LF</span><strong>Lily Feng</strong></button>
+      <button className="brand" onClick={() => onNavigate("about")} aria-label="Lily Feng home"><span>LF</span><strong>Lily Feng</strong></button>
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
         <button className={view === "knowledge" ? "active" : ""} onClick={() => onNavigate("knowledge")}><Network size={16} /> Knowledge</button>
         <button className={view === "writing" ? "active" : ""} onClick={() => onNavigate("writing")}><BookOpen size={16} /> Writing</button>

@@ -16,6 +16,7 @@
     "marked": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "^7.18.2",
     "vite": "latest",
     "yaml": "latest"
   },

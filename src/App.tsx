@@ -3,24 +3,34 @@ import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BookOpen,
-  BrainCircuit,
-  BriefcaseBusiness,
-  GitBranch,
+  ChevronDown,
   Menu,
+  Moon,
   Network,
   Search,
   Sparkles,
+  Sun,
   X,
 } from "lucide-react";
+import { AboutPage } from "./components/AboutPage";
 import { ArticlePage } from "./components/ArticlePage";
 import { KnowledgeGraph } from "./components/KnowledgeGraph";
 import { documents, domains, getDocument, getRelated, searchDocuments, type ContentDocument } from "./lib/content";
 
-type View = "knowledge" | "writing" | "about";
+type View = "knowledge" | "blogs" | "about";
+type Theme = "light" | "dark";
+
+function GitHubLogo({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.4-1.27.74-1.56-2.57-.29-5.27-1.29-5.27-5.68 0-1.25.45-2.28 1.2-3.08-.12-.3-.52-1.47.11-3.05 0 0 .97-.31 3.17 1.18a10.96 10.96 0 0 1 5.78 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.58.23 2.76.11 3.05.74.8 1.2 1.83 1.2 3.08 0 4.4-2.7 5.38-5.28 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z" />
+    </svg>
+  );
+}
 
 function getView(pathname: string): View {
   if (pathname === "/knowledge") return "knowledge";
-  if (pathname === "/writing") return "writing";
+  if (pathname === "/blogs" || pathname === "/writing") return "blogs";
   return "about";
 }
 
@@ -49,10 +59,17 @@ function App() {
   const location = useLocation();
   const routerNavigate = useNavigate();
   const view = getView(location.pathname);
+  const [theme, setTheme] = useState<Theme>(() => localStorage.getItem("theme") === "dark" ? "dark" : "light");
   const [activeDomain, setActiveDomain] = useState(domains[0] ?? "Knowledge");
   const [query, setQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#080d18" : "#f5f7fb");
+  }, [theme]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -70,11 +87,12 @@ function App() {
   const activeDocument = articleSlug ? getDocument(articleSlug) : undefined;
   const graphDocuments = useMemo(() => documents.filter((document) => document.domain === activeDomain), [activeDomain]);
   const searchResults = useMemo(() => searchDocuments(query).slice(0, 12), [query]);
-  const writing = documents.filter((document) => document.kind === "post" || document.kind === "project");
+  const blogs = documents.filter((document) => document.kind === "post" || document.kind === "project");
 
   const openDocument = (slug: string) => {
     routerNavigate(`/read/${encodeURIComponent(slug)}`);
     setQuery("");
+    setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -85,10 +103,15 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const navigateToDomain = (domain: string) => {
+    setActiveDomain(domain);
+    navigate("knowledge");
+  };
+
   if (activeDocument) {
     return (
       <div className="site-shell">
-        <Header view={view} onNavigate={navigate} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Header view={view} onNavigate={navigate} onOpen={openDocument} onSelectDomain={navigateToDomain} menuOpen={menuOpen} setMenuOpen={setMenuOpen} theme={theme} setTheme={setTheme} />
         <ArticlePage document={activeDocument} related={getRelated(activeDocument)} onOpen={openDocument} onBack={() => navigate("knowledge")} />
         <Footer />
       </div>
@@ -97,14 +120,14 @@ function App() {
 
   return (
     <div className="site-shell">
-      <Header view={view} onNavigate={navigate} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header view={view} onNavigate={navigate} onOpen={openDocument} onSelectDomain={navigateToDomain} menuOpen={menuOpen} setMenuOpen={setMenuOpen} theme={theme} setTheme={setTheme} />
 
       <main>
         {view === "knowledge" ? (
           <section className="hero">
             <div className="hero-copy">
               <span className="hero-kicker"><span /> Digital garden · Open notebook</span>
-              <h1>Ideas are more useful when you can see <em>how they connect.</em></h1>
+              <h1>A map of what I’m learning—and <em>how it connects.</em></h1>
               <p>I’m Lily Feng. I explore the space between enterprise data, applied AI, and business strategy—and publish what I learn as connected field notes.</p>
             </div>
 
@@ -117,34 +140,27 @@ function App() {
               <a href="https://github.com/Lily-Feng" target="_blank" rel="noreferrer">Follow the work on GitHub <ArrowRight size={16} /></a>
             </div>
           </section>
-        ) : view === "writing" ? (
+        ) : view === "blogs" ? (
           <section className="page-intro page-intro--writing">
             <div className="page-number">02</div>
             <div>
-              <span className="eyebrow">Writing</span>
+              <span className="eyebrow">Blogs</span>
               <h1>Field notes from the work.</h1>
             </div>
             <p>Essays, implementation notes, and practical frameworks—published when an idea becomes useful enough to share.</p>
           </section>
         ) : (
-          <section className="page-intro page-intro--about">
-            <div className="page-number">03</div>
-            <div>
-              <span className="eyebrow">About Me</span>
-              <h1>I work between technical depth and business direction.</h1>
-            </div>
-            <p>I’m Lily Feng. I translate complex systems into decisions, roadmaps, and products that people can understand and use.</p>
-          </section>
+          <AboutPage theme={theme} />
         )}
 
         {view !== "about" && (
-          <section className={`discovery-bar${view === "writing" ? " discovery-bar--compact" : ""}`} aria-label="Search the knowledge garden">
+          <section className={`discovery-bar${view === "blogs" ? " discovery-bar--compact" : ""}`} aria-label="Search the knowledge garden">
             <Search size={20} />
             <input
               ref={searchRef}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder={view === "writing" ? "Search the writing…" : "Search notes, topics, and projects…"}
+              placeholder={view === "blogs" ? "Search the blogs…" : "Search notes, topics, and projects…"}
               aria-label="Search notes, topics, and projects"
             />
             {query ? <button onClick={() => setQuery("")} aria-label="Clear search"><X size={17} /></button> : <kbd>/</kbd>}
@@ -180,29 +196,15 @@ function App() {
             <KnowledgeGraph domain={activeDomain} documents={graphDocuments} onOpen={openDocument} />
             <div className="graph-help"><span>Hover</span> to trace connections · <span>Click</span> a note to read · <span>Tab + Enter</span> works too</div>
           </section>
-        ) : view === "writing" ? (
+        ) : view === "blogs" ? (
           <section className="writing-section">
             <div className="section-heading">
               <div><span className="eyebrow">Latest</span><h2>Browse the archive</h2></div>
-              <p>{writing.length} published piece{writing.length === 1 ? "" : "s"}. Every post also becomes a node in the knowledge graph.</p>
+              <p>{blogs.length} published piece{blogs.length === 1 ? "" : "s"}. Every post also becomes a node in the knowledge graph.</p>
             </div>
-            <div className="content-grid">{writing.map((document) => <ContentCard key={document.slug} document={document} onOpen={openDocument} />)}</div>
+            <div className="content-grid">{blogs.map((document) => <ContentCard key={document.slug} document={document} onOpen={openDocument} />)}</div>
           </section>
-        ) : (
-          <section className="about-section">
-            <div className="about-intro">
-              <span className="eyebrow">How I think</span>
-              <h2>Useful work makes the complex feel navigable.</h2>
-              <p>My work sits at the intersection of technical architecture and business execution. I use this space to make hard-won knowledge easier to find, understand, and reuse—not to make complexity look impressive.</p>
-              <a href="https://github.com/Lily-Feng" target="_blank" rel="noreferrer">See what I’m building <ArrowRight size={16} /></a>
-            </div>
-            <div className="focus-grid">
-              <div><Network /><span>01</span><h3>AI & Data Architecture</h3><p>Designing governed, scalable foundations for analytics, machine learning, and LLM applications.</p></div>
-              <div><BriefcaseBusiness /><span>02</span><h3>Product & Strategy</h3><p>Turning ambiguous business goals into clear technical bets, roadmaps, and measurable outcomes.</p></div>
-              <div><BrainCircuit /><span>03</span><h3>Applied ML</h3><p>Prototyping and evaluating AI systems to learn quickly before investing at enterprise scale.</p></div>
-            </div>
-          </section>
-        )}
+        ) : null}
       </main>
 
       <Footer />
@@ -210,16 +212,78 @@ function App() {
   );
 }
 
-function Header({ view, onNavigate, menuOpen, setMenuOpen }: { view: View; onNavigate: (view: View) => void; menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
+type HeaderProps = {
+  view: View;
+  onNavigate: (view: View) => void;
+  onOpen: (slug: string) => void;
+  onSelectDomain: (domain: string) => void;
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+function Header({ view, onNavigate, onOpen, onSelectDomain, menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
+  const [openFlyout, setOpenFlyout] = useState<"explore" | "blogs" | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const latestPosts = documents.filter((document) => document.kind === "post").slice(0, 3);
+
+  useEffect(() => {
+    const closeFlyouts = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setOpenFlyout(null);
+    };
+    window.addEventListener("pointerdown", closeFlyouts);
+    return () => window.removeEventListener("pointerdown", closeFlyouts);
+  }, []);
+
+  const chooseView = (nextView: View) => {
+    setOpenFlyout(null);
+    onNavigate(nextView);
+  };
+
   return (
-    <header className="site-header">
-      <button className="brand" onClick={() => onNavigate("about")} aria-label="Lily Feng home"><span>LF</span><strong>Lily Feng</strong></button>
+    <header className="site-header" ref={headerRef}>
+      <button className="brand" onClick={() => chooseView("about")} aria-label="Lily Feng home"><span>LF</span><strong>Lily Feng</strong></button>
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
-        <button className={view === "knowledge" ? "active" : ""} onClick={() => onNavigate("knowledge")}><Network size={16} /> Knowledge</button>
-        <button className={view === "writing" ? "active" : ""} onClick={() => onNavigate("writing")}><BookOpen size={16} /> Writing</button>
-        <button className={view === "about" ? "active" : ""} onClick={() => onNavigate("about")}><Sparkles size={16} /> About Me</button>
+        <div className="nav-item" onMouseEnter={() => setOpenFlyout("explore")} onMouseLeave={() => setOpenFlyout(null)}>
+          <button className={`nav-trigger${view === "knowledge" ? " active" : ""}`} onClick={() => setOpenFlyout(openFlyout === "explore" ? null : "explore")} aria-expanded={openFlyout === "explore"}>
+            <Network size={16} /> Explore <ChevronDown size={13} />
+          </button>
+          <div className={`nav-flyout explore-flyout${openFlyout === "explore" ? " open" : ""}`}>
+            <button className="flyout-feature" onClick={() => chooseView("knowledge")}>
+              <span className="flyout-icon"><Network size={18} /></span>
+              <span><strong>Knowledge map</strong><small>Trace ideas across AI, data, and strategy.</small></span>
+              <ArrowRight size={16} />
+            </button>
+            <div className="flyout-label">Browse a trail</div>
+            <div className="domain-links">
+              {domains.map((domain, index) => <button key={domain} onClick={() => { setOpenFlyout(null); onSelectDomain(domain); }}><span>0{index + 1}</span>{domain}</button>)}
+            </div>
+          </div>
+        </div>
+        <div className="nav-item" onMouseEnter={() => setOpenFlyout("blogs")} onMouseLeave={() => setOpenFlyout(null)}>
+          <button className={`nav-trigger${view === "blogs" ? " active" : ""}`} onClick={() => setOpenFlyout(openFlyout === "blogs" ? null : "blogs")} aria-expanded={openFlyout === "blogs"}>
+            <BookOpen size={16} /> Blogs <ChevronDown size={13} />
+          </button>
+          <div className={`nav-flyout blogs-flyout${openFlyout === "blogs" ? " open" : ""}`}>
+            <div className="flyout-heading"><div><span>Fresh from the garden</span><strong>Latest field notes</strong></div><button onClick={() => chooseView("blogs")}>View all <ArrowRight size={14} /></button></div>
+            <div className="post-preview-list">
+              {latestPosts.map((post) => (
+                <button key={post.slug} onClick={() => { setOpenFlyout(null); onOpen(post.slug); }}>
+                  <span>{post.domain}</span><strong>{post.title}</strong><small>{post.readingMinutes} min read</small>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <button className={`nav-direct${view === "about" ? " active" : ""}`} onClick={() => chooseView("about")}><Sparkles size={16} /> About Me</button>
       </nav>
-      <a className="github-link" href="https://github.com/Lily-Feng" target="_blank" rel="noreferrer" aria-label="Lily Feng on GitHub"><GitBranch size={18} /><span>GitHub</span></a>
+      <div className="header-actions">
+        <button className="theme-toggle" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`} title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}>
+          {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
+        </button>
+        <a className="github-link" href="https://github.com/Lily-Feng" target="_blank" rel="noreferrer" aria-label="Lily Feng on GitHub"><GitHubLogo /><span>GitHub</span></a>
+      </div>
       <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button>
     </header>
   );

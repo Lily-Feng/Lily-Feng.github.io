@@ -16,7 +16,9 @@
     "marked": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-globe.gl": "^2.38.0",
     "react-router-dom": "^7.18.2",
+    "three": "^0.185.1",
     "vite": "latest",
     "yaml": "latest"
   },

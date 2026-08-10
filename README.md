@@ -36,3 +36,7 @@ npm run dev
 ```
 
 Run `npm run build` before publishing to verify every Markdown file and the production bundle.
+
+## Update the resume
+
+Edit `src/data/resume.ts` to update profile details, experience, education, skills, or map locations. The About page and interactive journey globe both read from this shared data file.

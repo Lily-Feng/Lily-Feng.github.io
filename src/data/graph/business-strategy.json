@@ -1,0 +1,145 @@
+{
+  "id": "business-strategy",
+  "domain": "Business Strategy",
+  "title": "Business Strategy",
+  "tagline": "Rings by weight: the decision sits at the centre, everything else earns its distance.",
+  "style": "orbit",
+  "layout": "orbit",
+  "clusters": [
+    { "id": "decisions", "label": "Decisions", "accent": "#52d3c6", "summary": "The unit of value in strategy work." },
+    { "id": "execution", "label": "Execution", "accent": "#f0ba66", "summary": "Turning intent into weekly behaviour." },
+    { "id": "measurement", "label": "Measurement", "accent": "#a99cf6", "summary": "Knowing whether any of it worked." }
+  ],
+  "nodes": [
+    {
+      "id": "decision-quality",
+      "label": "Decision quality",
+      "cluster": "decisions",
+      "weight": 0.95,
+      "summary": "Judge a process by the quality of the decision it produced, separately from the outcome it got.",
+      "keyPoints": [
+        "Name the decision, its owner, its cadence, and the cost of being wrong.",
+        "Good decisions can have bad outcomes; a process that can't tell them apart learns nothing.",
+        "Analytics earns its keep only where it changes what someone does."
+      ],
+      "topics": ["Decision Making"]
+    },
+    {
+      "id": "framing",
+      "label": "Problem framing",
+      "cluster": "decisions",
+      "weight": 0.7,
+      "summary": "Most strategy errors are framing errors: the right answer to a question nobody needed answered.",
+      "keyPoints": [
+        "State the alternative you are choosing against — a strategy with no rejected option is a wish.",
+        "Separate reversible bets from one-way doors and spend review time accordingly.",
+        "Write the disconfirming evidence you would accept, in advance."
+      ],
+      "topics": ["Product Strategy"]
+    },
+    {
+      "id": "tradeoffs",
+      "label": "Trade-offs & constraints",
+      "cluster": "decisions",
+      "weight": 0.5,
+      "summary": "Strategy is the set of things you have decided not to do, made explicit.",
+      "keyPoints": [
+        "Every 'and also' silently reduces the odds on everything already committed.",
+        "Constraints are more useful than goals for guiding day-to-day choices.",
+        "Sequencing is a trade-off too: what gets postponed is part of the plan."
+      ]
+    },
+    {
+      "id": "operating-model",
+      "label": "Operating model",
+      "cluster": "execution",
+      "weight": 0.82,
+      "summary": "The recurring meetings, owners, and interfaces that carry a strategy between quarters.",
+      "keyPoints": [
+        "Structure follows the decisions that need to be made repeatedly.",
+        "An unowned initiative is a stated preference, not a plan.",
+        "Interfaces between teams are where most execution latency accumulates."
+      ],
+      "topics": ["Operating Models"]
+    },
+    {
+      "id": "execution-loop",
+      "label": "Strategy to execution",
+      "cluster": "execution",
+      "weight": 0.74,
+      "summary": "The translation layer from a written intent to what teams actually pick up on Monday.",
+      "keyPoints": [
+        "Translate intent into a small number of visible commitments.",
+        "Review cadence should match how fast the underlying evidence changes.",
+        "When plans and behaviour disagree, believe the behaviour."
+      ],
+      "topics": ["Operating Models", "Product Strategy"]
+    },
+    {
+      "id": "prioritisation",
+      "label": "Prioritisation",
+      "cluster": "execution",
+      "weight": 0.42,
+      "summary": "Ranking work by expected decision value rather than by whoever asked most recently.",
+      "keyPoints": [
+        "Score by the decision it improves and the cost of delay.",
+        "A backlog without a stopping rule is a queue, not a priority list.",
+        "Capacity is the constraint people most often refuse to state."
+      ]
+    },
+    {
+      "id": "measurement",
+      "label": "Measurement design",
+      "cluster": "measurement",
+      "weight": 0.78,
+      "summary": "Choose the smallest set of metrics that would actually change a decision if they moved.",
+      "keyPoints": [
+        "Every metric needs an owner, a grain, and a defined response when it moves.",
+        "Leading indicators are guesses about causality — label them as such.",
+        "A metric that nobody would act on is reporting, not measurement."
+      ],
+      "topics": ["Measurement"],
+      "resources": [
+        { "type": "practice", "label": "Sessionize event data", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=sql-sessions", "note": "Defining the behaviour a metric counts" }
+      ]
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence & experiments",
+      "cluster": "measurement",
+      "weight": 0.46,
+      "summary": "Deciding how much confidence a piece of evidence deserves before it moves a plan.",
+      "keyPoints": [
+        "Match the method to the stakes: a two-week test does not justify a five-year commitment.",
+        "Pre-register the threshold that would change your mind.",
+        "Most strategic evidence is observational; say so instead of dressing it as causal."
+      ]
+    },
+    {
+      "id": "narrative",
+      "label": "Narrative & alignment",
+      "cluster": "measurement",
+      "weight": 0.28,
+      "summary": "The version of the strategy people can repeat correctly without the document in front of them.",
+      "keyPoints": [
+        "If it can't be repeated in two sentences, it won't survive delegation.",
+        "Alignment is tested by what people decline, not by what they applaud.",
+        "Repeat the same framing until it is boring to you — that is roughly when it lands."
+      ]
+    }
+  ],
+  "edges": [
+    { "source": "decision-quality", "target": "framing", "weight": 0.85, "kind": "prerequisite" },
+    { "source": "decision-quality", "target": "measurement", "weight": 0.8, "kind": "supports" },
+    { "source": "decision-quality", "target": "operating-model", "weight": 0.65, "kind": "applies" },
+    { "source": "framing", "target": "tradeoffs", "weight": 0.7, "kind": "supports" },
+    { "source": "framing", "target": "evidence", "weight": 0.55, "kind": "supports" },
+    { "source": "tradeoffs", "target": "prioritisation", "weight": 0.6, "kind": "applies" },
+    { "source": "operating-model", "target": "execution-loop", "weight": 0.85, "kind": "supports" },
+    { "source": "operating-model", "target": "prioritisation", "weight": 0.5, "kind": "supports" },
+    { "source": "execution-loop", "target": "measurement", "weight": 0.7, "kind": "prerequisite" },
+    { "source": "execution-loop", "target": "narrative", "weight": 0.45, "kind": "supports" },
+    { "source": "measurement", "target": "evidence", "weight": 0.65, "kind": "supports" },
+    { "source": "measurement", "target": "narrative", "weight": 0.35, "kind": "applies" }
+  ]
+}

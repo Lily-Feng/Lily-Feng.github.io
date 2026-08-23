@@ -194,7 +194,7 @@ function App() {
               ))}
             </div>
             <KnowledgeGraph domain={activeDomain} documents={graphDocuments} onOpen={openDocument} />
-            <div className="graph-help"><span>Hover</span> to trace connections · <span>Click</span> a note to read · <span>Tab + Enter</span> works too</div>
+            <div className="graph-help"><span>Click</span> a concept for key knowledge and links · <span>Drag</span> to pan · <span>Scroll</span> to zoom once engaged · <span>Tab</span> reveals a keyboard list</div>
           </section>
         ) : view === "blogs" ? (
           <section className="writing-section">

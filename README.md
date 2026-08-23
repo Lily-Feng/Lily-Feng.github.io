@@ -28,6 +28,18 @@ Use `content/knowledge/` for evergreen notes and `content/projects/` for project
 
 When a commit lands on `master` or `main`, the GitHub Actions workflow builds the site and publishes the `dist/` artifact to GitHub Pages.
 
+## Edit the knowledge map
+
+The map on `/knowledge` is authored, weighted data — one JSON file per domain in
+`src/data/graph/`. Concepts carry a `weight` (0–1) that decides how prominent they
+are, `keyPoints` that fill the popup, and typed links to notes and practice
+material. Notes attach themselves to concepts through their `topics`, so
+publishing a Markdown file grows the map without editing it.
+
+The full field reference, the weight-to-tier table, and how to add a style pack
+(`galaxy`, `orbit`, `tile`) are in
+[`docs/knowledge-graph-schema.md`](docs/knowledge-graph-schema.md).
+
 ## Work locally
 
 ```bash

@@ -3,9 +3,13 @@ import Globe, { type GlobeMethods } from "react-globe.gl";
 import { ArrowRight, MapPin, MousePointer2, X } from "lucide-react";
 import { categoryColors, categoryLabels, journeyLocations, type JourneyLocation, type ResumeCategory } from "../data/resume";
 
-type ExperienceGlobeProps = {
-  theme: "light" | "dark";
-};
+/**
+ * Scene colours are deliberately fixed rather than themed: `.globe-shell` renders
+ * a night-side Earth in both light and dark mode (see src/styles/resume.css), so
+ * the atmosphere and arcs are constants of the scene, not of the page palette.
+ */
+const ATMOSPHERE_COLOR = "#60a5fa";
+const ARC_COLOR = "rgba(203,213,225,.55)";
 
 type RouteArc = {
   startLat: number;
@@ -14,7 +18,7 @@ type RouteArc = {
   endLng: number;
 };
 
-export default function ExperienceGlobe({ theme }: ExperienceGlobeProps) {
+export default function ExperienceGlobe() {
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
   const shellRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 900, height: 650 });
@@ -60,7 +64,7 @@ export default function ExperienceGlobe({ theme }: ExperienceGlobeProps) {
           globeImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg"
           bumpImageUrl="https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png"
           showAtmosphere
-          atmosphereColor={theme === "dark" ? "#60a5fa" : "#0ea5e9"}
+          atmosphereColor={ATMOSPHERE_COLOR}
           atmosphereAltitude={.17}
           pointsData={journeyLocations}
           pointLat="lat"
@@ -82,7 +86,7 @@ export default function ExperienceGlobe({ theme }: ExperienceGlobeProps) {
           arcStartLng="startLng"
           arcEndLat="endLat"
           arcEndLng="endLng"
-          arcColor={() => theme === "dark" ? "rgba(148,163,184,.5)" : "rgba(255,255,255,.72)"}
+          arcColor={() => ARC_COLOR}
           arcStroke={.35}
           arcDashLength={.45}
           arcDashGap={.25}

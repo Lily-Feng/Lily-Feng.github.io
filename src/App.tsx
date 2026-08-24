@@ -28,6 +28,16 @@ function GitHubLogo({ size = 18 }: { size?: number }) {
   );
 }
 
+function readStoredTheme(): Theme {
+  try {
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark" || stored === "light") return stored;
+  } catch {
+    /* private browsing — fall through to the OS preference */
+  }
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 function getView(pathname: string): View {
   if (pathname === "/knowledge") return "knowledge";
   if (pathname === "/blogs" || pathname === "/writing") return "blogs";
@@ -59,16 +69,23 @@ function App() {
   const location = useLocation();
   const routerNavigate = useNavigate();
   const view = getView(location.pathname);
-  const [theme, setTheme] = useState<Theme>(() => localStorage.getItem("theme") === "dark" ? "dark" : "light");
+  const [theme, setTheme] = useState<Theme>(readStoredTheme);
   const [activeDomain, setActiveDomain] = useState(domains[0] ?? "Knowledge");
   const [query, setQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("theme", theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#080d18" : "#f5f7fb");
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      /* private browsing — the theme just will not persist */
+    }
+    // Keep the browser chrome in step with the design token rather than a literal.
+    const surface = getComputedStyle(root).getPropertyValue("--surface-page").trim();
+    if (surface) document.querySelector('meta[name="theme-color"]')?.setAttribute("content", surface);
   }, [theme]);
 
   useEffect(() => {
@@ -150,7 +167,7 @@ function App() {
             <p>Essays, implementation notes, and practical frameworks—published when an idea becomes useful enough to share.</p>
           </section>
         ) : (
-          <AboutPage theme={theme} />
+          <AboutPage />
         )}
 
         {view !== "about" && (

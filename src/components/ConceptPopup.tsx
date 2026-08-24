@@ -85,7 +85,7 @@ export function ConceptPopup({ node, related, position, onOpen, onSelect, onClos
         <X size={15} />
       </button>
 
-      <header className="concept-popup__head" style={{ "--accent": node.cluster.accent } as React.CSSProperties}>
+      <header className="concept-popup__head" style={{ "--cluster-accent": node.cluster.accent } as React.CSSProperties}>
         <span className="concept-popup__eyebrow">
           <i />
           {node.cluster.label}
@@ -120,7 +120,7 @@ export function ConceptPopup({ node, related, position, onOpen, onSelect, onClos
                   key={item.id}
                   type="button"
                   className="related-chip"
-                  style={{ "--accent": item.cluster.accent } as React.CSSProperties}
+                  style={{ "--cluster-accent": item.cluster.accent } as React.CSSProperties}
                   onClick={() => (item.kind === "note" && item.slug ? onOpen(item.slug) : onSelect(item.id))}
                   title={note ?? item.summary}
                 >

@@ -20,12 +20,14 @@ function readTheme(): GraphTheme {
   const styles = getComputedStyle(root);
   const mode = root.dataset.theme === "dark" ? "dark" : "light";
   const read = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
+  // Canvas cannot resolve CSS custom properties itself, so the design tokens are
+  // read off :root here and handed to the renderer as concrete colours.
   return {
     mode,
-    ink: mode === "dark" ? "#e8edf6" : "#172033",
-    inkSoft: read("--muted", mode === "dark" ? "#8896aa" : "#647287"),
-    line: read("--line", mode === "dark" ? "#213047" : "#d7dee8"),
-    veil: read("--graph-veil", mode === "dark" ? "#0a111e" : "#f7f9fc"),
+    ink: read("--text-strong", mode === "dark" ? "#f6f7fa" : "#22262f"),
+    inkSoft: read("--text-muted", mode === "dark" ? "#a9b0bd" : "#6c7381"),
+    line: read("--border-default", mode === "dark" ? "#3d434f" : "#d5d8de"),
+    veil: read("--surface-veil", mode === "dark" ? "#14161d" : "#fafafb"),
   };
 }
 

@@ -1,0 +1,184 @@
+{
+  "id": "enterprise-ai",
+  "domain": "Enterprise AI",
+  "title": "Enterprise AI",
+  "tagline": "Platform, governance, and evaluation carry the weight — the model is rarely the hard part.",
+  "style": "tile",
+  "layout": "force",
+  "clusters": [
+    { "id": "platform", "label": "Platform", "accent": "#52d3c6", "summary": "The substrate every AI workload sits on." },
+    { "id": "systems", "label": "AI systems", "accent": "#a99cf6", "style": "galaxy", "summary": "The retrieval and orchestration patterns that make models useful." },
+    { "id": "operations", "label": "Operations", "accent": "#f0ba66", "summary": "Keeping a deployed system honest over time." },
+    { "id": "trust", "label": "Governance & trust", "accent": "#7fb2ff", "summary": "Access, evidence, and accountability." }
+  ],
+  "nodes": [
+    {
+      "id": "platform-map",
+      "label": "Platform architecture",
+      "cluster": "platform",
+      "weight": 0.94,
+      "summary": "The layers — data, feature, model, orchestration, application — and who owns each one.",
+      "keyPoints": [
+        "Most enterprise AI failure is an integration failure, not a modelling failure.",
+        "Separate storage, compute, and semantics so each can be replaced independently.",
+        "Draw the ownership boundary before choosing the vendor."
+      ],
+      "topics": ["Data Platforms", "MLOps"],
+      "resources": [
+        { "type": "practice", "label": "Choose the shape of a data platform", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=data-platform-selection" }
+      ]
+    },
+    {
+      "id": "data-foundation",
+      "label": "Data foundation",
+      "cluster": "platform",
+      "weight": 0.8,
+      "summary": "Governed, contracted, reproducible data — the constraint that quietly caps every AI ambition.",
+      "keyPoints": [
+        "Schema contracts turn producer/consumer arguments into a reviewable artefact.",
+        "Freshness and grain are AI requirements, not just analytics requirements.",
+        "If a number can't be reproduced, an AI answer built on it can't be defended."
+      ],
+      "topics": ["Data Platforms"],
+      "resources": [
+        { "type": "practice", "label": "Build an incremental pipeline", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=data-incremental-pipelines" },
+        { "type": "practice", "label": "Diagnose a slow analytical query", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=data-performance" }
+      ]
+    },
+    {
+      "id": "rag",
+      "label": "Retrieval-augmented generation",
+      "cluster": "systems",
+      "weight": 0.88,
+      "summary": "Ground a model's answer in retrieved, permissioned content instead of its own memory.",
+      "keyPoints": [
+        "Retrieval quality sets the ceiling; generation only spends what retrieval provides.",
+        "Chunking, ranking, and citation are three separate problems with three separate metrics.",
+        "Permissions must be enforced at retrieval, never through prompt instructions."
+      ],
+      "topics": ["Generative AI", "Evaluation"]
+    },
+    {
+      "id": "orchestration",
+      "label": "Agents & orchestration",
+      "cluster": "systems",
+      "weight": 0.6,
+      "summary": "Multi-step flows where a model calls tools, and something has to bound the loop.",
+      "keyPoints": [
+        "Every tool call is an authorisation decision.",
+        "Bound steps, cost, and latency explicitly — autonomy without limits is an outage.",
+        "Deterministic routing beats a clever agent for most enterprise workflows."
+      ],
+      "topics": ["Generative AI"],
+      "resources": [
+        { "type": "practice", "label": "Cancellation with context", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=go-cancellation", "note": "Timeouts and clean shutdown for tool loops" }
+      ]
+    },
+    {
+      "id": "text-to-sql",
+      "label": "Natural language to data",
+      "cluster": "systems",
+      "weight": 0.5,
+      "summary": "Translate a question into a governed query, and show the query alongside the answer.",
+      "keyPoints": [
+        "Restrict access at the data layer, not in the prompt.",
+        "Show the generated SQL so a reader can audit the answer.",
+        "Evaluate with ambiguous and adversarial questions, not just clean ones."
+      ],
+      "topics": ["Data Products", "Generative AI"],
+      "resources": [
+        { "type": "practice", "label": "Top N per group", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=sql-top-n-per-group" },
+        { "type": "practice", "label": "Sessionize event data", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=sql-sessions" }
+      ]
+    },
+    {
+      "id": "mlops",
+      "label": "MLOps lifecycle",
+      "cluster": "operations",
+      "weight": 0.84,
+      "summary": "Versioning, deployment, monitoring, and retraining as one continuous loop.",
+      "keyPoints": [
+        "Version data, code, and model together or you cannot reproduce an incident.",
+        "Deployment is the midpoint of the lifecycle, not the finish line.",
+        "Retraining triggers should be written down before the first drift alarm."
+      ],
+      "topics": ["MLOps", "Observability"]
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation & monitoring",
+      "cluster": "operations",
+      "weight": 0.82,
+      "summary": "Graded test sets offline, quality and cost signals online, and a path between them.",
+      "keyPoints": [
+        "Build the evaluation set before the system — it defines what 'working' means.",
+        "Track groundedness and refusal behaviour, not only accuracy.",
+        "Log inputs, retrieved context, and outputs so regressions are diagnosable."
+      ],
+      "topics": ["Evaluation", "Observability"]
+    },
+    {
+      "id": "reliability",
+      "label": "Reliability & cost",
+      "cluster": "operations",
+      "weight": 0.46,
+      "summary": "Latency budgets, fallbacks, rate limits, and the unit economics of every call.",
+      "keyPoints": [
+        "Model calls are a dependency with an SLO and a bill attached.",
+        "Design the degraded path: what does the product do when the model is unavailable?",
+        "Cost per resolved task is the metric that survives contact with finance."
+      ],
+      "resources": [
+        { "type": "practice", "label": "Design for regional failure", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=cloud-high-availability" },
+        { "type": "practice", "label": "Make message processing reliable", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=cloud-reliable-messaging" }
+      ]
+    },
+    {
+      "id": "governance",
+      "label": "Governance",
+      "cluster": "trust",
+      "weight": 0.76,
+      "summary": "Who may see what, who approved this system, and what evidence exists that it behaves.",
+      "keyPoints": [
+        "Access control belongs to the data platform, inherited by every AI surface.",
+        "Governance that arrives after launch becomes a rollback.",
+        "Evidence — lineage, evaluations, audit trails — is the deliverable, not the policy document."
+      ],
+      "topics": ["Governance"],
+      "resources": [
+        { "type": "practice", "label": "Reason about least privilege", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=cloud-least-privilege" }
+      ]
+    },
+    {
+      "id": "legibility",
+      "label": "Legibility & adoption",
+      "cluster": "trust",
+      "weight": 0.54,
+      "summary": "People use a system they can inspect, correct, and predict.",
+      "keyPoints": [
+        "Show sources and the reasoning path; hidden work is not trusted work.",
+        "An override mechanism raises adoption more than an accuracy point.",
+        "Adoption failures are usually workflow failures wearing a model costume."
+      ],
+      "topics": ["Decision Making"]
+    }
+  ],
+  "edges": [
+    { "source": "platform-map", "target": "data-foundation", "weight": 0.9, "kind": "prerequisite" },
+    { "source": "platform-map", "target": "mlops", "weight": 0.8, "kind": "supports" },
+    { "source": "platform-map", "target": "governance", "weight": 0.7, "kind": "supports" },
+    { "source": "data-foundation", "target": "rag", "weight": 0.8, "kind": "prerequisite" },
+    { "source": "data-foundation", "target": "text-to-sql", "weight": 0.85, "kind": "prerequisite" },
+    { "source": "rag", "target": "evaluation", "weight": 0.85, "kind": "prerequisite" },
+    { "source": "rag", "target": "governance", "weight": 0.7, "kind": "applies" },
+    { "source": "rag", "target": "orchestration", "weight": 0.6, "kind": "supports" },
+    { "source": "orchestration", "target": "reliability", "weight": 0.6, "kind": "applies" },
+    { "source": "orchestration", "target": "governance", "weight": 0.55, "kind": "applies" },
+    { "source": "text-to-sql", "target": "governance", "weight": 0.65, "kind": "applies" },
+    { "source": "text-to-sql", "target": "legibility", "weight": 0.6, "kind": "supports" },
+    { "source": "mlops", "target": "evaluation", "weight": 0.85, "kind": "supports" },
+    { "source": "mlops", "target": "reliability", "weight": 0.6, "kind": "supports" },
+    { "source": "evaluation", "target": "legibility", "weight": 0.5, "kind": "supports" },
+    { "source": "governance", "target": "legibility", "weight": 0.55, "kind": "supports" }
+  ]
+}

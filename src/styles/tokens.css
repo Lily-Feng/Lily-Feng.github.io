@@ -1,0 +1,229 @@
+/**
+ * Design tokens — the single source of truth for colour, type, space, and motion.
+ *
+ * Three layers, in order:
+ *   1. Primitives   Hue/chroma dials + raw scales. Nothing here references a component.
+ *   2. Semantics    Role-named tokens (--surface-card, --text-muted). Components use ONLY these.
+ *   3. Themes       Light and dark redefine layer 2 only. No component CSS is duplicated per theme.
+ *
+ * ── Changing the colour of the whole site ──────────────────────────────────
+ * Rotate one number. `--hue-accent` drives every accent, glow, ring, and tint:
+ *
+ *     :root { --hue-accent: 185; }   teal      (default)
+ *                          265;     indigo
+ *                          300;     violet
+ *                            25;    rose
+ *                           150;    emerald
+ *
+ * Or set the preset attribute on <html> and skip the maths entirely:
+ *
+ *     <html data-accent="rose">
+ *
+ * Lightness and chroma relationships are preserved across the rotation, so
+ * contrast ratios hold no matter which hue you land on.
+ */
+
+:root {
+  /* ── 1. Primitives: the dials ──────────────────────────────────────────── */
+  --hue-accent: 185;
+  --hue-secondary: 285;
+  --hue-highlight: 75;
+  --hue-neutral: 255;
+
+  --chroma-accent: 0.115;
+  --chroma-secondary: 0.115;
+  --chroma-highlight: 0.105;
+
+  /* ── 1b. Primitives: non-colour scales (theme-independent) ─────────────── */
+
+  /* Type — 11px floor. Nothing on this site renders below --text-2xs. */
+  --text-2xs: 0.6875rem;  /* 11px */
+  --text-xs:  0.75rem;    /* 12px */
+  --text-sm:  0.8125rem;  /* 13px */
+  --text-md:  0.875rem;   /* 14px */
+  --text-base:0.9375rem;  /* 15px */
+  --text-lg:  1.0625rem;  /* 17px */
+  --text-xl:  1.25rem;    /* 20px */
+  --text-2xl: 1.625rem;   /* 26px */
+  --text-3xl: clamp(1.75rem, 3.2vw, 2.25rem);
+  --text-4xl: clamp(2rem, 4.2vw, 2.875rem);
+  --text-5xl: clamp(2.5rem, 5vw, 3.5rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tighter: -0.045em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.14em;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Space — 4pt grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 104px;
+
+  /* Radius — six steps replace the eighteen ad-hoc values this file grew */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --transition-colors: color var(--dur-base) var(--ease-out),
+                       background-color var(--dur-base) var(--ease-out),
+                       border-color var(--dur-base) var(--ease-out);
+  --transition-transform: transform var(--dur-base) var(--ease-out);
+
+  /* Layout */
+  --width-page: 1180px;
+  --width-prose: 920px;
+  --header-height: 70px;
+  --gutter: var(--space-6);
+
+  /* Focus — one ring, applied globally in base.css */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--accent);
+}
+
+/* ── 2 + 3. Semantic roles — LIGHT (also the pre-JS default) ─────────────── */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --surface-page:    oklch(98.5% 0.004 var(--hue-neutral));
+  --surface-sunken:  oklch(96.2% 0.007 var(--hue-neutral));
+  --surface-card:    oklch(100% 0 0);
+  --surface-raised:  oklch(95.5% 0.008 var(--hue-neutral));
+  --surface-inset:   oklch(93.5% 0.010 var(--hue-neutral));
+  --surface-overlay: oklch(100% 0 0 / 0.93);
+  --surface-veil:    oklch(98% 0.005 var(--hue-neutral));
+
+  --border-subtle: oklch(90.5% 0.009 var(--hue-neutral));
+  --border-default:oklch(83% 0.013 var(--hue-neutral));
+  --border-strong: oklch(72% 0.016 var(--hue-neutral));
+
+  --text-strong: oklch(23% 0.021 var(--hue-neutral));
+  --text-default:oklch(34% 0.018 var(--hue-neutral));
+  --text-muted:  oklch(48% 0.016 var(--hue-neutral));
+  --text-subtle: oklch(57% 0.014 var(--hue-neutral));
+  --text-on-accent: oklch(99% 0 0);
+
+  --accent:       oklch(52% var(--chroma-accent) var(--hue-accent));
+  --accent-hover: oklch(44% var(--chroma-accent) var(--hue-accent));
+  --accent-soft:  oklch(52% var(--chroma-accent) var(--hue-accent) / 0.10);
+  --accent-line:  oklch(52% var(--chroma-accent) var(--hue-accent) / 0.32);
+
+  --secondary:      oklch(48% var(--chroma-secondary) var(--hue-secondary));
+  --secondary-soft: oklch(48% var(--chroma-secondary) var(--hue-secondary) / 0.10);
+  --secondary-line: oklch(48% var(--chroma-secondary) var(--hue-secondary) / 0.30);
+
+  --highlight:      oklch(52% var(--chroma-highlight) var(--hue-highlight));
+  --highlight-soft: oklch(52% var(--chroma-highlight) var(--hue-highlight) / 0.12);
+  --highlight-line: oklch(52% var(--chroma-highlight) var(--hue-highlight) / 0.34);
+
+  --shadow-sm: 0 1px 2px oklch(23% 0.02 var(--hue-neutral) / 0.06);
+  --shadow-md: 0 4px 16px oklch(23% 0.02 var(--hue-neutral) / 0.07);
+  --shadow-lg: 0 18px 48px oklch(23% 0.02 var(--hue-neutral) / 0.10);
+  --shadow-overlay: 0 24px 60px oklch(23% 0.02 var(--hue-neutral) / 0.16);
+  --glow-accent: 0 0 12px oklch(52% var(--chroma-accent) var(--hue-accent) / 0.45);
+
+  /* Backdrop wash behind the page */
+  --wash-1: oklch(52% var(--chroma-accent) var(--hue-accent) / 0.07);
+  --wash-2: oklch(48% var(--chroma-secondary) var(--hue-secondary) / 0.05);
+  --wash-grid: oklch(23% 0.02 var(--hue-neutral) / 0.035);
+}
+
+/* ── DARK ────────────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface-page:    oklch(15% 0.017 var(--hue-neutral));
+  --surface-sunken:  oklch(11.5% 0.015 var(--hue-neutral));
+  --surface-card:    oklch(19% 0.019 var(--hue-neutral));
+  --surface-raised:  oklch(24% 0.022 var(--hue-neutral));
+  --surface-inset:   oklch(21% 0.020 var(--hue-neutral));
+  --surface-overlay: oklch(17% 0.018 var(--hue-neutral) / 0.94);
+  --surface-veil:    oklch(13% 0.016 var(--hue-neutral));
+
+  --border-subtle: oklch(27% 0.021 var(--hue-neutral));
+  --border-default:oklch(33% 0.024 var(--hue-neutral));
+  --border-strong: oklch(45% 0.028 var(--hue-neutral));
+
+  --text-strong: oklch(97% 0.005 var(--hue-neutral));
+  --text-default:oklch(88% 0.009 var(--hue-neutral));
+  --text-muted:  oklch(73% 0.015 var(--hue-neutral));
+  --text-subtle: oklch(63% 0.017 var(--hue-neutral));
+  --text-on-accent: oklch(16% 0.02 var(--hue-neutral));
+
+  --accent:       oklch(80% 0.125 var(--hue-accent));
+  --accent-hover: oklch(88% 0.105 var(--hue-accent));
+  --accent-soft:  oklch(80% 0.125 var(--hue-accent) / 0.12);
+  --accent-line:  oklch(80% 0.125 var(--hue-accent) / 0.36);
+
+  --secondary:      oklch(78% 0.115 var(--hue-secondary));
+  --secondary-soft: oklch(78% 0.115 var(--hue-secondary) / 0.14);
+  --secondary-line: oklch(78% 0.115 var(--hue-secondary) / 0.34);
+
+  --highlight:      oklch(82% 0.115 var(--hue-highlight));
+  --highlight-soft: oklch(82% 0.115 var(--hue-highlight) / 0.12);
+  --highlight-line: oklch(82% 0.115 var(--hue-highlight) / 0.38);
+
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.30);
+  --shadow-md: 0 4px 16px oklch(0% 0 0 / 0.34);
+  --shadow-lg: 0 18px 48px oklch(0% 0 0 / 0.42);
+  --shadow-overlay: 0 24px 60px oklch(0% 0 0 / 0.55);
+  --glow-accent: 0 0 12px oklch(80% 0.125 var(--hue-accent) / 0.40);
+
+  --wash-1: oklch(80% 0.125 var(--hue-accent) / 0.07);
+  --wash-2: oklch(78% 0.115 var(--hue-secondary) / 0.055);
+  --wash-grid: oklch(100% 0 0 / 0.018);
+}
+
+/* Pre-JS: follow the OS when the user has not chosen a theme yet. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --surface-page:    oklch(15% 0.017 var(--hue-neutral));
+    --surface-card:    oklch(19% 0.019 var(--hue-neutral));
+    --text-strong:     oklch(97% 0.005 var(--hue-neutral));
+    --text-default:    oklch(88% 0.009 var(--hue-neutral));
+  }
+}
+
+/* ── Accent presets — one attribute recolours the entire site ────────────── */
+:root[data-accent="teal"]    { --hue-accent: 185; --hue-secondary: 285; }
+:root[data-accent="emerald"] { --hue-accent: 155; --hue-secondary: 265; }
+:root[data-accent="indigo"]  { --hue-accent: 265; --hue-secondary: 320; }
+:root[data-accent="violet"]  { --hue-accent: 300; --hue-secondary: 265; }
+:root[data-accent="rose"]    { --hue-accent: 15;  --hue-secondary: 320; }
+:root[data-accent="amber"]   { --hue-accent: 70;  --hue-secondary: 25;  }

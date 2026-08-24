@@ -1,0 +1,134 @@
+{
+  "id": "learning-in-public",
+  "domain": "Learning in Public",
+  "title": "Learning in Public",
+  "tagline": "A small set of habits that compound, plus the system that keeps them findable.",
+  "style": "galaxy",
+  "layout": "force",
+  "clusters": [
+    { "id": "loops", "label": "Learning loops", "accent": "#52d3c6", "summary": "How understanding actually accumulates." },
+    { "id": "systems", "label": "Knowledge systems", "accent": "#a99cf6", "style": "tile", "summary": "Where notes live and how they connect." },
+    { "id": "publishing", "label": "Publishing", "accent": "#f0ba66", "summary": "Turning private notes into something useful to others." }
+  ],
+  "nodes": [
+    {
+      "id": "learning-loops",
+      "label": "Learning loops",
+      "cluster": "loops",
+      "weight": 0.92,
+      "summary": "Short cycles of attempt, feedback, and revision beat long cycles of consumption.",
+      "keyPoints": [
+        "Feedback latency is the single biggest driver of learning speed.",
+        "Retrieval — writing it from memory — outperforms rereading, reliably.",
+        "A loop needs an artefact; without output there is nothing to correct."
+      ],
+      "topics": ["Knowledge Systems", "Leadership"]
+    },
+    {
+      "id": "deliberate-practice",
+      "label": "Deliberate practice",
+      "cluster": "loops",
+      "weight": 0.56,
+      "summary": "Work at the edge of what you can already do, on the specific part that fails.",
+      "keyPoints": [
+        "Isolate the sub-skill; whole-task repetition hides the weak component.",
+        "Difficulty should be uncomfortable but survivable.",
+        "Track the failure mode, not the hours."
+      ],
+      "resources": [
+        { "type": "practice", "label": "Sliding window", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=python-sliding-window", "note": "A pattern worth drilling until recognition is automatic" },
+        { "type": "practice", "label": "Prevent goroutine leaks", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=go-goroutine-leaks" }
+      ]
+    },
+    {
+      "id": "mental-models",
+      "label": "Reusable mental models",
+      "cluster": "loops",
+      "weight": 0.66,
+      "summary": "Compress a domain into a handful of transferable structures instead of a list of facts.",
+      "keyPoints": [
+        "A model earns its place by making a decision faster somewhere else.",
+        "Name the model — unnamed structure doesn't get reused.",
+        "Test it by finding the case where it breaks."
+      ]
+    },
+    {
+      "id": "digital-garden",
+      "label": "Digital garden",
+      "cluster": "systems",
+      "weight": 0.84,
+      "summary": "Connected, revisable notes rather than a reverse-chronological archive.",
+      "keyPoints": [
+        "Notes are living: a good one gets edited more often than it gets replaced.",
+        "Connections are the value — an isolated note is a bookmark.",
+        "Publishing pressure improves note quality more than any template."
+      ],
+      "topics": ["Digital Gardens", "Knowledge Systems"]
+    },
+    {
+      "id": "linking",
+      "label": "Linking & structure",
+      "cluster": "systems",
+      "weight": 0.5,
+      "summary": "Topics, connections, and weights that let a reader trace an idea instead of searching for it.",
+      "keyPoints": [
+        "Link on the way in; retrofitting structure never happens.",
+        "Weight matters: not every note deserves equal prominence on a map.",
+        "Search is the fallback, structure is the product."
+      ],
+      "topics": ["Knowledge Systems"]
+    },
+    {
+      "id": "content-pipeline",
+      "label": "Plain-text pipeline",
+      "cluster": "systems",
+      "weight": 0.34,
+      "summary": "Markdown in Git, static output, no database to babysit.",
+      "keyPoints": [
+        "Front matter is a schema — treat it with the same discipline as any contract.",
+        "A build that fails on a missing field prevents silent content rot.",
+        "Portability is the reason to stay boring here."
+      ],
+      "topics": ["Data Platforms", "Governance"]
+    },
+    {
+      "id": "writing",
+      "label": "Writing to think",
+      "cluster": "publishing",
+      "weight": 0.72,
+      "summary": "The draft is where the gaps in understanding become impossible to ignore.",
+      "keyPoints": [
+        "Write the version you wish you had found six months ago.",
+        "If a paragraph can't be written plainly, the idea isn't finished.",
+        "Publish at 'useful', not at 'complete'."
+      ],
+      "topics": ["Digital Gardens"]
+    },
+    {
+      "id": "teaching",
+      "label": "Teaching & feedback",
+      "cluster": "publishing",
+      "weight": 0.44,
+      "summary": "Explaining to someone else is the cheapest available test of understanding.",
+      "keyPoints": [
+        "Questions from readers point directly at the weakest section.",
+        "Teaching forces a sequence, and sequence is most of the insight.",
+        "Public commitments shorten the feedback loop."
+      ],
+      "topics": ["Leadership"]
+    }
+  ],
+  "edges": [
+    { "source": "learning-loops", "target": "deliberate-practice", "weight": 0.85, "kind": "supports" },
+    { "source": "learning-loops", "target": "mental-models", "weight": 0.75, "kind": "supports" },
+    { "source": "learning-loops", "target": "writing", "weight": 0.8, "kind": "applies" },
+    { "source": "mental-models", "target": "digital-garden", "weight": 0.7, "kind": "applies" },
+    { "source": "digital-garden", "target": "linking", "weight": 0.85, "kind": "supports" },
+    { "source": "digital-garden", "target": "content-pipeline", "weight": 0.6, "kind": "supports" },
+    { "source": "digital-garden", "target": "writing", "weight": 0.7, "kind": "supports" },
+    { "source": "linking", "target": "content-pipeline", "weight": 0.5, "kind": "prerequisite" },
+    { "source": "writing", "target": "teaching", "weight": 0.65, "kind": "supports" },
+    { "source": "teaching", "target": "learning-loops", "weight": 0.6, "kind": "supports" },
+    { "source": "deliberate-practice", "target": "mental-models", "weight": 0.5, "kind": "supports" }
+  ]
+}

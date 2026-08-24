@@ -4,11 +4,7 @@ import { categoryLabels, profile, resumeEntries } from "../data/resume";
 
 const ExperienceGlobe = lazy(() => import("./ExperienceGlobe"));
 
-type AboutPageProps = {
-  theme: "light" | "dark";
-};
-
-export function AboutPage({ theme }: AboutPageProps) {
+export function AboutPage() {
   const [section, setSection] = useState<"education" | "experience" | "highlights" | "globe">("highlights");
 
   return (
@@ -98,7 +94,7 @@ export function AboutPage({ theme }: AboutPageProps) {
 
       {section === "globe" && (
         <Suspense fallback={<div className="globe-loading"><Globe2 size={30} /><span>Preparing the globe…</span></div>}>
-          <ExperienceGlobe theme={theme} />
+          <ExperienceGlobe />
         </Suspense>
       )}
     </div>

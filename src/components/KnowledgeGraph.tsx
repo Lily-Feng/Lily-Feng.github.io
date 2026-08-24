@@ -1,17 +1,11 @@
-import { useMemo, useState } from "react";
-import { ArrowUpRight, FileText } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FileText, Maximize2 } from "lucide-react";
+import { buildGraph, specForDomain } from "../data/graph";
+import { createGraphEngine, type GraphEngine, type ScreenPoint } from "../graph/engine";
+import type { GraphTheme } from "../graph/styles";
+import type { GraphNode } from "../graph/types";
 import type { ContentDocument } from "../lib/content";
-
-type GraphNode = {
-  id: string;
-  label: string;
-  type: "core" | "topic" | "document";
-  x: number;
-  y: number;
-  document?: ContentDocument;
-};
-
-type GraphLink = { source: string; target: string };
+import { ConceptPopup } from "./ConceptPopup";
 
 type KnowledgeGraphProps = {
   domain: string;
@@ -19,147 +13,196 @@ type KnowledgeGraphProps = {
   onOpen: (slug: string) => void;
 };
 
-const width = 880;
-const height = 620;
-const center = { x: width / 2, y: height / 2 };
+type PopupPosition = { x: number; y: number; flip: boolean };
 
-function makeGraph(domain: string, documents: ContentDocument[]) {
-  const topics = Array.from(new Set(documents.flatMap((document) => document.topics))).slice(0, 8);
-  const nodes: GraphNode[] = [{ id: "core", label: domain, type: "core", ...center }];
-  const links: GraphLink[] = [];
-
-  topics.forEach((topic, index) => {
-    const angle = (index / Math.max(topics.length, 1)) * Math.PI * 2 - Math.PI / 2;
-    const x = center.x + Math.cos(angle) * 170;
-    const y = center.y + Math.sin(angle) * 170;
-    nodes.push({ id: `topic:${topic}`, label: topic, type: "topic", x, y });
-    links.push({ source: "core", target: `topic:${topic}` });
-  });
-
-  documents.forEach((document, index) => {
-    const primaryTopic = document.topics.find((topic) => topics.includes(topic));
-    const topicIndex = Math.max(0, topics.indexOf(primaryTopic ?? topics[0]));
-    const baseAngle = (topicIndex / Math.max(topics.length, 1)) * Math.PI * 2 - Math.PI / 2;
-    const siblings = documents.filter((candidate) => candidate.topics[0] === primaryTopic);
-    const siblingIndex = Math.max(0, siblings.findIndex((candidate) => candidate.slug === document.slug));
-    const offset = (siblingIndex - (siblings.length - 1) / 2) * 0.18;
-    const angle = baseAngle + offset;
-    const radius = 270 + (index % 2) * 34;
-    nodes.push({
-      id: `doc:${document.slug}`,
-      label: document.title,
-      type: "document",
-      x: center.x + Math.cos(angle) * radius,
-      y: center.y + Math.sin(angle) * radius,
-      document,
-    });
-
-    document.topics.filter((topic) => topics.includes(topic)).forEach((topic) => {
-      links.push({ source: `topic:${topic}`, target: `doc:${document.slug}` });
-    });
-  });
-
-  return { nodes, links };
-}
-
-function shortLabel(label: string, limit: number) {
-  return label.length > limit ? `${label.slice(0, limit - 1)}…` : label;
+function readTheme(): GraphTheme {
+  const root = document.documentElement;
+  const styles = getComputedStyle(root);
+  const mode = root.dataset.theme === "dark" ? "dark" : "light";
+  const read = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
+  // Canvas cannot resolve CSS custom properties itself, so the design tokens are
+  // read off :root here and handed to the renderer as concrete colours.
+  return {
+    mode,
+    ink: read("--text-strong", mode === "dark" ? "#f6f7fa" : "#22262f"),
+    inkSoft: read("--text-muted", mode === "dark" ? "#a9b0bd" : "#6c7381"),
+    line: read("--border-default", mode === "dark" ? "#3d434f" : "#d5d8de"),
+    veil: read("--surface-veil", mode === "dark" ? "#14161d" : "#fafafb"),
+  };
 }
 
 export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProps) {
-  const graph = useMemo(() => makeGraph(domain, documents), [domain, documents]);
-  const [activeNode, setActiveNode] = useState("core");
-  const active = graph.nodes.find((node) => node.id === activeNode) ?? graph.nodes[0];
-  const connected = new Set(
-    graph.links
-      .filter((link) => link.source === activeNode || link.target === activeNode)
-      .flatMap((link) => [link.source, link.target]),
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const engineRef = useRef<GraphEngine | null>(null);
+
+  const spec = useMemo(() => specForDomain(domain), [domain]);
+  const graph = useMemo(() => (spec ? buildGraph(spec) : null), [spec]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [popupPosition, setPopupPosition] = useState<PopupPosition | null>(null);
+  const [hover, setHover] = useState<{ node: GraphNode; x: number; y: number } | null>(null);
+
+  const toLocal = useCallback((point: ScreenPoint): PopupPosition => {
+    const rect = wrapperRef.current?.getBoundingClientRect();
+    if (!rect) return { x: point.x, y: point.y, flip: false };
+    const x = point.x - rect.left;
+    const y = point.y - rect.top;
+    const flip = x > rect.width * 0.56;
+    return {
+      x: Math.max(14, Math.min(rect.width - 14, x + (flip ? -20 : 20))),
+      y: Math.max(12, Math.min(Math.max(12, rect.height - 130), y - 46)),
+      flip,
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const engine = createGraphEngine(canvas, {
+      onSelect: (node, anchor) => {
+        setSelectedId(node?.id ?? null);
+        setPopupPosition(node && anchor ? toLocal(anchor) : null);
+      },
+      onHover: (node, anchor) => {
+        const rect = wrapperRef.current?.getBoundingClientRect();
+        setHover(node && anchor && rect ? { node, x: anchor.x - rect.left, y: anchor.y - rect.top } : null);
+      },
+    });
+    engineRef.current = engine;
+    engine.setTheme(readTheme());
+
+    const observer = new MutationObserver(() => engine.setTheme(readTheme()));
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+    return () => {
+      observer.disconnect();
+      engine.destroy();
+      engineRef.current = null;
+    };
+  }, [toLocal]);
+
+  useEffect(() => {
+    if (!graph) return;
+    engineRef.current?.setGraph(graph);
+    setSelectedId(null);
+    setPopupPosition(null);
+    setHover(null);
+  }, [graph]);
+
+  const selected = graph?.nodes.find((node) => node.id === selectedId) ?? null;
+
+  const related = useMemo(() => {
+    if (!graph || !selected) return [];
+    return graph.edges
+      .filter((edge) => edge.source.id === selected.id || edge.target.id === selected.id)
+      .map((edge) => ({
+        node: edge.source.id === selected.id ? edge.target : edge.source,
+        weight: edge.weight,
+        note: edge.note,
+      }))
+      .sort((a, b) => b.weight - a.weight);
+  }, [graph, selected]);
+
+  const selectNode = useCallback(
+    (id: string | null) => {
+      setSelectedId(id);
+      engineRef.current?.setSelection(id);
+      if (!id) {
+        setPopupPosition(null);
+        return;
+      }
+      const anchor = engineRef.current?.anchorFor(id);
+      setPopupPosition(anchor ? toLocal(anchor) : null);
+    },
+    [toLocal],
   );
 
-  const activate = (node: GraphNode) => {
-    setActiveNode(node.id);
-    if (node.document) onOpen(node.document.slug);
-  };
+  const close = useCallback(() => selectNode(null), [selectNode]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && selectedId) close();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedId, close]);
+
+  const concepts = graph?.nodes.filter((node) => node.kind === "concept") ?? [];
+  const notes = graph?.nodes.filter((node) => node.kind === "note") ?? [];
 
   return (
     <div className="graph-shell">
       <div className="graph-topline">
         <div>
-          <span className="eyebrow">Live map</span>
-          <h2>{domain}</h2>
+          <span className="eyebrow">Weighted map</span>
+          <h2>{graph?.title ?? domain}</h2>
+          {graph?.tagline && <p className="graph-tagline">{graph.tagline}</p>}
         </div>
-        <span className="graph-count">{documents.length} notes · {graph.nodes.filter((node) => node.type === "topic").length} topics</span>
+        <div className="graph-legend">
+          {graph?.clusters.map((cluster) => (
+            <span key={cluster.id} title={cluster.summary}>
+              <i style={{ background: cluster.accent }} />
+              {cluster.label}
+            </span>
+          ))}
+          <span className="graph-count">{concepts.length} concepts · {notes.length} notes</span>
+        </div>
       </div>
 
-      <div className="graph-canvas">
-        <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Knowledge graph for ${domain}`}>
-          <g className="graph-links">
-            {graph.links.map((link) => {
-              const source = graph.nodes.find((node) => node.id === link.source)!;
-              const target = graph.nodes.find((node) => node.id === link.target)!;
-              const isActive = !activeNode || (connected.has(source.id) && connected.has(target.id));
-              return (
-                <line
-                  key={`${link.source}-${link.target}`}
-                  x1={source.x}
-                  y1={source.y}
-                  x2={target.x}
-                  y2={target.y}
-                  className={isActive ? "is-active" : "is-muted"}
-                />
-              );
-            })}
-          </g>
+      <div className="graph-canvas" ref={wrapperRef}>
+        <canvas ref={canvasRef} className="graph-surface" />
 
-          {graph.nodes.map((node) => {
-            const isActive = node.id === activeNode;
-            const isMuted = activeNode !== "core" && !connected.has(node.id) && !isActive;
-            const radius = node.type === "core" ? 57 : node.type === "topic" ? 34 : 20;
-            return (
-              <g
-                key={node.id}
-                className={`graph-node graph-node--${node.type}${isActive ? " is-active" : ""}${isMuted ? " is-muted" : ""}`}
-                transform={`translate(${node.x} ${node.y})`}
-                tabIndex={0}
-                role="button"
-                aria-label={node.document ? `Read ${node.label}` : `Explore ${node.label}`}
-                onMouseEnter={() => setActiveNode(node.id)}
-                onFocus={() => setActiveNode(node.id)}
-                onClick={() => activate(node)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") activate(node);
-                }}
-              >
-                <circle className="node-pulse" r={radius + 9} />
-                <circle className="node-body" r={radius} />
-                <text className="node-label" textAnchor="middle" y={node.type === "document" ? 37 : 4}>
-                  {shortLabel(node.label, node.type === "core" ? 22 : node.type === "topic" ? 18 : 25)}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-
-        <aside className="graph-inspector" aria-live="polite">
-          <span className="inspector-type">{active.type}</span>
-          <strong>{active.label}</strong>
-          {active.document ? (
-            <>
-              <p>{active.document.summary}</p>
-              <button onClick={() => onOpen(active.document!.slug)}>Read note <ArrowUpRight size={15} /></button>
-            </>
-          ) : (
-            <p>{active.type === "core" ? "Choose a topic or note to trace the connections." : "This topic connects the surrounding field notes."}</p>
-          )}
-        </aside>
-
-        {!documents.length && (
-          <div className="graph-empty">
-            <FileText size={22} />
-            Add a Markdown note in this domain to grow the graph.
+        {hover && !selected && (
+          <div className="graph-tooltip" style={{ left: hover.x, top: hover.y }}>
+            <strong>{hover.node.label}</strong>
+            <span>{hover.node.kind === "note" ? "field note" : `${hover.node.tier} · ${hover.node.cluster.label}`}</span>
           </div>
         )}
+
+        {selected && (
+          <ConceptPopup
+            node={selected}
+            related={related}
+            position={popupPosition}
+            onOpen={onOpen}
+            onSelect={selectNode}
+            onClose={close}
+          />
+        )}
+
+        <button className="graph-reset" onClick={() => engineRef.current?.resetView()} title="Fit the map to view">
+          <Maximize2 size={14} /> Fit
+        </button>
+
+        {!graph ? (
+          <div className="graph-empty">
+            <FileText size={22} />
+            No weighted map authored for {domain} yet — add a JSON file in src/data/graph.
+          </div>
+        ) : documents.length === 0 ? (
+          <div className="graph-empty">
+            <FileText size={22} />
+            The concept map is live; add a Markdown note in this domain to hang writing off it.
+          </div>
+        ) : null}
       </div>
+
+      {/* Keyboard path into the canvas: every concept stays reachable without a pointer. */}
+      <ul className="graph-a11y-list">
+        {concepts.map((node) => (
+          <li key={node.id}>
+            <button onClick={() => selectNode(node.id)}>
+              {node.label} — {node.tier} concept in {node.cluster.label}
+            </button>
+          </li>
+        ))}
+        {notes.map((node) => (
+          <li key={node.id}>
+            <button onClick={() => node.slug && onOpen(node.slug)}>Read {node.label}</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

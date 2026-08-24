@@ -1,0 +1,247 @@
+{
+  "id": "applied-ml",
+  "domain": "Applied Machine Learning",
+  "title": "Applied Machine Learning",
+  "tagline": "The big three carry most of the weight; the rest are tools you reach for when a problem asks for them.",
+  "style": "galaxy",
+  "layout": "force",
+  "clusters": [
+    { "id": "paradigms", "label": "Learning paradigms", "accent": "#52d3c6", "summary": "How a model is told what 'better' means." },
+    { "id": "deep", "label": "Deep learning", "accent": "#a99cf6", "style": "tile", "summary": "Representation learning at scale." },
+    { "id": "reinforcement", "label": "Reinforcement learning", "accent": "#f0ba66", "summary": "Learning from consequences over time." },
+    { "id": "craft", "label": "Modelling craft", "accent": "#7fb2ff", "summary": "The unglamorous work that decides whether a model is usable." },
+    { "id": "judgement", "label": "Evaluation & judgement", "accent": "#f78ca0", "summary": "Knowing whether the thing actually works." }
+  ],
+  "nodes": [
+    {
+      "id": "supervised",
+      "label": "Supervised learning",
+      "cluster": "paradigms",
+      "weight": 0.96,
+      "summary": "Learn a mapping from inputs to labelled outputs, then check that it holds on data the model never saw.",
+      "keyPoints": [
+        "Almost every production ML system in industry is supervised.",
+        "The label definition is a product decision, not a data-cleaning step.",
+        "Generalisation is the whole game: train/validation/test discipline comes before model choice."
+      ],
+      "topics": ["Machine Learning", "Evaluation"],
+      "resources": [
+        { "type": "practice", "label": "Top K with a heap", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=python-top-k", "note": "Ranking mechanics behind top-N recommendations" }
+      ]
+    },
+    {
+      "id": "unsupervised",
+      "label": "Unsupervised learning",
+      "cluster": "paradigms",
+      "weight": 0.52,
+      "summary": "Find structure — clusters, embeddings, anomalies — when no label exists.",
+      "keyPoints": [
+        "Useful for segmentation, deduplication, and retrieval, rarely for a headline metric.",
+        "Evaluation is genuinely hard: there is no ground truth to score against.",
+        "Embeddings are the version of this that most enterprise systems actually ship."
+      ],
+      "topics": ["Embeddings"]
+    },
+    {
+      "id": "self-supervised",
+      "label": "Self-supervised pretraining",
+      "cluster": "paradigms",
+      "weight": 0.66,
+      "summary": "Manufacture labels from the data itself, so a model can learn from a corpus nobody annotated.",
+      "keyPoints": [
+        "The reason foundation models exist: the internet becomes a training signal.",
+        "Downstream work becomes fine-tuning or prompting rather than training from scratch.",
+        "Shifts cost from labelling to compute and data curation."
+      ],
+      "topics": ["Generative AI"]
+    },
+    {
+      "id": "deep-learning",
+      "label": "Deep learning",
+      "cluster": "deep",
+      "weight": 0.9,
+      "summary": "Stacked differentiable layers that learn their own features instead of being handed them.",
+      "keyPoints": [
+        "Wins where raw signal is high-dimensional: text, image, audio, sequences.",
+        "Backpropagation plus gradient descent is the entire training loop, everything else is architecture.",
+        "On small tabular datasets, gradient-boosted trees usually still beat it."
+      ],
+      "topics": ["Deep Learning"]
+    },
+    {
+      "id": "transformers",
+      "label": "Transformers & attention",
+      "cluster": "deep",
+      "weight": 0.78,
+      "summary": "Attention lets every token look at every other token, which made scale pay off.",
+      "keyPoints": [
+        "Self-attention is quadratic in sequence length — context length is a cost decision.",
+        "The same block powers text, vision, and multimodal models.",
+        "Understanding attention is what makes RAG, context windows, and prompt design intelligible."
+      ],
+      "topics": ["Generative AI", "Deep Learning"]
+    },
+    {
+      "id": "optimization",
+      "label": "Optimisation & training loops",
+      "cluster": "deep",
+      "weight": 0.58,
+      "summary": "Loss functions, learning rates, and regularisation — the dials that decide whether training converges.",
+      "keyPoints": [
+        "The loss function encodes what you actually want; most 'model bugs' are loss bugs.",
+        "Learning rate schedule matters more than optimiser choice.",
+        "Overfitting is diagnosed from the gap between training and validation curves, not from a single number."
+      ]
+    },
+    {
+      "id": "rl",
+      "label": "Reinforcement learning",
+      "cluster": "reinforcement",
+      "weight": 0.82,
+      "summary": "An agent learns a policy by acting, observing rewards, and updating — no labelled answer key.",
+      "keyPoints": [
+        "Framed as states, actions, rewards, and a policy that maximises long-run return.",
+        "The exploration/exploitation trade-off has no universally right setting.",
+        "Reward design is the hardest part: agents optimise what you measure, not what you meant."
+      ],
+      "topics": ["Reinforcement Learning"],
+      "resources": [
+        { "type": "practice", "label": "BFS or DFS?", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=python-graph-traversal", "note": "State-space search, the substrate under planning" }
+      ]
+    },
+    {
+      "id": "rlhf",
+      "label": "RL from human feedback",
+      "cluster": "reinforcement",
+      "weight": 0.6,
+      "summary": "Use human preference data to shape a model's behaviour when the objective can't be written down.",
+      "keyPoints": [
+        "Preferences replace a hand-written reward function.",
+        "This is how instruction-following and refusal behaviour get trained into language models.",
+        "Preference data quality caps the result — noisy raters produce a noisy policy."
+      ],
+      "topics": ["Generative AI"]
+    },
+    {
+      "id": "bandits",
+      "label": "Bandits & online learning",
+      "cluster": "reinforcement",
+      "weight": 0.32,
+      "summary": "The one-step case of RL: choose an arm, observe the payoff, adapt.",
+      "keyPoints": [
+        "The practical entry point to RL in product work — ranking, pricing, layout tests.",
+        "Cheaper and safer to deploy than full sequential RL.",
+        "Needs a live feedback loop, which is an engineering problem more than a modelling one."
+      ]
+    },
+    {
+      "id": "features",
+      "label": "Features & data quality",
+      "cluster": "craft",
+      "weight": 0.7,
+      "summary": "Most of the accuracy in a real system comes from the inputs, not the architecture.",
+      "keyPoints": [
+        "Feature availability at inference time is a hard constraint — check it before modelling.",
+        "Training/serving skew is the most common silent failure.",
+        "A clear grain and a clear time boundary prevent most leakage."
+      ],
+      "topics": ["Data Products", "Data Platforms"],
+      "resources": [
+        { "type": "practice", "label": "Keep the latest record", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=sql-deduplicate", "note": "Point-in-time correctness for feature tables" },
+        { "type": "practice", "label": "Build an incremental pipeline", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=data-incremental-pipelines" }
+      ]
+    },
+    {
+      "id": "leakage",
+      "label": "Leakage & drift",
+      "cluster": "craft",
+      "weight": 0.34,
+      "summary": "Two ways a model looks better offline than it will ever behave in production.",
+      "keyPoints": [
+        "Leakage: information from the future or from the label sneaks into a feature.",
+        "Drift: the world moves and yesterday's mapping stops holding.",
+        "Both are detected by monitoring, not by a smarter training run."
+      ],
+      "topics": ["Observability"]
+    },
+    {
+      "id": "tuning",
+      "label": "Model selection & tuning",
+      "cluster": "craft",
+      "weight": 0.3,
+      "summary": "Search over models and hyperparameters, honestly, without touching the test set.",
+      "keyPoints": [
+        "Cross-validation buys reliability on small data and costs compute on large data.",
+        "Start with a boring baseline; it decides whether anything else is worth it.",
+        "Tuning gains are usually smaller than feature or label gains."
+      ]
+    },
+    {
+      "id": "evaluation",
+      "label": "Evaluation design",
+      "cluster": "judgement",
+      "weight": 0.86,
+      "summary": "Choosing metrics and test sets that predict real behaviour rather than flatter the model.",
+      "keyPoints": [
+        "Pick the metric from the cost of each error type, not from convention.",
+        "Hold out by time or by entity when rows are not independent.",
+        "For generative systems, build a graded question set before you build the system."
+      ],
+      "topics": ["Evaluation"]
+    },
+    {
+      "id": "decision-value",
+      "label": "From metric to decision",
+      "cluster": "judgement",
+      "weight": 0.64,
+      "summary": "A model creates value when it changes a decision, not when it scores well.",
+      "keyPoints": [
+        "Name the decision, its frequency, and the cost of being wrong before modelling.",
+        "A slightly worse model that is faster or more explainable often wins.",
+        "Offline lift and online lift diverge; plan the experiment that connects them."
+      ],
+      "topics": ["Decision Making", "Measurement"]
+    },
+    {
+      "id": "serving",
+      "label": "Serving & feedback loops",
+      "cluster": "judgement",
+      "weight": 0.44,
+      "summary": "Inference paths, latency budgets, and the loop that returns outcomes to the training set.",
+      "keyPoints": [
+        "Batch, streaming, and request/response serving have different failure modes.",
+        "Log the inputs and the prediction, or you can never diagnose a regression.",
+        "A model that changes user behaviour contaminates its own future training data."
+      ],
+      "topics": ["MLOps"],
+      "resources": [
+        { "type": "practice", "label": "Bounded worker pool", "href": "https://lily-feng.github.io/Calm.Data.and.AI/#guide=go-worker-pool", "note": "Backpressure for inference workers" }
+      ]
+    }
+  ],
+  "edges": [
+    { "source": "supervised", "target": "deep-learning", "weight": 0.8, "kind": "supports" },
+    { "source": "supervised", "target": "features", "weight": 0.85, "kind": "prerequisite" },
+    { "source": "supervised", "target": "evaluation", "weight": 0.9, "kind": "prerequisite" },
+    { "source": "supervised", "target": "unsupervised", "weight": 0.4, "kind": "contrasts" },
+    { "source": "supervised", "target": "rl", "weight": 0.45, "kind": "contrasts", "note": "Labelled answers versus delayed reward" },
+    { "source": "self-supervised", "target": "deep-learning", "weight": 0.7, "kind": "supports" },
+    { "source": "self-supervised", "target": "transformers", "weight": 0.75, "kind": "supports" },
+    { "source": "unsupervised", "target": "features", "weight": 0.45, "kind": "applies" },
+    { "source": "deep-learning", "target": "transformers", "weight": 0.9, "kind": "supports" },
+    { "source": "deep-learning", "target": "optimization", "weight": 0.75, "kind": "prerequisite" },
+    { "source": "transformers", "target": "rlhf", "weight": 0.6, "kind": "applies" },
+    { "source": "rl", "target": "rlhf", "weight": 0.8, "kind": "supports" },
+    { "source": "rl", "target": "bandits", "weight": 0.6, "kind": "supports" },
+    { "source": "rl", "target": "evaluation", "weight": 0.5, "kind": "prerequisite" },
+    { "source": "features", "target": "leakage", "weight": 0.7, "kind": "supports" },
+    { "source": "features", "target": "serving", "weight": 0.6, "kind": "applies" },
+    { "source": "tuning", "target": "evaluation", "weight": 0.55, "kind": "prerequisite" },
+    { "source": "optimization", "target": "tuning", "weight": 0.5, "kind": "supports" },
+    { "source": "evaluation", "target": "decision-value", "weight": 0.8, "kind": "supports" },
+    { "source": "evaluation", "target": "leakage", "weight": 0.55, "kind": "applies" },
+    { "source": "serving", "target": "leakage", "weight": 0.5, "kind": "applies" },
+    { "source": "decision-value", "target": "serving", "weight": 0.4, "kind": "applies" },
+    { "source": "bandits", "target": "serving", "weight": 0.35, "kind": "applies" }
+  ]
+}

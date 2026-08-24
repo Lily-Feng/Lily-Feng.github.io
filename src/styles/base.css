@@ -1,0 +1,178 @@
+/**
+ * Base layer — reset, document typography, and the global interaction contract.
+ *
+ * The interaction contract is the reason clicked and hovered things used to look
+ * broken: every control now inherits one focus ring, one transition curve, and
+ * one disabled treatment from here instead of inventing its own (or, more often,
+ * having none at all).
+ */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-default);
+  background: var(--surface-page);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient wash — one rule for both themes, driven by tokens. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 83% 9%, var(--wash-1), transparent 24rem),
+    radial-gradient(circle at 12% 45%, var(--wash-2), transparent 26rem),
+    linear-gradient(var(--wash-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--wash-grid) 1px, transparent 1px);
+  background-size: auto, auto, 46px 46px, 46px 46px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-strong);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+p { line-height: var(--leading-normal); }
+
+/* ── The interaction contract ────────────────────────────────────────────── */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button,
+a,
+[role="tab"],
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+a { color: inherit; }
+
+/* Every interactive element eases the same way. */
+button,
+a,
+input,
+summary,
+[role="tab"],
+[role="button"] {
+  transition: var(--transition-colors), box-shadow var(--dur-base) var(--ease-out);
+}
+
+/*
+ * One focus ring for the entire site. Previously there were zero :focus-visible
+ * rules in 544 lines, so keyboard users got the UA default outline on surfaces
+ * it could not be seen against.
+ */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-xs);
+}
+
+/* Controls that sit flush against an edge cannot afford an offset ring. */
+:where(.graph-surface, .discovery-bar input):focus-visible {
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+:where(button, a, input, select, textarea):disabled,
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+::selection {
+  color: var(--text-on-accent);
+  background: var(--accent);
+}
+
+::placeholder { color: var(--text-subtle); }
+
+img, svg, canvas { max-width: 100%; }
+svg { flex: none; }
+
+/* Scrollbars inside overlays, so popups do not show a bright OS scrollbar. */
+.concept-popup__scroll,
+.site-header nav,
+.domain-tabs {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* ── Shared recipes ──────────────────────────────────────────────────────── */
+
+/* A bordered surface that lifts on hover. Used by cards, tiles, list buttons. */
+.u-surface {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  transition: var(--transition-colors), var(--transition-transform),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.u-surface:hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-md);
+}
+
+/* Small uppercase label used above headings and inside meta rows. */
+.u-eyebrow {
+  color: var(--accent);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+/* Pill / tag. */
+.u-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  background: var(--surface-inset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

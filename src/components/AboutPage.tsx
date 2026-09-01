@@ -4,7 +4,7 @@ import { categoryLabels, profile, resumeEntries } from "../data/resume";
 
 const ExperienceGlobe = lazy(() => import("./ExperienceGlobe"));
 
-export function AboutPage() {
+export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
   const [section, setSection] = useState<"education" | "experience" | "highlights" | "globe">("highlights");
 
   return (
@@ -19,6 +19,11 @@ export function AboutPage() {
         <div className="resume-hero-meta">
           <a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={14} /></a>
           <a href={profile.links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a>
+          <button className="guzheng-entry" onClick={onOpenJianghu} aria-label="轻触古筝，翻开 Lily 的中文江湖传说">
+            <span className="guzheng-entry__hint">A Chinese easter egg</span>
+            <img src="/guzheng-button.png" alt="" />
+            <strong>轻触琴弦 · 入江湖</strong>
+          </button>
         </div>
       </header>
 

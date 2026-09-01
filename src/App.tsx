@@ -15,6 +15,7 @@ import {
 import { AboutPage } from "./components/AboutPage";
 import { ArticlePage } from "./components/ArticlePage";
 import { KnowledgeGraph } from "./components/KnowledgeGraph";
+import { JianghuPage } from "./components/JianghuPage";
 import { documents, domains, getDocument, getRelated, searchDocuments, type ContentDocument } from "./lib/content";
 
 type View = "knowledge" | "blogs" | "about";
@@ -89,6 +90,18 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
+    const isJianghu = location.pathname === "/jianghu";
+    document.documentElement.lang = isJianghu ? "zh-CN" : "en";
+    document.title = isJianghu
+      ? "江湖传说 · Lily Feng"
+      : "Lily Feng — Field Notes & Knowledge Graph";
+    const themeColor = isJianghu
+      ? "#eee8d9"
+      : getComputedStyle(document.documentElement).getPropertyValue("--surface-page").trim();
+    if (themeColor) document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "/" && document.activeElement?.tagName !== "INPUT") {
         event.preventDefault();
@@ -124,6 +137,10 @@ function App() {
     setActiveDomain(domain);
     navigate("knowledge");
   };
+
+  if (location.pathname === "/jianghu") {
+    return <JianghuPage onBack={() => routerNavigate("/about")} />;
+  }
 
   if (activeDocument) {
     return (
@@ -167,7 +184,7 @@ function App() {
             <p>Essays, implementation notes, and practical frameworks—published when an idea becomes useful enough to share.</p>
           </section>
         ) : (
-          <AboutPage />
+          <AboutPage onOpenJianghu={() => routerNavigate("/jianghu")} />
         )}
 
         {view !== "about" && (

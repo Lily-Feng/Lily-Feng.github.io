@@ -90,12 +90,12 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    const isJianghu = location.pathname === "/jianghu";
-    document.documentElement.lang = isJianghu ? "zh-CN" : "en";
-    document.title = isJianghu
+    const isEaster = location.pathname === "/easter";
+    document.documentElement.lang = isEaster ? "zh-CN" : "en";
+    document.title = isEaster
       ? "江湖传说 · Lily Feng"
       : "Lily Feng — Field Notes & Knowledge Graph";
-    const themeColor = isJianghu
+    const themeColor = isEaster
       ? "#eee8d9"
       : getComputedStyle(document.documentElement).getPropertyValue("--surface-page").trim();
     if (themeColor) document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor);
@@ -138,7 +138,7 @@ function App() {
     navigate("knowledge");
   };
 
-  if (location.pathname === "/jianghu") {
+  if (location.pathname === "/easter") {
     return <JianghuPage onBack={() => routerNavigate("/about")} />;
   }
 
@@ -184,7 +184,7 @@ function App() {
             <p>Essays, implementation notes, and practical frameworks—published when an idea becomes useful enough to share.</p>
           </section>
         ) : (
-          <AboutPage onOpenJianghu={() => routerNavigate("/jianghu")} />
+          <AboutPage onOpenJianghu={() => routerNavigate("/easter")} />
         )}
 
         {view !== "about" && (

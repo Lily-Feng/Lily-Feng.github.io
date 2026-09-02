@@ -32,7 +32,7 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
           <GraduationCap size={16} /><strong>Education</strong>
         </button>
         <button className={section === "experience" ? "active" : ""} onClick={() => setSection("experience")} role="tab" aria-selected={section === "experience"}>
-          <BriefcaseBusiness size={16} /><strong>Past Experience</strong>
+          <BriefcaseBusiness size={16} /><strong>Career Timeline</strong>
         </button>
         <button className={section === "highlights" ? "active" : ""} onClick={() => setSection("highlights")} role="tab" aria-selected={section === "highlights"}>
           <Wrench size={16} /><strong>Recent Focus and Highlights</strong>
@@ -62,7 +62,7 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
 
       {section === "experience" && <section className="resume-layout" role="tabpanel">
         <div className="resume-content">
-          <div className="resume-section-heading"><BriefcaseBusiness size={18} /><div><span>Professional journey</span><h2>Experience</h2></div></div>
+          <div className="resume-section-heading"><BriefcaseBusiness size={18} /><div><span>Professional journey</span><h2>Selected Achievements</h2></div></div>
           <div className="resume-timeline">
             {resumeEntries.filter((entry) => entry.category === "work").map((entry) => (
               <article key={entry.id}>

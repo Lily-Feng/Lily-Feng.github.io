@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/check-content.mjs && tsc -b && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
-    "check": "tsc -b --pretty false"
+    "check": "node scripts/check-content.mjs && tsc -b --pretty false",
+    "check:content": "node scripts/check-content.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

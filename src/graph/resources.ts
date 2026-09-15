@@ -49,7 +49,7 @@ export const RESOURCE_STYLES: Record<ResourceType, ResourceStyleSpec> = {
   },
   external: {
     group: "Elsewhere",
-    hint: "Sources outside the garden",
+    hint: "Sources outside this site",
     icon: "external-link",
     variant: "external",
     order: 5,

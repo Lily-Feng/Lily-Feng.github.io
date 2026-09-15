@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState } from "react";
-import { ArrowUpRight, BriefcaseBusiness, Globe2, GraduationCap, MapPin, Wrench } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, Globe2, GraduationCap, MapPin, Printer, Wrench } from "lucide-react";
 import { categoryLabels, profile, resumeEntries } from "../data/resume";
 
 const ExperienceGlobe = lazy(() => import("./ExperienceGlobe"));
@@ -19,10 +19,16 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
         <div className="resume-hero-meta">
           <a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={14} /></a>
           <a href={profile.links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a>
-          <button className="guzheng-entry" onClick={onOpenJianghu} aria-label="轻触古筝，翻开 Lily 的中文江湖传说">
-            <span className="guzheng-entry__hint">A Chinese easter egg</span>
-            <img src="/guzheng-button.png" alt="" />
-            <strong>轻触琴弦 · 入江湖</strong>
+          <button className="resume-print" onClick={() => window.print()}>
+            <Printer size={14} /> Download résumé
+          </button>
+          <button
+            className="guzheng-entry"
+            onClick={onOpenJianghu}
+            title="轻触琴弦 · 入江湖"
+            aria-label="轻触古筝，翻开 Lily 的中文江湖传说"
+          >
+            琴
           </button>
         </div>
       </header>
@@ -42,7 +48,7 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
         </button>
       </div>
 
-      {section === "education" && <section className="resume-layout" role="tabpanel">
+      <section className="resume-layout" role="tabpanel" hidden={section !== "education"}>
         <div className="resume-content">
           <div className="resume-section-heading"><GraduationCap size={18} /><div><span>{categoryLabels.education}</span><h2>Education</h2></div></div>
           <div className="education-list">
@@ -58,9 +64,9 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
             ))}
           </div>
         </div>
-      </section>}
+      </section>
 
-      {section === "experience" && <section className="resume-layout" role="tabpanel">
+      <section className="resume-layout" role="tabpanel" hidden={section !== "experience"}>
         <div className="resume-content">
           <div className="resume-section-heading"><BriefcaseBusiness size={18} /><div><span>Professional journey</span><h2>Selected Achievements</h2></div></div>
           <div className="resume-timeline">
@@ -81,9 +87,9 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
             ))}
           </div>
         </div>
-      </section>}
+      </section>
 
-      {section === "highlights" && <section className="resume-layout" role="tabpanel">
+      <section className="resume-layout" role="tabpanel" hidden={section !== "highlights"}>
         <div className="resume-content">
           <div className="resume-section-heading"><Wrench size={18} /><div><span>Capabilities</span><h2>Technical Expertise</h2></div></div>
           <dl className="expertise-list">
@@ -95,7 +101,7 @@ export function AboutPage({ onOpenJianghu }: { onOpenJianghu: () => void }) {
             ))}
           </dl>
         </div>
-      </section>}
+      </section>
 
       {section === "globe" && (
         <Suspense fallback={<div className="globe-loading"><Globe2 size={30} /><span>Preparing the globe…</span></div>}>

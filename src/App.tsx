@@ -126,9 +126,9 @@ function Header({ menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
       </Link>
 
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
-        <NavLink className={navLinkClass} to="/work">Work</NavLink>
-        <NavLink className={navLinkClass} to="/blogs">Writing</NavLink>
-        <NavLink className={navLinkClass} to="/about">About</NavLink>
+        <NavLink className={navLinkClass} to="/work">Learning by doing</NavLink>
+        <NavLink className={navLinkClass} to="/blogs">My Blog</NavLink>
+        <NavLink className={navLinkClass} to="/about">About me</NavLink>
       </nav>
 
       <div className="header-actions">

@@ -28,7 +28,7 @@ export function BlogsPage() {
     <>
       <section className="page-intro">
         <div>
-          <span className="eyebrow">Writing</span>
+          <span className="eyebrow">My Blog</span>
           <h1>Notes from the work.</h1>
         </div>
         <p>Essays, implementation notes, and practical frameworks — published when an idea becomes useful enough to share.</p>

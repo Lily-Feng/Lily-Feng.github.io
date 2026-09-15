@@ -8,7 +8,7 @@ export function WorkPage() {
     <>
       <section className="page-intro">
         <div>
-          <span className="eyebrow">Work</span>
+          <span className="eyebrow">Learning by doing</span>
           <h1>Small repositories, one idea each.</h1>
         </div>
         <p>This site is the entry point. The work itself lives next door — two domain pillars, a handful of builds, and the notebooks I keep in the open.</p>

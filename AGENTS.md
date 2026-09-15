@@ -25,7 +25,8 @@ newsletter, authentication, or a build-time dependency on any external service.
 The site must stay a pile of static files that a plain file server can host.
 
 Do not add a fourth content type. Do not add a nav item. The navigation is three
-links — Work, Writing, About — and that is a decision, not an oversight: the
+links — Learning by doing, My Blog, About me — and that is a decision, not an
+oversight: the
 knowledge map was deliberately demoted out of the primary nav in Sep 2026 because
 it is the least load-bearing thing for the site's actual reader.
 

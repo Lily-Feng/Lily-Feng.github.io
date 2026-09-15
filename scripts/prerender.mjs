@@ -60,17 +60,17 @@ const routes = [
   { path: "/", title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION },
   {
     path: "/work",
-    title: `Work — ${SITE_NAME}`,
+    title: `Learning by doing — ${SITE_NAME}`,
     description: "Domain pillars, builds, and open notebooks — the repositories behind this site.",
   },
   {
     path: "/blogs",
-    title: `Writing — ${SITE_NAME}`,
+    title: `My Blog — ${SITE_NAME}`,
     description: "Essays, implementation notes, and practical frameworks on enterprise data and applied AI.",
   },
   {
     path: "/about",
-    title: `About — ${SITE_NAME}`,
+    title: `About me — ${SITE_NAME}`,
     description: "Career, education, and technical expertise across data platforms, applied AI, and agentic systems.",
   },
   {

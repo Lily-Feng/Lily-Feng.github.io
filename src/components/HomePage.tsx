@@ -52,11 +52,11 @@ export function HomePage() {
         <section className="home-section" aria-labelledby="home-writing">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">Writing</span>
+              <span className="eyebrow">My Blog</span>
               <h2 id="home-writing">Notes from the work</h2>
             </div>
             <Link className="section-more" to="/blogs">
-              All writing <ArrowRight size={15} aria-hidden="true" />
+              Read the blog <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </div>
           <div className="content-grid">

@@ -9,8 +9,8 @@ export function NotFound() {
       <p>The link may be out of date, or the note may have been renamed.</p>
       <div className="not-found-links">
         <Link to="/">Home <ArrowRight size={15} aria-hidden="true" /></Link>
-        <Link to="/work">Work <ArrowRight size={15} aria-hidden="true" /></Link>
-        <Link to="/blogs">Writing <ArrowRight size={15} aria-hidden="true" /></Link>
+        <Link to="/work">Learning by doing <ArrowRight size={15} aria-hidden="true" /></Link>
+        <Link to="/blogs">My Blog <ArrowRight size={15} aria-hidden="true" /></Link>
       </div>
     </section>
   );

@@ -11,8 +11,10 @@ or a pixel radius into a component rule, the token is missing, not the rule.
 | `src/styles.css` | Import barrel. Import order *is* cascade order. |
 | `src/styles/tokens.css` | Primitives, semantic roles, both themes, accent presets. |
 | `src/styles/base.css` | Reset, document type, the global interaction contract, shared recipes. |
-| `src/styles/layout.css` | Shell, header, nav, flyouts, hero, page intros, footer. |
+| `src/styles/layout.css` | Shell, header, flat nav, page intros, footer. |
 | `src/styles/components.css` | Search, cards, section headings, article page, Markdown. |
+| `src/styles/home.css` | Home page sections, route-loading state, the 404. |
+| `src/styles/work.css` | Work page tiers, repo cards, status chips. |
 | `src/styles/graph.css` | Domain tabs, graph canvas, concept popup, resource links. |
 | `src/styles/resume.css` | About page, resume timeline, journey globe. |
 | `src/styles/responsive.css` | Breakpoints and print. Layout only — no new colour. |
@@ -43,7 +45,7 @@ There are three hue dials in total:
 | --- | --- | --- |
 | `--hue-accent` | `185` (teal) | Links, active states, focus ring, "Read" resources, graph highlights |
 | `--hue-secondary` | `285` | Domain labels, post categories, "Build" resources, resume roles |
-| `--hue-highlight` | `75` | "Currently exploring" mark, "Practice" resources |
+| `--hue-highlight` | `75` | "Live site" status, external-item badges, "Practice" resources |
 
 Neutrals follow `--hue-neutral` (`255`) at very low chroma, so surfaces stay
 subtly cool rather than dead grey. Drop `--chroma-neutral`-adjacent values to `0`
@@ -79,7 +81,7 @@ Surfaces   --surface-page      page background
            --surface-card      cards, panels, header
            --surface-raised    hover state on a card or list row
            --surface-inset     chips, kbd, segmented-control track
-           --surface-overlay   popups and flyouts (pair with backdrop-filter)
+           --surface-overlay   header and popups (pair with backdrop-filter)
            --surface-veil      graph canvas ground
 
 Text       --text-strong       headings, emphasised body
@@ -117,6 +119,9 @@ Radius    --radius-xs (4) --radius-sm (6) --radius-md (10)
 Motion    --dur-fast (120ms) --dur-base (200ms) --dur-slow (320ms)
           --ease-out --ease-spring
           --transition-colors --transition-transform
+
+Blur      --blur-panel (10px)   panels sitting on the page
+          --blur-overlay (18px) the header and anything above the page
 ```
 
 **11px is the floor.** Nothing renders smaller than `--text-2xs`.

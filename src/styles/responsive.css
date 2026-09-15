@@ -219,14 +219,9 @@
   body { background: #fff; }
   .site-header,
   .about-view-tabs,
-  .resume-print,
   .guzheng-entry,
   .globe-shell { display: none !important; }
 
-  /* Print every panel, not just the open tab. */
-  .resume-layout[hidden] { display: block !important; }
-  .resume-layout { break-before: auto; }
-  .resume-layout + .resume-layout { margin-top: var(--space-8); }
   main { width: 100%; }
   .about-page { padding: 0; }
   .resume-hero { padding-bottom: var(--space-5); }

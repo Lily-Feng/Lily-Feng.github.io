@@ -160,10 +160,5 @@ Walk `/`, `/work`, `/blogs`, one `/blogs/<slug>`, `/about`, `/knowledge`,
 `/easter`, and a junk path (expect the 404, not a silent redirect to About).
 Check light and dark, and check 390px — no page may scroll horizontally.
 
-If you touched the résumé, print `/about` and confirm the PDF carries all three
-sections (Education, Selected Achievements, Technical Expertise) with no site
-chrome. The panels are always in the DOM and hidden with `[hidden]`; the print
-stylesheet re-reveals them.
-
 If you touched content handling, break a front-matter block on purpose and
 confirm `npm run build` **fails** rather than shipping a blank page.

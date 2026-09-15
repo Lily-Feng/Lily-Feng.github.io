@@ -54,23 +54,6 @@
 .resume-hero-meta span { justify-content: flex-start; }
 .resume-hero-meta a:hover { color: var(--accent); }
 
-.resume-print {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  background: var(--surface-card);
-}
-.resume-print:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
 /* ── Segmented control ───────────────────────────────────────────────────── */
 .about-view-tabs {
   width: fit-content;
@@ -106,8 +89,6 @@
 }
 .about-view-tabs button.active > svg { color: var(--accent); }
 
-/* Restated because the display:grid below outranks the UA's [hidden] rule. */
-.resume-layout[hidden] { display: none; }
 .resume-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

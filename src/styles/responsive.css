@@ -18,7 +18,12 @@
   .page-intro > p { max-width: 650px; }
 
   .bench-intro h1 { font-size: var(--text-3xl); }
-  .bench-grid { grid-template-columns: repeat(2, 1fr); }
+  .bench-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  .terminal { height: 280px; }
+  .bench-modules { grid-template-columns: repeat(2, 1fr); }
 
   .knowledge-section { grid-template-columns: 1fr; }
   .domain-tabs {
@@ -100,9 +105,9 @@
     padding: var(--space-7) 0 var(--space-9);
   }
   .bench-intro h1 { font-size: var(--text-2xl); }
-  .bench-intro p { font-size: var(--text-md); }
-  .bench-grid { grid-template-columns: 1fr; }
-  .station { padding: var(--space-4); }
+  .bench-copy { font-size: var(--text-sm); }
+  .terminal { height: 240px; }
+  .bench-modules { grid-template-columns: 1fr; }
 
   .about-page { padding: var(--space-7) 0 var(--space-11); }
   .resume-hero {

@@ -160,11 +160,14 @@ and hovered things look deliberate rather than accidental.
 4. New size? Use the nearest scale step. If nothing fits, the scale is wrong —
    change it once, centrally.
 
-## Two things that are deliberately not themed
+## Three things that are deliberately not themed
 
 - **`--cluster-accent`** is set inline per graph node from the authored graph
   data (`ConceptPopup.tsx`). It is content colour, not theme colour, and falls
   back to `--accent` when absent.
+- **`.terminal`** on the home page declares its own local dark scope (`--term-*`).
+  A console reads as a dark object in both themes, so it stays constant while
+  the page around it follows the toggle.
 - **`.globe-shell`** declares its own local dark scope. It renders a night-side
   Earth in both themes, so its atmosphere and arc colours are constants of the
   scene (`ExperienceGlobe.tsx`), not of the page palette.

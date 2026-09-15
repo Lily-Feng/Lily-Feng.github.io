@@ -66,7 +66,7 @@ in `src/App.tsx`:
 
 | Path | Component | Note |
 | --- | --- | --- |
-| `/` | `HomePage` | the bench: intro, one tile per destination, now. Fits one screen — do not add a section without checking it still does |
+| `/` | `HomePage` | intro + `BootTerminal` + module row. Fits one screen — do not add a section without checking it still does. The terminal reports real data and its entries are real links; never fake a log line |
 | `/work` | `WorkPage` | the repo constellation |
 | `/blogs` | `BlogsPage` | archive + search |
 | `/blogs/:slug` | `ArticlePage` | owns its own `<main>` |

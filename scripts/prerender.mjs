@@ -85,8 +85,15 @@ const routes = [
   })),
 ];
 
+/* GitHub Pages serves dist/<route>/index.html at "/<route>/" and 301s the
+   slashless form to it, so the canonical has to name the trailing-slash URL —
+   otherwise every page points at a redirect. */
+function canonicalFor(path) {
+  return path === "/" ? `${SITE}/` : `${SITE}${path}/`;
+}
+
 function headFor({ path, title, description }) {
-  const canonical = `${SITE}${path === "/" ? "/" : path}`;
+  const canonical = canonicalFor(path);
   return [
     `<title>${escapeHtml(title)}</title>`,
     `<meta name="description" content="${escapeHtml(description)}" />`,
@@ -123,7 +130,7 @@ for (const route of routes) {
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...routes.map((route) => `  <url><loc>${SITE}${route.path === "/" ? "/" : route.path}</loc></url>`),
+  ...routes.map((route) => `  <url><loc>${canonicalFor(route.path)}</loc></url>`),
   "</urlset>",
 ].join("\n");
 writeFileSync(join(dist, "sitemap.xml"), sitemap);

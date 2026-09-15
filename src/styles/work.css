@@ -1,0 +1,199 @@
+/* Work page — three tiers sharing one card at different weights. */
+
+.work-page {
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+.work-tier + .work-tier {
+  margin-top: var(--space-11);
+}
+
+.work-tier .section-heading {
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.work-tier .section-heading h2 {
+  font-size: var(--text-3xl);
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+.work-tier--pillars .repo-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  transition: var(--transition-transform), var(--transition-colors),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.repo-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-lg);
+}
+.repo-card:focus-within {
+  border-color: var(--accent);
+}
+
+/* A pillar carries more weight: a tinted edge and a larger title. */
+.repo-card--feature {
+  padding: var(--space-7);
+  border-color: var(--border-default);
+  background:
+    linear-gradient(160deg, var(--accent-soft), transparent 55%),
+    var(--surface-card);
+}
+
+.repo-card-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.repo-card h3 {
+  margin: 0;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.repo-card--feature h3 {
+  font-size: var(--text-2xl);
+}
+.repo-card h3 a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-strong);
+  text-decoration: none;
+}
+.repo-card h3 a:hover {
+  color: var(--accent);
+}
+.repo-tagline {
+  margin: var(--space-4) 0 var(--space-3);
+  color: var(--secondary);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+.repo-card p {
+  margin: 0 0 var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+.repo-card--feature p {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Status ──────────────────────────────────────────────────────────────── */
+.repo-status {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text-subtle);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.repo-status--live {
+  border-color: var(--highlight-line);
+  color: var(--highlight);
+  background: var(--highlight-soft);
+}
+.repo-status--unpublished {
+  border-style: dashed;
+  border-color: var(--border-default);
+}
+
+/* ── Footer: topics + links ──────────────────────────────────────────────── */
+.repo-card-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: auto;
+}
+.repo-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.repo-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+.repo-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+.repo-links a:hover {
+  color: var(--accent-hover);
+}
+.repo-links-note {
+  color: var(--text-subtle);
+  font-size: var(--text-xs);
+  font-style: italic;
+}
+
+/* ── Outro ───────────────────────────────────────────────────────────────── */
+.work-outro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-top: var(--space-10);
+  padding: var(--space-6) var(--space-7);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-lg);
+}
+.work-outro p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+}
+.work-outro-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-6);
+}
+.work-outro a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--accent);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.work-outro a:hover {
+  color: var(--accent-hover);
+}

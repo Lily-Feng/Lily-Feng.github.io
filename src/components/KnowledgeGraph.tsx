@@ -135,7 +135,7 @@ export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProp
     <div className="graph-shell">
       <div className="graph-topline">
         <div>
-          <span className="eyebrow">Weighted map</span>
+          <span className="eyebrow">Concept map</span>
           <h2>{graph?.title ?? domain}</h2>
           {graph?.tagline && <p className="graph-tagline">{graph.tagline}</p>}
         </div>

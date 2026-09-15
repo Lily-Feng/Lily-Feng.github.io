@@ -109,6 +109,10 @@
   --header-height: 70px;
   --gutter: var(--space-6);
 
+  /* Blur */
+  --blur-panel: blur(10px);
+  --blur-overlay: blur(18px);
+
   /* Focus — one ring, applied globally in base.css */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
@@ -157,10 +161,6 @@
   --shadow-overlay: 0 24px 60px oklch(23% 0.02 var(--hue-neutral) / 0.16);
   --glow-accent: 0 0 12px oklch(52% var(--chroma-accent) var(--hue-accent) / 0.45);
 
-  /* Backdrop wash behind the page */
-  --wash-1: oklch(52% var(--chroma-accent) var(--hue-accent) / 0.07);
-  --wash-2: oklch(48% var(--chroma-secondary) var(--hue-secondary) / 0.05);
-  --wash-grid: oklch(23% 0.02 var(--hue-neutral) / 0.035);
 }
 
 /* ── DARK ────────────────────────────────────────────────────────────────── */
@@ -204,9 +204,6 @@
   --shadow-overlay: 0 24px 60px oklch(0% 0 0 / 0.55);
   --glow-accent: 0 0 12px oklch(80% 0.125 var(--hue-accent) / 0.40);
 
-  --wash-1: oklch(80% 0.125 var(--hue-accent) / 0.07);
-  --wash-2: oklch(78% 0.115 var(--hue-secondary) / 0.055);
-  --wash-grid: oklch(100% 0 0 / 0.018);
 }
 
 /* Pre-JS: follow the OS when the user has not chosen a theme yet. */

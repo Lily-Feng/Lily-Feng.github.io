@@ -1,6 +1,13 @@
 import { parse } from "yaml";
 
-export type ContentKind = "post" | "note" | "project";
+/** `link` is content hosted elsewhere: it has no page here. */
+export type ContentKind = "post" | "note" | "project" | "link";
+
+/** A copy of a post published elsewhere. */
+export type Syndication = {
+  label: string;
+  url: string;
+};
 
 export type ContentDocument = {
   slug: string;
@@ -14,6 +21,11 @@ export type ContentDocument = {
   featured: boolean;
   body: string;
   readingMinutes: number;
+  /** Required on `kind: link`. */
+  url?: string;
+  /** Badge text: "Medium", "YouTube", "Conference". */
+  source?: string;
+  syndicated: Syndication[];
 };
 
 type FrontMatter = {
@@ -26,7 +38,25 @@ type FrontMatter = {
   connections?: string[];
   kind?: ContentKind;
   featured?: boolean;
+  url?: string;
+  source?: string;
+  syndicated?: Record<string, string>;
 };
+
+const syndicationLabels: Record<string, string> = {
+  medium: "Medium",
+  youtube: "YouTube",
+  devto: "DEV",
+  substack: "Substack",
+  linkedin: "LinkedIn",
+};
+
+function readSyndication(entries: FrontMatter["syndicated"]): Syndication[] {
+  if (!entries || typeof entries !== "object") return [];
+  return Object.entries(entries)
+    .filter(([, url]) => typeof url === "string" && url)
+    .map(([key, url]) => ({ label: syndicationLabels[key] ?? key, url }));
+}
 
 const markdownFiles = import.meta.glob("../../content/**/*.md", {
   eager: true,
@@ -52,6 +82,12 @@ function readMarkdown(path: string, raw: string): ContentDocument {
     throw new Error(`title, summary, and domain are required in ${path}`);
   }
 
+  const kind = metadata.kind ?? inferredKind;
+
+  if (kind === "link" && !metadata.url) {
+    throw new Error(`kind: link requires a url in ${path}`);
+  }
+
   const plainWords = body
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/[#>*_`\-[\]()]/g, " ")
@@ -70,11 +106,19 @@ function readMarkdown(path: string, raw: string): ContentDocument {
     domain: metadata.domain,
     topics: Array.isArray(metadata.topics) ? metadata.topics : [],
     connections: Array.isArray(metadata.connections) ? metadata.connections : [],
-    kind: metadata.kind ?? inferredKind,
+    kind,
     featured: metadata.featured ?? false,
     body,
     readingMinutes: Math.max(1, Math.ceil(plainWords / 220)),
+    url: metadata.url,
+    source: metadata.source,
+    syndicated: readSyndication(metadata.syndicated),
   };
+}
+
+/** True when the document has no page here. */
+export function isExternal(document: ContentDocument): document is ContentDocument & { url: string } {
+  return document.kind === "link" && Boolean(document.url);
 }
 
 export const documents = Object.entries(markdownFiles)

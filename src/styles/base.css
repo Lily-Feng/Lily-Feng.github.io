@@ -30,21 +30,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Ambient wash — one rule for both themes, driven by tokens. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 83% 9%, var(--wash-1), transparent 24rem),
-    radial-gradient(circle at 12% 45%, var(--wash-2), transparent 26rem),
-    linear-gradient(var(--wash-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--wash-grid) 1px, transparent 1px);
-  background-size: auto, auto, 46px 46px, 46px 46px;
-  mask-image: linear-gradient(to bottom, black, transparent 78%);
-}
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-strong);

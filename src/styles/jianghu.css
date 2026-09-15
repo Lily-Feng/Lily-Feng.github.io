@@ -1,58 +1,23 @@
-/* The homepage easter egg. */
+/* The easter-egg entry: a small seal in the résumé action row. */
 .guzheng-entry {
-  position: relative;
   display: grid;
-  justify-items: center;
-  margin-top: var(--space-2);
-  padding: var(--space-2) var(--space-3) var(--space-3);
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  background: linear-gradient(145deg, var(--surface-card), var(--surface-inset));
-  overflow: hidden;
-  transition: var(--transition-colors), var(--transition-transform), box-shadow var(--dur-base) var(--ease-out);
-}
-.guzheng-entry::after {
-  content: "";
-  position: absolute;
-  left: 14%;
-  right: 14%;
-  bottom: 31px;
-  height: 1px;
-  background: var(--accent-line);
-  transform: scaleX(0);
-  transition: transform var(--dur-slow) var(--ease-out);
+  border-radius: var(--radius-circle);
+  color: var(--text-subtle);
+  background: var(--surface-card);
+  font-family: Georgia, "STKaiti", "KaiTi", serif;
+  font-size: var(--text-sm);
+  line-height: 1;
+  transition: var(--transition-colors), var(--transition-transform);
 }
 .guzheng-entry:hover {
   border-color: var(--accent-line);
-  color: var(--text-strong);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-.guzheng-entry:hover::after { transform: scaleX(1); }
-.guzheng-entry img {
-  width: 190px;
-  margin: calc(var(--space-2) * -1) 0 calc(var(--space-2) * -1);
-  filter: drop-shadow(0 8px 9px oklch(23% 0.02 var(--hue-neutral) / 0.14));
-  transition: transform var(--dur-slow) var(--ease-spring);
-}
-.guzheng-entry:hover img { transform: translateY(-2px) rotate(-1deg) scale(1.035); }
-.resume-hero-meta .guzheng-entry__hint {
-  display: block;
-  width: 100%;
-  justify-self: start;
-  padding: 0;
-  border: 0;
-  color: var(--text-subtle);
-  font-size: var(--text-2xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-}
-.guzheng-entry strong {
-  font-family: Georgia, "STKaiti", "KaiTi", serif;
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  transform: translateY(-1px);
 }
 
 /* The hidden Chinese chapter: ink, paper, cloud, and one cinnabar accent. */

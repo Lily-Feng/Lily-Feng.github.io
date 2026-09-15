@@ -1,0 +1,136 @@
+/* Home page and the 404. */
+
+.home-page {
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+/* ── Who ─────────────────────────────────────────────────────────────────── */
+.home-intro {
+  max-width: 760px;
+  padding-bottom: var(--space-9);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.home-name {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+}
+.home-intro h1 {
+  margin: var(--space-3) 0 var(--space-5);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+}
+.home-summary {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-7);
+}
+.home-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+.home-actions a:hover { color: var(--accent); }
+
+/* Scoped so it outranks `.home-actions a` above. */
+.home-actions .home-action--primary {
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  color: var(--text-on-accent);
+  background: var(--accent);
+}
+.home-actions .home-action--primary:hover {
+  color: var(--text-on-accent);
+  background: var(--accent-hover);
+}
+
+/* ── Now ─────────────────────────────────────────────────────────────────── */
+.home-now {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: baseline;
+  padding: var(--space-7) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.home-now p {
+  margin: 0;
+  color: var(--text-default);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+}
+
+/* ── Selected work / recent writing ──────────────────────────────────────── */
+.home-section {
+  padding-top: var(--space-10);
+}
+.section-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--accent);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section-more:hover { color: var(--accent-hover); }
+
+.repo-grid--home { grid-template-columns: repeat(3, 1fr); }
+
+/* ── Route-level states ──────────────────────────────────────────────────── */
+.route-loading {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  color: var(--text-subtle);
+  font-size: var(--text-md);
+}
+
+.not-found {
+  max-width: 560px;
+  padding: var(--space-12) 0;
+}
+.not-found h1 {
+  margin: var(--space-3) 0 var(--space-4);
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tighter);
+}
+.not-found p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+.not-found-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-7);
+}
+.not-found-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--accent);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+.not-found-links a:hover { color: var(--accent-hover); }

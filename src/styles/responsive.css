@@ -4,22 +4,15 @@
  */
 
 @media (max-width: 900px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
-    padding-top: var(--space-10);
-  }
-  .hero-aside { max-width: 430px; }
-
   .page-intro {
-    grid-template-columns: 38px 1fr;
-    gap: var(--space-5);
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    align-items: start;
   }
-  .page-intro > p {
-    grid-column: 2;
-    max-width: 650px;
-    margin-top: calc(var(--space-3) * -1);
-  }
+  .page-intro > p { max-width: 650px; }
+
+  .home-intro h1 { font-size: var(--text-3xl); }
+  .repo-grid--home { grid-template-columns: repeat(2, 1fr); }
 
   .knowledge-section { grid-template-columns: 1fr; }
   .domain-tabs {
@@ -47,11 +40,15 @@
   .graph-help { grid-column: 1; }
 
   .content-grid { grid-template-columns: repeat(2, 1fr); }
+  .repo-grid,
+  .work-tier--pillars .repo-grid { grid-template-columns: repeat(2, 1fr); }
+  .work-tier .section-heading { flex-direction: column; align-items: start; gap: var(--space-3); }
   .resume-layout {
     grid-template-columns: 1fr;
     gap: var(--space-9);
   }
-  .article-page > article { grid-template-columns: 1fr; }
+  /* minmax(0,1fr), not 1fr — a bare track keeps min-width:auto and overflows. */
+  .article-page > article { grid-template-columns: minmax(0, 1fr); }
   .article-header {
     position: static;
     margin-bottom: var(--space-9);
@@ -72,55 +69,33 @@
     top: 62px;
     right: var(--space-4);
     display: none;
-    width: min(370px, calc(100vw - 30px));
-    max-height: calc(100vh - 82px);
+    width: min(260px, calc(100vw - 30px));
     align-items: stretch;
     flex-direction: column;
     padding: var(--space-2);
     box-shadow: var(--shadow-overlay);
-    overflow-y: auto;
   }
-  .site-header nav.open { display: flex; }
-  .nav-item { width: 100%; }
-  .nav-trigger,
+  .site-header nav.open { display: flex; animation: mobile-nav-in var(--dur-base) var(--ease-out); }
   .nav-direct {
     width: 100%;
     padding: var(--space-3);
   }
-  .nav-flyout {
-    position: static;
-    width: auto;
-    margin: 3px 3px var(--space-2);
-    padding: var(--space-3);
-    box-shadow: none;
-    transform: none;
-  }
-  .nav-flyout::before { display: none; }
-  .nav-flyout.open { animation: mobile-flyout-in var(--dur-base) var(--ease-out); }
-  .post-preview-list { grid-template-columns: 1fr; }
-  .post-preview-list button { min-height: 82px; }
   .menu-button { display: grid; place-items: center; }
 
   main,
   footer { width: min(100% - 30px, var(--width-page)); }
 
-  .hero {
-    min-height: auto;
-    padding: var(--space-9) 0 var(--space-8);
-  }
-  .hero-aside { display: none; }
-
-  .page-intro {
-    min-height: auto;
+  .page-intro { padding: var(--space-8) 0 var(--space-6); }
+  .home-page { padding-top: var(--space-8); }
+  .home-intro h1 { font-size: var(--text-2xl); }
+  .home-summary { font-size: var(--text-md); }
+  .home-actions { gap: var(--space-4); }
+  .home-now {
     grid-template-columns: 1fr;
-    gap: var(--space-3);
-    padding: var(--space-8) 0 var(--space-7);
+    gap: var(--space-2);
   }
-  .page-number { display: none; }
-  .page-intro > p {
-    grid-column: 1;
-    margin: 3px 0 0;
-  }
+  .home-now p { font-size: var(--text-md); }
+  .repo-grid--home { grid-template-columns: 1fr; }
 
   .about-page { padding: var(--space-7) 0 var(--space-11); }
   .resume-hero {
@@ -198,6 +173,13 @@
   .related-grid { grid-template-columns: 1fr; }
   .content-card { min-height: 240px; }
 
+  .repo-grid,
+  .work-tier--pillars .repo-grid { grid-template-columns: 1fr; }
+  .repo-card,
+  .repo-card--feature { padding: var(--space-5); }
+  .repo-card-top { flex-direction: column; gap: var(--space-3); }
+  .work-outro { padding: var(--space-5); }
+
   .article-page {
     width: calc(100% - 30px);
     padding-top: var(--space-7);
@@ -210,7 +192,7 @@
   footer > p { display: none; }
 }
 
-@keyframes mobile-flyout-in {
+@keyframes mobile-nav-in {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
@@ -228,10 +210,17 @@
     --border-default: #9ca3af;
   }
   body { background: #fff; }
-  body::before,
   .site-header,
   .about-view-tabs,
+  .resume-print,
+  .guzheng-entry,
+  .globe-shell,
   footer { display: none !important; }
+
+  /* Print every panel, not just the open tab. */
+  .resume-layout[hidden] { display: block !important; }
+  .resume-layout { break-before: auto; }
+  .resume-layout + .resume-layout { margin-top: var(--space-8); }
   main { width: 100%; }
   .about-page { padding: 0; }
   .resume-hero { padding-bottom: var(--space-5); }

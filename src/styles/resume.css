@@ -54,6 +54,23 @@
 .resume-hero-meta span { justify-content: flex-start; }
 .resume-hero-meta a:hover { color: var(--accent); }
 
+.resume-print {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  background: var(--surface-card);
+}
+.resume-print:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ── Segmented control ───────────────────────────────────────────────────── */
 .about-view-tabs {
   width: fit-content;
@@ -89,6 +106,8 @@
 }
 .about-view-tabs button.active > svg { color: var(--accent); }
 
+/* Restated because the display:grid below outranks the UA's [hidden] rule. */
+.resume-layout[hidden] { display: none; }
 .resume-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -338,7 +357,7 @@
   color: var(--globe-ink-muted);
   font-size: var(--text-2xs);
   background: var(--globe-panel);
-  backdrop-filter: blur(12px);
+  backdrop-filter: var(--blur-panel);
 }
 .globe-legend span {
   display: flex;
@@ -350,7 +369,6 @@
   width: 7px;
   height: 7px;
   border-radius: var(--radius-circle);
-  box-shadow: 0 0 10px currentColor;
 }
 
 .globe-detail-card {
@@ -365,7 +383,7 @@
   color: var(--globe-ink);
   background: var(--globe-panel);
   box-shadow: var(--shadow-overlay);
-  backdrop-filter: blur(18px);
+  backdrop-filter: var(--blur-overlay);
   transform: translate(-50%, -50%);
   animation: globe-popup-in var(--dur-base) var(--ease-out);
 }

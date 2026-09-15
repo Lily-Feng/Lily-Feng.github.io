@@ -1,4 +1,4 @@
-# Lily Feng's site — Agent Guide
+# Lily’s Workbench — Agent Guide
 
 This repository is the entry point. It is a React + TypeScript + Vite static site
 deployed to GitHub Pages at `https://lily-feng.github.io`, and it exists to be the
@@ -33,6 +33,11 @@ it is the least load-bearing thing for the site's actual reader.
 Keep the visual language quiet. The site had an ambient gradient wash, neon glow
 dots, hover flyouts, and magazine-style page numbers; they were removed on
 purpose. A new decorative treatment needs a reason beyond looking nice.
+
+The site name lives in exactly two places and must be changed in both:
+`src/App.tsx` (header and footer) and `scripts/prerender.mjs` (SITE_NAME and
+DEFAULT_TITLE). The home page title keeps "Lily Feng" in it so the site still
+ranks for her name.
 
 ## Architecture
 

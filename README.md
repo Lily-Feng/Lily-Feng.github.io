@@ -1,4 +1,4 @@
-# Lily Feng — lily-feng.github.io
+# Lily’s Workbench — lily-feng.github.io
 
 The entry point: selected work, writing, and a résumé. A static React +
 TypeScript + Vite site deployed to GitHub Pages. Everything lives in this

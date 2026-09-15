@@ -16,8 +16,8 @@ const dist = join(root, "dist");
 const contentDir = join(root, "content");
 
 const SITE = "https://lily-feng.github.io";
-const SITE_NAME = "Lily Feng";
-const DEFAULT_TITLE = "Lily Feng — Data & AI Platforms";
+const SITE_NAME = "Lily’s Workbench";
+const DEFAULT_TITLE = "Lily’s Workbench — Lily Feng, Data & AI Platforms";
 const DEFAULT_DESCRIPTION =
   "Senior Staff Software Engineer working on enterprise data platforms, applied AI, and agentic systems. Selected work, writing, and an open knowledge map.";
 

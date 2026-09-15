@@ -3,6 +3,12 @@
  * spacing still resolve through the same tokens.
  */
 
+/* The wordmark is the first thing to go: below this the centred nav would
+   otherwise touch it. The monogram still links home. */
+@media (max-width: 920px) {
+  .brand strong { display: none; }
+}
+
 @media (max-width: 900px) {
   .page-intro {
     grid-template-columns: 1fr;

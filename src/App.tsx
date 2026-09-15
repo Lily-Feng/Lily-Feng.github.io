@@ -121,8 +121,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 function Header({ menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
   return (
     <header className="site-header">
-      <Link className="brand" to="/" aria-label="Lily Feng — home">
-        <span>LF</span><strong>Lily Feng</strong>
+      <Link className="brand" to="/" aria-label="Lily’s Workbench — home">
+        <span>LW</span><strong>Lily’s Workbench</strong>
       </Link>
 
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
@@ -161,7 +161,7 @@ function Header({ menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
 function Footer() {
   return (
     <footer>
-      <div><span className="brand-mark">LF</span><p>Built in the open, one repository at a time.</p></div>
+      <div><span className="brand-mark">LW</span><p>Learning by doing, in the open, one repository at a time.</p></div>
       <p>Markdown in Git · Static on GitHub Pages · No tracking</p>
       <a href="https://github.com/Lily-Feng/Lily-Feng.github.io" target="_blank" rel="noreferrer">
         View source <ArrowRight size={14} aria-hidden="true" />

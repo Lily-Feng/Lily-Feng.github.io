@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, NavLink, Outlet, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { ArrowRight, Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
 import { AboutPage } from "./components/AboutPage";
 import { ArticlePage } from "./components/ArticlePage";
 import { BlogsPage } from "./components/BlogsPage";
@@ -95,7 +95,6 @@ function App() {
         </Route>
       </Routes>
 
-      <Footer />
     </div>
   );
 }
@@ -155,18 +154,6 @@ function Header({ menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
         {menuOpen ? <X /> : <Menu />}
       </button>
     </header>
-  );
-}
-
-function Footer() {
-  return (
-    <footer>
-      <div><span className="brand-mark">LW</span><p>Learning by doing, in the open, one repository at a time.</p></div>
-      <p>Markdown in Git · Static on GitHub Pages · No tracking</p>
-      <a href="https://github.com/Lily-Feng/Lily-Feng.github.io" target="_blank" rel="noreferrer">
-        View source <ArrowRight size={14} aria-hidden="true" />
-      </a>
-    </footer>
   );
 }
 

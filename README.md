@@ -90,8 +90,7 @@ keep in sync.
 
 Edit [`src/data/work.ts`](src/data/work.ts). Repositories are grouped into three
 tiers (pillars, builds, notes), each with a `status` of `live`, `repo`, or
-`unpublished`. `featuredIds` in the same file chooses the three shown on the home
-page.
+`unpublished`.
 
 ## Edit the knowledge map
 

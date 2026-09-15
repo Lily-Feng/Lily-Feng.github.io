@@ -165,12 +165,3 @@ export const workTiers: WorkTier[] = [
 ];
 
 export const profileUrl = "https://github.com/Lily-Feng";
-
-/** The three shown on the home page. */
-const featuredIds = ["calm-data-and-ai", "enterprise-atlas", "trustgraph"];
-
-const allRepos = workTiers.flatMap((tier) => tier.repos);
-
-export const featuredRepos: WorkRepo[] = featuredIds.flatMap(
-  (id) => allRepos.find((repo) => repo.id === id) ?? [],
-);

@@ -17,8 +17,8 @@
   }
   .page-intro > p { max-width: 650px; }
 
-  .home-intro h1 { font-size: var(--text-3xl); }
-  .repo-grid--home { grid-template-columns: repeat(2, 1fr); }
+  .bench-intro h1 { font-size: var(--text-3xl); }
+  .bench-grid { grid-template-columns: repeat(2, 1fr); }
 
   .knowledge-section { grid-template-columns: 1fr; }
   .domain-tabs {
@@ -88,20 +88,21 @@
   }
   .menu-button { display: grid; place-items: center; }
 
-  main,
-  footer { width: min(100% - 30px, var(--width-page)); }
+  main { width: min(100% - 30px, var(--width-page)); }
 
   .page-intro { padding: var(--space-8) 0 var(--space-6); }
-  .home-page { padding-top: var(--space-8); }
-  .home-intro h1 { font-size: var(--text-2xl); }
-  .home-summary { font-size: var(--text-md); }
-  .home-actions { gap: var(--space-4); }
-  .home-now {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
+  /* Below this the six tiles cannot honestly fit one screen, so the page is
+     allowed to scroll rather than shrink the text to fit. */
+  .home-page {
+    min-height: 0;
+    justify-content: flex-start;
+    gap: var(--space-7);
+    padding: var(--space-7) 0 var(--space-9);
   }
-  .home-now p { font-size: var(--text-md); }
-  .repo-grid--home { grid-template-columns: 1fr; }
+  .bench-intro h1 { font-size: var(--text-2xl); }
+  .bench-intro p { font-size: var(--text-md); }
+  .bench-grid { grid-template-columns: 1fr; }
+  .station { padding: var(--space-4); }
 
   .about-page { padding: var(--space-7) 0 var(--space-11); }
   .resume-hero {
@@ -191,11 +192,6 @@
     padding-top: var(--space-7);
   }
 
-  footer {
-    grid-template-columns: 1fr auto;
-    padding: var(--space-6) 0;
-  }
-  footer > p { display: none; }
 }
 
 @keyframes mobile-nav-in {
@@ -220,8 +216,7 @@
   .about-view-tabs,
   .resume-print,
   .guzheng-entry,
-  .globe-shell,
-  footer { display: none !important; }
+  .globe-shell { display: none !important; }
 
   /* Print every panel, not just the open tab. */
   .resume-layout[hidden] { display: block !important; }

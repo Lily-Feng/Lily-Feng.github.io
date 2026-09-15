@@ -66,13 +66,13 @@ in `src/App.tsx`:
 
 | Path | Component | Note |
 | --- | --- | --- |
-| `/` | `HomePage` | positioning → now → selected work → recent writing |
+| `/` | `HomePage` | the bench: intro, one tile per destination, now. Fits one screen — do not add a section without checking it still does |
 | `/work` | `WorkPage` | the repo constellation |
 | `/blogs` | `BlogsPage` | archive + search |
 | `/blogs/:slug` | `ArticlePage` | owns its own `<main>` |
 | `/about` | `AboutPage` | résumé; prints to PDF |
 | `/knowledge` | `KnowledgePage` | **lazy**; not in the nav, reached from `/work` |
-| `/easter` | `JianghuPage` | no shared header or footer |
+| `/easter` | `JianghuPage` | no shared header |
 | `*` | `NotFound` | a real 404 |
 
 Three things to preserve:

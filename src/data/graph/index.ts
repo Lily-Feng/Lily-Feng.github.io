@@ -178,5 +178,3 @@ export function buildGraph(spec: DomainGraphSpec): ResolvedGraph {
   };
 }
 
-/** Domains that have an authored graph, in the order the tabs should show them. */
-export const graphDomains = graphSpecs.map((spec) => spec.domain);

@@ -93,7 +93,9 @@
 
   display: flex;
   flex-direction: column;
-  height: 384px;
+  /* Sized for the most lines the log can ever hold (3 posts + 3 notes + a
+     two-line NOW), not for however much content exists today. */
+  height: 420px;
   border: 1px solid var(--term-line);
   border-radius: var(--radius-lg);
   background: var(--term-bg);

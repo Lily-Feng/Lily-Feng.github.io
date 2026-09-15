@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { documents, domains } from "../lib/content";
+import { documents, domains, isExternal } from "../lib/content";
 import { documentPath } from "../lib/format";
 import { profile } from "../data/resume";
 import { workTiers } from "../data/work";
@@ -13,7 +13,7 @@ import { workTiers } from "../data/work";
 type Line =
   | { kind: "log"; tag: string; text: string; tone?: "ok" | "dim" }
   | { kind: "head"; text: string }
-  | { kind: "entry"; to: string; label: string; meta: string }
+  | { kind: "entry"; to?: string; href?: string; label: string; meta: string }
   | { kind: "prompt" };
 
 function buildLines(): Line[] {
@@ -26,12 +26,11 @@ function buildLines(): Line[] {
     { kind: "log", tag: "load", text: `work.ts — ${repos} repositories` },
     { kind: "log", tag: "load", text: `content/ — ${posts.length + notes.length} documents, ${domains.length} domains` },
     { kind: "head", text: "recent from /blogs" },
-    ...posts.slice(0, 3).map((document): Line => ({
-      kind: "entry",
-      to: documentPath(document.slug),
-      label: document.title,
-      meta: `${document.readingMinutes} min`,
-    })),
+    ...posts.slice(0, 3).map((document): Line => (
+      isExternal(document)
+        ? { kind: "entry", href: document.url, label: document.title, meta: document.source ?? "external" }
+        : { kind: "entry", to: documentPath(document.slug), label: document.title, meta: `${document.readingMinutes} min` }
+    )),
     { kind: "head", text: "latest notes" },
     ...notes.slice(0, 3).map((document): Line => ({
       kind: "entry",
@@ -84,13 +83,16 @@ export function BootTerminal() {
             return <p className="term-head" key={index}>{line.text}</p>;
           }
           if (line.kind === "entry") {
-            return (
-              <Link className="term-entry" to={line.to} key={index}>
-                <span className="term-bullet">→</span>
+            const body = (
+              <>
+                <span className="term-bullet">{line.href ? "↗" : "→"}</span>
                 <span className="term-label">{line.label}</span>
                 <span className="term-meta">{line.meta}</span>
-              </Link>
+              </>
             );
+            return line.href
+              ? <a className="term-entry" href={line.href} target="_blank" rel="noreferrer" key={index}>{body}</a>
+              : <Link className="term-entry" to={line.to!} key={index}>{body}</Link>;
           }
           if (line.kind === "prompt") {
             return (

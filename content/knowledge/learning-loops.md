@@ -8,7 +8,6 @@ topics:
   - Leadership
   - Operating Models
 connections:
-  - building-a-digital-garden
   - strategy-to-execution
 kind: note
 ---

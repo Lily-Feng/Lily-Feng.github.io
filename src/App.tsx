@@ -121,7 +121,7 @@ function Header({ menuOpen, setMenuOpen, theme, setTheme }: HeaderProps) {
   return (
     <header className="site-header">
       <Link className="brand" to="/" aria-label="Lily’s Workbench — home">
-        <span>LW</span><strong>Lily’s Workbench</strong>
+        <img className="brand-logo" src="/octopus.png" width="34" height="34" alt="" /><strong>Lily’s Workbench</strong>
       </Link>
 
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">

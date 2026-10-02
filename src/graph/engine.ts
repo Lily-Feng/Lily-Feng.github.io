@@ -245,10 +245,10 @@ export function createGraphEngine(canvas: HTMLCanvasElement, options: EngineOpti
       const fits = [0, above].find(
         (dy) => !claimed.some((rect) => overlaps(rect, { ...bounds, y: bounds.y + dy })),
       );
-      // A crowded minor label is dropped; a major or core one is always drawn,
-      // because an unlabelled headline concept is worse than a tight fit.
-      if (fits === undefined && node.tier !== "major" && node.tier !== "core") continue;
-      const choice = fits ?? 0;
+      // Never force a label through another label or node body. Hover,
+      // selection, and the keyboard list keep crowded concepts identifiable.
+      if (fits === undefined) continue;
+      const choice = fits;
       claimed.push({ ...bounds, y: bounds.y + choice });
       ctx.save();
       ctx.translate(0, choice);

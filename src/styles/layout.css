@@ -26,18 +26,12 @@
   gap: var(--space-3);
   width: fit-content;
 }
-.brand span {
-  display: grid;
-  place-items: center;
+.brand-logo {
+  display: block;
   width: 34px;
   height: 34px;
-  border: 1px solid var(--accent-line);
   border-radius: var(--radius-circle);
-  color: var(--accent);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-wide);
-  background: var(--accent-soft);
+  object-fit: contain;
 }
 .brand { text-decoration: none; }
 .brand strong {

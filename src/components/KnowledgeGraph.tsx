@@ -178,12 +178,7 @@ export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProp
         {!graph ? (
           <div className="graph-empty">
             <FileText size={22} />
-            No weighted map authored for {domain} yet — add a JSON file in src/data/graph.
-          </div>
-        ) : documents.length === 0 ? (
-          <div className="graph-empty">
-            <FileText size={22} />
-            The concept map is live; add a Markdown note in this domain to hang writing off it.
+            A concept map for {domain} is not available yet.
           </div>
         ) : null}
       </div>

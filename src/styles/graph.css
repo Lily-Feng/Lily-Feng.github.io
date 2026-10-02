@@ -24,9 +24,7 @@
 }
 .domain-tabs button {
   position: relative;
-  display: grid;
-  grid-template-columns: 25px 1fr;
-  gap: var(--space-3);
+  display: block;
   width: 100%;
   padding: var(--space-3) var(--space-3);
   border-left: 1px solid var(--border-subtle);

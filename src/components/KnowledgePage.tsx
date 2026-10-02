@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { documents, domains } from "../lib/content";
+import { documents } from "../lib/content";
+import { graphSpecs } from "../data/graph";
 import { documentPath } from "../lib/format";
 import { KnowledgeGraph } from "./KnowledgeGraph";
 
@@ -12,7 +13,7 @@ import { KnowledgeGraph } from "./KnowledgeGraph";
  */
 export function KnowledgePage() {
   const navigate = useNavigate();
-  const [activeDomain, setActiveDomain] = useState(domains[0] ?? "Knowledge");
+  const [activeDomain, setActiveDomain] = useState(graphSpecs[0]?.domain ?? "Knowledge");
 
   const graphDocuments = useMemo(
     () => documents.filter((item) => item.domain === activeDomain),
@@ -31,7 +32,7 @@ export function KnowledgePage() {
 
       <section className="knowledge-section">
         <div className="domain-tabs" role="tablist" aria-label="Knowledge domains">
-          {domains.map((domain) => (
+          {graphSpecs.map(({ domain }) => (
             <button
               key={domain}
               className={domain === activeDomain ? "active" : ""}

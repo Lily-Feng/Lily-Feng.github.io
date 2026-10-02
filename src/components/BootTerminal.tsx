@@ -76,7 +76,18 @@ export function BootTerminal() {
         <span className="terminal-live"><i />live</span>
       </div>
 
-      <div className="terminal-body" ref={bodyRef} tabIndex={0} aria-label="Latest achievements and recent entries">
+      <div
+        className="terminal-body"
+        ref={bodyRef}
+        tabIndex={0}
+        aria-label="Latest achievements and recent entries"
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && event.target === event.currentTarget && shown >= lines.length) {
+            event.preventDefault();
+            setExecuted(true);
+          }
+        }}
+      >
         {lines.slice(0, shown).map((line, index) => {
           if (line.kind === "head") {
             return <p className="term-head" key={index}>{line.text}</p>;
@@ -97,7 +108,7 @@ export function BootTerminal() {
             return (
               <div key={index}>
                 <div className="term-prompt">
-                  <span>sys@workbench:~$</span>{" "}
+                  <span>guest@workbench:~$</span>{" "}
                   <button
                     className="term-command"
                     type="button"
@@ -110,7 +121,7 @@ export function BootTerminal() {
                     {!executed && <i className="term-caret" aria-hidden="true" />}
                   </button>
                 </div>
-                {!executed && <p className="term-hint">Click the command or focus it and press Enter.</p>}
+                {!executed && <p className="term-hint">Click the command, or focus the terminal and press Enter.</p>}
                 <div id="terminal-response" role="status" aria-live="polite">
                   {executed && <>
                     <pre className="term-art" aria-hidden="true">{terminalCommand.art}</pre>

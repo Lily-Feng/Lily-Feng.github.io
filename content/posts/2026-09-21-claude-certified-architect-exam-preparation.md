@@ -5,6 +5,9 @@ summary: Key takeaways and a mock test for practicing applied engineering judgme
 domain: Claude Certified Architect (Pro)
 topics: [AI Engineering, Architecture, Evaluation]
 kind: post
+color: ai
+cover: /images/claude/claude-mock-test.png
+coverAlt: Claude Architect mock exam start screen with timed mock and study mode options
 ---
 
 <!-- Date inferred from the LinkedIn activity ID (ID >> 22): 2026-09-21T23:54:19.244Z, September 21 in America/Los_Angeles. This is an inferred creation timestamp, not a verified publication timestamp. -->

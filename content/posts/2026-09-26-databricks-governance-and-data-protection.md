@@ -6,6 +6,10 @@ domain: Data Governance
 topics: [Databricks, Unity Catalog, Data Protection]
 kind: post
 connections: [databricks-cdf-and-cdc]
+color: data
+icon: data
+cover: /images/databricks/data-protection-techniques.png
+coverAlt: Data protection techniques diagram
 ---
 
 Two screenshots from my Databricks learning belong next to each other. One organizes access control into principals, objects, and privileges. The other compares ways to transform sensitive values. They describe different decisions that meet in the same data product.

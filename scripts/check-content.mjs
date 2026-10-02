@@ -6,7 +6,8 @@
  * would otherwise pass CI and render a blank page. Run: node scripts/check-content.mjs
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
+import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
 
@@ -81,6 +82,36 @@ function check(file) {
   for (const field of ["topics", "connections"]) {
     if (meta[field] !== undefined && !Array.isArray(meta[field])) {
       fail(file, `${field} must be a list`);
+    }
+  }
+
+  for (const [field, choices] of Object.entries({
+    icon: ["ai", "data", "architecture", "security"],
+    color: ["data", "ai", "architecture"],
+  })) {
+    if (meta[field] !== undefined && !choices.includes(meta[field])) {
+      fail(file, `${field} must be one of ${choices.join(", ")}`);
+    }
+  }
+  const publicRoot = join(root, "public");
+  for (const field of ["cover", "logo"]) {
+    if (meta[field] === undefined) continue;
+    const value = meta[field];
+    const asset = typeof value === "string" ? resolve(publicRoot, `.${value}`) : "";
+    if (typeof value !== "string" || !/^\/(?!\/)[\w/.-]+\.(png|jpe?g|webp|avif|svg)$/i.test(value)
+      || !asset.startsWith(publicRoot + sep) || !existsSync(asset) || !statSync(asset).isFile()) {
+      fail(file, `${field} must reference an existing local image under public/`);
+    }
+    if (typeof meta[`${field}Alt`] !== "string" || !meta[`${field}Alt`].trim()) {
+      fail(file, `${field} requires descriptive ${field}Alt text`);
+    }
+  }
+  for (const field of ["coverAlt", "logoAlt"]) {
+    if (meta[field] !== undefined && (typeof meta[field] !== "string" || !meta[field].trim())) {
+      fail(file, `${field} must be non-empty text`);
+    }
+    if (meta[field] !== undefined && meta[field.replace("Alt", "")] === undefined) {
+      fail(file, `${field} requires its image field`);
     }
   }
 

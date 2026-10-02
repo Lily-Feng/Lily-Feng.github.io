@@ -5,6 +5,10 @@ summary: Reflections from Scale Networking 2026 on how AI is moving the boundary
 domain: AI Infrastructure
 topics: [AI Infrastructure, Networking, Systems Architecture]
 kind: post
+color: architecture
+icon: architecture
+cover: /ai-infrastructure-boundaries.jpeg
+coverAlt: AI infrastructure scaling boundaries diagram
 ---
 
 <!-- Original creation time inferred from LinkedIn activity ID (ID >> 22): 2026-08-26T22:15:25.676Z. Display date uses America/Los_Angeles. Not a verified publication timestamp; source may have been edited. -->

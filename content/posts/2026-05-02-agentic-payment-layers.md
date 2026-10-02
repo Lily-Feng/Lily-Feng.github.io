@@ -5,6 +5,10 @@ summary: A layered view of agentic payments, spanning discovery, identity, deleg
 domain: Agentic Payments
 topics: [Agentic AI, Payments, Architecture]
 kind: post
+color: ai
+icon: ai
+cover: /agentic-payments-stack.jpeg
+coverAlt: Layers of the agentic payments stack
 ---
 
 <!-- Original creation time inferred from LinkedIn activity ID (ID >> 22): 2026-05-02T18:56:46.169Z. Display date uses America/Los_Angeles. Not a verified publication timestamp; source may have been edited. -->

@@ -25,6 +25,13 @@ export type ContentDocument = {
   url?: string;
   /** Badge text: "Medium", "YouTube", "Conference". */
   source?: string;
+  /** Optional archive-card visuals, using locally hosted assets. */
+  cover?: string;
+  coverAlt?: string;
+  logo?: string;
+  logoAlt?: string;
+  icon?: "ai" | "data" | "architecture" | "security";
+  color?: "data" | "ai" | "architecture";
   syndicated: Syndication[];
 };
 
@@ -40,6 +47,13 @@ type FrontMatter = {
   featured?: boolean;
   url?: string;
   source?: string;
+  /** Optional archive-card visuals, using locally hosted assets. */
+  cover?: string;
+  coverAlt?: string;
+  logo?: string;
+  logoAlt?: string;
+  icon?: "ai" | "data" | "architecture" | "security";
+  color?: "data" | "ai" | "architecture";
   syndicated?: Record<string, string>;
 };
 
@@ -112,6 +126,12 @@ function readMarkdown(path: string, raw: string): ContentDocument {
     readingMinutes: Math.max(1, Math.ceil(plainWords / 220)),
     url: metadata.url,
     source: metadata.source,
+    cover: metadata.cover,
+    coverAlt: metadata.coverAlt,
+    logo: metadata.logo,
+    logoAlt: metadata.logoAlt,
+    icon: metadata.icon,
+    color: metadata.color,
     syndicated: readSyndication(metadata.syndicated),
   };
 }

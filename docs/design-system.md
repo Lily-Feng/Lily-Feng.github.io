@@ -171,3 +171,25 @@ and hovered things look deliberate rather than accidental.
 - **`.globe-shell`** declares its own local dark scope. It renders a night-side
   Earth in both themes, so its atmosphere and arc colours are constants of the
   scene (`ExperienceGlobe.tsx`), not of the page palette.
+
+## Optional blog card visuals
+
+Archive cards accept independent optional front-matter fields:
+
+```yaml
+color: data                  # data | ai | architecture
+icon: data                   # data | ai | architecture | security
+cover: /images/post.webp     # local image in public/
+coverAlt: Description of the cover
+logo: /images/vendor.svg     # local logo in public/; replaces the topic icon
+logoAlt: Vendor name
+```
+
+Omit all fields for the original plain card. Each image requires its matching
+alt text. Logos, covers, and color can be used independently or together. Topic
+icons are decorative; the title and domain carry the meaning. Use official logo
+assets supplied by the brand and optimized covers. Covers fit inside a 16:9 area without cropping, preserving diagram labels.
+The selected topic tint fills any space around the image.
+The validator rejects unknown presets, missing assets, and missing image alt text.
+Color presets use semantic `--card-*` tokens that follow both themes. No remote
+image service or build-time network access is required.

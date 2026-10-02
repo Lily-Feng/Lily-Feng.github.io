@@ -6,6 +6,10 @@ domain: Data Engineering
 topics: [Databricks, Apache Spark, Performance]
 kind: post
 connections: [databricks-lakeflow-orchestration, databricks-cdf-and-cdc]
+color: data
+icon: data
+cover: /images/databricks/spark-query-optimization.png
+coverAlt: Spark query optimization diagram
 ---
 
 Three screenshots from my Databricks learning form a useful sequence: where Spark runs work, how it plans a query, and which coding habits can undermine that plan. I want to connect them before treating a slow workload as a request for a larger cluster.

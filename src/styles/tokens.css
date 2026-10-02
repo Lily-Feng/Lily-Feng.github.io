@@ -9,7 +9,8 @@
  * ── Changing the colour of the whole site ──────────────────────────────────
  * Rotate one number. `--hue-accent` drives every accent, glow, ring, and tint:
  *
- *     :root { --hue-accent: 185; }   teal      (default)
+ *     :root {
+ --hue-accent: 185; }   teal      (default)
  *                          265;     indigo
  *                          300;     violet
  *                            25;    rose
@@ -24,6 +25,15 @@
  */
 
 :root {
+  /* Archive visual roles derive from the active theme's semantic palette. */
+  --card-visual-surface: var(--surface-inset);
+  --card-visual-accent: var(--text-muted);
+  --card-data-surface: var(--accent-soft);
+  --card-data-accent: var(--accent);
+  --card-ai-surface: var(--secondary-soft);
+  --card-ai-accent: var(--secondary);
+  --card-architecture-surface: var(--highlight-soft);
+  --card-architecture-accent: var(--highlight);
   /* ── 1. Primitives: the dials ──────────────────────────────────────────── */
   --hue-accent: 185;
   --hue-secondary: 285;

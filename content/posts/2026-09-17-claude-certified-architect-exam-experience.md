@@ -5,6 +5,9 @@ summary: Reflections on an architecture exam that challenged practical experienc
 domain: Claude Certified Architect (Pro)
 topics: [AI Engineering, Architecture, Evaluation]
 kind: post
+color: ai
+cover: /images/claude/architect-professional.png
+coverAlt: Claude Certified Architect Professional certification badge
 ---
 
 <!-- Date inferred from the LinkedIn activity ID (ID >> 22): 2026-09-18T02:16:47.579Z, September 17 in America/Los_Angeles. This is an inferred creation timestamp, not a verified publication timestamp. -->

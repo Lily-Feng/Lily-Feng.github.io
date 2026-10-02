@@ -364,3 +364,39 @@
   line-height: var(--leading-snug);
 }
 .related-grid svg { color: var(--accent); }
+
+/* Optional archive artwork: text remains on the normal card surface. */
+.card-visual {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  flex-shrink: 0;
+  margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-5);
+  overflow: hidden;
+  background: var(--card-visual-surface);
+  color: var(--card-visual-accent);
+}
+.card-visual[data-color="data"] {
+  --card-visual-surface: var(--card-data-surface);
+  --card-visual-accent: var(--card-data-accent);
+}
+.card-visual[data-color="ai"] {
+  --card-visual-surface: var(--card-ai-surface);
+  --card-visual-accent: var(--card-ai-accent);
+}
+.card-visual[data-color="architecture"] {
+  --card-visual-surface: var(--card-architecture-surface);
+  --card-visual-accent: var(--card-architecture-accent);
+}
+.card-cover { width: 100%; height: 100%; object-fit: contain; display: block; }
+.card-visual-badge {
+  position: absolute;
+  inset: auto auto var(--space-3) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+}
+.card-logo { width: var(--space-8); height: var(--space-6); object-fit: contain; }

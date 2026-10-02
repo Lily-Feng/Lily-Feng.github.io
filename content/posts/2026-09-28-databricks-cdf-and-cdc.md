@@ -6,6 +6,10 @@ domain: Data Engineering
 topics: [Databricks, Delta Lake, CDC]
 kind: post
 connections: [databricks-lakeflow-orchestration, databricks-governance-and-data-protection]
+color: data
+icon: data
+cover: /images/databricks/cdf-vs-cdc.png
+coverAlt: Comparison of change data feed and change data capture
 ---
 
 I saved a comparison of CDF and CDC because the similar names can hide a useful architectural distinction. I read it as a prompt to ask where a change is observed and what downstream state that change needs to produce.

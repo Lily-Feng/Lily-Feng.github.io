@@ -6,6 +6,10 @@ domain: Data Engineering
 topics: [Databricks, Lakeflow, Orchestration]
 kind: post
 connections: [databricks-cdf-and-cdc, databricks-spark-execution]
+color: data
+icon: data
+cover: /images/databricks/lakeflow-orchestration.png
+coverAlt: Lakeflow workflow orchestration diagram
 ---
 
 While learning Databricks, I saved three diagrams that belong together: the orchestration architecture, the job/task layers, and a retail processing example. Taken together, they offer a useful way to read a workflow before getting lost in individual notebooks.

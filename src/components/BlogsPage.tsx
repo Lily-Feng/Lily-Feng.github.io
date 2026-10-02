@@ -68,8 +68,7 @@ export function BlogsPage() {
         <section className="writing-section">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">Latest</span>
-              <h2>Browse the archive</h2>
+              <h2>All writing</h2>
             </div>
             <p>{posts.length} published piece{posts.length === 1 ? "" : "s"}.</p>
           </div>

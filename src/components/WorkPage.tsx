@@ -1,26 +1,48 @@
+import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Network } from "lucide-react";
 import { profileUrl, workTiers } from "../data/work";
 import { RepoCard } from "./RepoCard";
 
 export function WorkPage() {
+  const [selectedTier, setSelectedTier] = useState("builds");
+
+  function handleTabKey(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next: number;
+    if (event.key === "ArrowRight") next = (index + 1) % workTiers.length;
+    else if (event.key === "ArrowLeft") next = (index + workTiers.length - 1) % workTiers.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = workTiers.length - 1;
+    else return;
+    event.preventDefault();
+    setSelectedTier(workTiers[next].id);
+    document.getElementById(`tab-${workTiers[next].id}`)?.focus();
+  }
+
   return (
     <>
-      <section className="page-intro">
-        <div>
-          <span className="eyebrow">Learning by doing</span>
-          <h1>Small repositories, one idea each.</h1>
-        </div>
-        <p>This site is the entry point. The work itself lives next door — two domain pillars, a handful of builds, and the notebooks I keep in the open.</p>
-      </section>
-
+      <div className="work-section-links" role="tablist" aria-label="Project gallery sections">
+        {workTiers.map((tier, index) => (
+          <button
+            key={tier.id}
+            id={`tab-${tier.id}`}
+            type="button"
+            role="tab"
+            aria-selected={selectedTier === tier.id}
+            aria-controls={`panel-${tier.id}`}
+            tabIndex={selectedTier === tier.id ? 0 : -1}
+            onClick={() => setSelectedTier(tier.id)}
+            onKeyDown={(event) => handleTabKey(event, index)}
+          >{tier.title}</button>
+        ))}
+      </div>
       <div className="work-page">
         {workTiers.map((tier) => (
-          <section className={`work-tier work-tier--${tier.id}`} key={tier.id} aria-labelledby={`tier-${tier.id}`}>
+          <section className={`work-tier work-tier--${tier.id}`} key={tier.id} id={`panel-${tier.id}`} role="tabpanel" aria-labelledby={`tab-${tier.id}`} hidden={selectedTier !== tier.id} tabIndex={0}>
             <div className="section-heading">
               <div>
                 <span className="eyebrow">{tier.eyebrow}</span>
-                <h2 id={`tier-${tier.id}`}>{tier.title}</h2>
+                <h1 id={`tier-${tier.id}`}>{tier.title}</h1>
               </div>
               <p>{tier.blurb}</p>
             </div>
@@ -33,7 +55,7 @@ export function WorkPage() {
         ))}
 
         <aside className="work-outro">
-          <p>Everything here is built in the open, in small repositories that each hold one idea.</p>
+          <p>Follow a project into its source, or explore the ideas that connect the work.</p>
           <div className="work-outro-links">
             <Link to="/knowledge">
               <Network size={14} aria-hidden="true" /> Knowledge map

@@ -1,6 +1,6 @@
 /**
- * The repositories this site points at, in three tiers: domain pillars, builds,
- * and open notebooks.
+ * The repositories this site points at, in three tiers: knowledge refreshers, open-source projects,
+ * and learning notebooks.
  *
  * `status` says where the work can be read: `live` has a published site,
  * `repo` is source only, `unpublished` has no link yet.
@@ -17,6 +17,9 @@ export type WorkRepo = {
   status: RepoStatus;
   repoUrl?: string;
   siteUrl?: string;
+  articlePath?: string;
+  cover?: string;
+  coverAlt?: string;
 };
 
 export type WorkTier = {
@@ -36,10 +39,10 @@ export const statusLabels: Record<RepoStatus, string> = {
 export const workTiers: WorkTier[] = [
   {
     id: "pillars",
-    eyebrow: "Domain",
-    title: "Two pillars",
+    eyebrow: "Knowledge base",
+    title: "Data and AI",
     blurb:
-      "Ten-plus years of data and AI work, split by the angle it is viewed from: how a system works inside, and how systems are wired together.",
+      "Connected notes, architecture references, and a knowledge graph for refreshing useful ideas — and finding the connections between them.",
     repos: [
       {
         id: "calm-data-and-ai",
@@ -66,20 +69,23 @@ export const workTiers: WorkTier[] = [
   },
   {
     id: "builds",
-    eyebrow: "Builds",
-    title: "Things made to be looked at",
+    eyebrow: "Projects",
+    title: "Open-source projects",
     blurb:
-      "Prototypes and projects with a thesis. Each is independent work on synthetic or personal data — no employer code, data, or design carried over.",
+      "Different stacks, different questions. These projects turn ideas about trust, health, operations, and security into working systems. Explore the source and the thinking behind each build.",
     repos: [
       {
         id: "trustgraph",
         name: "TrustGraph",
-        tagline: "Autonomous decisions you can audit.",
+        tagline: "Exploring the protocols behind agentic commerce.",
         description:
-          "Fraud and merchant trust for a payments platform where a growing share of transactions are initiated by AI agents rather than humans. Merchant digital twin, AP2 payment mandate, and escrow, against a Stripe-shaped data contract in test mode with synthetic data.",
-        topics: ["Agentic commerce", "Fraud", "Evaluation", "Payments"],
-        status: "repo",
+          "An agentic commerce demo bringing A2A, UCP, AP2, and x402 together in a payments scenario. Explore how these protocols fit together, with merchant trust and an audit trail providing context for agent-driven transactions.",
+        topics: ["A2A", "UCP", "AP2", "x402"],
+        status: "live",
         repoUrl: "https://github.com/Lily-Feng/TrustGraph",
+        siteUrl: "https://lily-feng.github.io/TrustGraph/",
+        cover: "/images/work/trustgraph-protocol-icons.jpg",
+        coverAlt: "Merchant Digital Twin storefront icon connected to A2A agent, UCP cart, AP2 shield, and x402 payment icons",
       },
       {
         id: "twiistlab",
@@ -109,25 +115,18 @@ export const workTiers: WorkTier[] = [
         topics: ["Security", "Agents", "Code review", "Python"],
         status: "repo",
         repoUrl: "https://github.com/Lily-Feng/codex-vulnerability-agentic-harness",
+        cover: "/images/work/codex-vulnerability-harness.jpg",
+        coverAlt: "Visa security harness adapted for Codex subscription access, with a fork connector and developer community icons",
       },
-      {
-        id: "java-crm-databricks",
-        name: "java-crm-databricks",
-        tagline: "A small CRM used as a probe.",
-        description:
-          "A mini CRM written in Java to exercise Databricks Lakebase, Unity Catalog, and adjacent platform features from a JVM client — built to find the edges rather than to ship a CRM.",
-        topics: ["Java", "Lakebase", "Unity Catalog"],
-        status: "repo",
-        repoUrl: "https://github.com/Lily-Feng/java-crm-databricks",
-      },
+
     ],
   },
   {
     id: "notes",
-    eyebrow: "Open notebooks",
-    title: "Learning in public",
+    eyebrow: "Practice",
+    title: "Learning notebooks",
     blurb:
-      "Working notebooks rather than finished writing. They are here because the practice is the point, and because a half-built understanding is still worth showing.",
+      "Hands-on notes, simulations, and study tools. A place to work through unfamiliar ideas, test what I understand, and keep what helps.",
     repos: [
       {
         id: "reinforcement-learning",
@@ -141,14 +140,16 @@ export const workTiers: WorkTier[] = [
         siteUrl: "https://lily-feng.github.io/Reinforcement-Learning/",
       },
       {
-        id: "programming",
-        name: "Programming practice",
-        tagline: "Five languages, recurring patterns.",
+        id: "claude-architect",
+        name: "Claude Certified Architect",
+        tagline: "Architecture judgment, put into practice.",
         description:
-          "Fundamentals, data structures, and problem-solving patterns across SQL, Python, Java, Go, and Rust — kept as a deliberate refresh rather than an interview grind.",
-        topics: ["SQL", "Python", "Java", "Go", "Rust"],
-        status: "repo",
-        repoUrl: "https://github.com/Lily-Feng/programming",
+          "My exam preparation notes and mock test for exploring AI architecture tradeoffs: latency, cost, accuracy, and evaluation. The blog collects the details and lessons from the work.",
+        topics: ["Claude", "AI architecture", "Evaluation"],
+        status: "live",
+        articlePath: "/blogs/claude-certified-architect-exam-preparation",
+        cover: "/images/claude/claude-mock-test.png",
+        coverAlt: "Claude Architect mock test with timed mock and study mode options",
       },
       {
         id: "skills",

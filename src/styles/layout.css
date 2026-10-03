@@ -65,8 +65,10 @@
   background: var(--surface-raised);
 }
 .nav-direct.active {
-  color: var(--text-strong);
-  background: var(--surface-raised);
+  color: var(--text-on-accent);
+  background: var(--accent);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ── Header actions ──────────────────────────────────────────────────────── */

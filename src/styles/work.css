@@ -4,25 +4,20 @@
   padding: var(--space-10) 0 var(--space-12);
 }
 
-.work-tier + .work-tier {
-  margin-top: var(--space-11);
-}
+.work-tier[hidden] { display: none; }
 
 .work-tier .section-heading {
   padding-bottom: var(--space-5);
   border-bottom: 1px solid var(--border-subtle);
 }
-.work-tier .section-heading h2 {
+.work-tier .section-heading h1 {
   font-size: var(--text-3xl);
 }
 
 .repo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
-}
-.work-tier--pillars .repo-grid {
-  grid-template-columns: repeat(2, 1fr);
 }
 
 /* ── Card ────────────────────────────────────────────────────────────────── */
@@ -49,18 +44,19 @@
 .repo-card--feature {
   padding: var(--space-7);
   border-color: var(--border-default);
-  background:
-    linear-gradient(160deg, var(--accent-soft), transparent 55%),
-    var(--surface-card);
+  background: var(--surface-card);
 }
 
 .repo-card-top {
   display: flex;
   align-items: start;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-4);
 }
 .repo-card h3 {
+  flex-grow: 1;
+  min-width: min(100%, 240px);
   margin: 0;
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
@@ -196,4 +192,51 @@
 }
 .work-outro a:hover {
   color: var(--accent-hover);
+}
+
+/* Visual summaries keep the gallery local and lightweight. */
+.work-section-links {
+  padding-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.work-section-links button {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--accent);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.work-section-links button:hover { background: var(--accent-soft); }
+.work-section-links button[aria-selected="true"] {
+  color: var(--text-on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: var(--weight-semibold);
+}
+.work-tier, .work-tier h2 { scroll-margin-top: var(--space-12); }
+.repo-card { min-width: 0; }
+.repo-preview {
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  aspect-ratio: 2 / 1;
+}
+.repo-preview svg, .repo-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.preview-connector { fill: none; stroke: var(--border-strong); stroke-width: 2; }
+.preview-node { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.preview-node--1 { fill: var(--secondary-soft); stroke: var(--secondary); }
+.preview-node--2 { fill: var(--highlight-soft); stroke: var(--highlight); }
+.repo-preview text { fill: var(--text-muted); font-size: 16px; font-family: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  .repo-card:hover { transform: none; }
 }

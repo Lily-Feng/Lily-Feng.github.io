@@ -60,6 +60,11 @@ export function RepoCard({ repo, feature }: { repo: WorkRepo; feature?: boolean 
               <Code2 size={13} aria-hidden="true" /> Source
             </a>
           )}
+          {repo.reference && (
+            <a href={repo.reference.url} target="_blank" rel="noreferrer">
+              {repo.reference.label} <ArrowUpRight size={13} aria-hidden="true" />
+            </a>
+          )}
           {!primary && <span className="repo-links-note">Link goes up once it is published.</span>}
         </div>
       </div>

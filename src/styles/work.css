@@ -20,6 +20,17 @@
   gap: var(--space-4);
 }
 
+.project-groups {
+  display: grid;
+  gap: var(--space-8);
+}
+.project-group h2 {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
 /* ── Card ────────────────────────────────────────────────────────────────── */
 .repo-card {
   display: flex;

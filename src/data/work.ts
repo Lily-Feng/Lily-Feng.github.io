@@ -15,7 +15,9 @@ export type WorkRepo = {
   description: string;
   topics: string[];
   status: RepoStatus;
+  development?: "active" | "concluded";
   repoUrl?: string;
+  reference?: { label: string; url: string };
   siteUrl?: string;
   articlePath?: string;
   cover?: string;
@@ -70,12 +72,13 @@ export const workTiers: WorkTier[] = [
   {
     id: "builds",
     eyebrow: "Projects",
-    title: "Open-source projects",
+    title: "My Open-source projects",
     blurb:
       "Different stacks, different questions. These projects turn ideas about trust, health, operations, and security into working systems. Explore the source and the thinking behind each build.",
     repos: [
       {
         id: "trustgraph",
+        development: "concluded",
         name: "TrustGraph",
         tagline: "Exploring the protocols behind agentic commerce.",
         description:
@@ -88,26 +91,49 @@ export const workTiers: WorkTier[] = [
         coverAlt: "Merchant Digital Twin storefront icon connected to A2A agent, UCP cart, AP2 shield, and x402 payment icons",
       },
       {
-        id: "twiistlab",
-        name: "TwiistLab",
-        tagline: "Data for good — type 1 diabetes.",
+        id: "tidepool-data-intelligence",
+        development: "active",
+        name: "Tidepool Data Intelligence",
+        tagline: "From diabetes pump data to personal insight.",
         description:
-          "A privacy-first personal analytics workflow for people with type 1 diabetes: Tidepool export into private S3, a governed Unity Catalog lakehouse, and a read-only dashboard. Real health data never leaves the private boundary; only code, schemas, and synthetic fixtures are published.",
-        topics: ["Health data", "Databricks", "Unity Catalog", "Governance"],
-        status: "unpublished",
+          "A personal analysis platform in active development that ingests diabetes pump data from Tidepool into Databricks. Starting with twiist pump data, the project explores how to organize health records and understand patterns in insulin delivery and glucose over time.",
+        topics: ["Tidepool", "twiist", "Databricks", "Personal analytics"],
+        status: "repo",
+        repoUrl: "https://github.com/Lily-Feng/Tidepool-data-intelligence",
+        reference: { label: "Tidepool", url: "https://www.tidepool.org/" },
+        cover: "/images/work/tidepool-data-intelligence.jpg",
+        coverAlt: "Diabetes pump data flows through Tidepool into Databricks for personal analysis",
+      },
+      {
+        id: "knowledge-flow",
+        development: "active",
+        name: "Knowledge-Flow",
+        tagline: "Turn learning notes into useful explanations.",
+        description:
+          "Experiments with AI-assisted tools and reusable workflows for turning learning notes into knowledge posts, diagrams, interactive pages, and explainer videos. GeoGebra, Manim, AppleScript, and PocketFlow support different steps, with human direction and review for accuracy, clarity, and usefulness.",
+        topics: ["Visual explanations", "AI workflows", "Manim", "PocketFlow"],
+        status: "repo",
+        repoUrl: "https://github.com/Lily-Feng/Knowledge-Flow",
+        cover: "/images/work/knowledge-flow.jpg",
+        coverAlt: "Learning notes become posts, diagrams, interactive pages, and videos through a connected workflow",
       },
       {
         id: "log-ai",
+        development: "concluded",
         name: "Log-AI",
-        tagline: "Metered inference on what survives the cheap filters.",
+        tagline: "Log analytics with typed, probability-based decisions.",
         description:
-          "Log analysis at adversarial volume, where cost per record rather than model quality decides the shape of the pipeline. Deterministic parsing and statistical screening on every line, agentic reasoning only on the remainder.",
-        topics: ["AIOps", "LLM agents", "Observability", "Python"],
+          "A log analytics project inspired by Salesforce’s LogAI workflow. Its expanded scope adds System One decision models, such as Jev, for fixed-option log classification and probability-based triage. Parsing, feature extraction, clustering, and anomaly detection narrow the inputs; generative LLMs handle cases that need deeper investigation.",
+        topics: ["Log analytics", "System One", "Classification", "AIOps"],
         status: "repo",
         repoUrl: "https://github.com/Lily-Feng/Log-AI",
+        reference: { label: "Design reference", url: "https://www.salesforce.com/blog/logai/" },
+        cover: "/images/work/log-ai-decision-model.jpg",
+        coverAlt: "Logs flow through pattern extraction into a decision model that returns category probabilities",
       },
       {
         id: "codex-harness",
+        development: "concluded",
         name: "Codex Vulnerability Harness",
         tagline: "Reads your codebase like an attacker, files a report instead.",
         description:

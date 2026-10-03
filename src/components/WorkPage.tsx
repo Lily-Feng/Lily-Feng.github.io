@@ -46,11 +46,26 @@ export function WorkPage() {
               </div>
               <p>{tier.blurb}</p>
             </div>
-            <div className="repo-grid">
+            {tier.id === "builds" ? (
+              <div className="project-groups">
+                {(["active", "concluded"] as const).map((development) => (
+                  <section className="project-group" key={development} aria-labelledby={`projects-${development}`}>
+                    <h2 id={`projects-${development}`}>
+                      {development === "active" ? "Active" : "Concluded projects"}
+                    </h2>
+                    <div className="repo-grid">
+                      {tier.repos.filter((repo) => repo.development === development).map((repo) => (
+                        <RepoCard key={repo.id} repo={repo} />
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            ) : <div className="repo-grid">
               {tier.repos.map((repo) => (
                 <RepoCard key={repo.id} repo={repo} feature={tier.id === "pillars"} />
               ))}
-            </div>
+            </div>}
           </section>
         ))}
 

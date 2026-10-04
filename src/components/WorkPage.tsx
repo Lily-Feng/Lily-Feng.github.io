@@ -1,6 +1,6 @@
 import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Network } from "lucide-react";
+import { ArrowUpRight, History } from "lucide-react";
 import { profileUrl, workTiers } from "../data/work";
 import { RepoCard } from "./RepoCard";
 
@@ -70,10 +70,10 @@ export function WorkPage() {
         ))}
 
         <aside className="work-outro">
-          <p>Follow a project into its source, or explore the ideas that connect the work.</p>
+          <p>Follow a project into its source, or explore the histories behind the work.</p>
           <div className="work-outro-links">
             <Link to="/knowledge">
-              <Network size={14} aria-hidden="true" /> Knowledge map
+              <History size={14} aria-hidden="true" /> Brief histories
             </Link>
             <a href={profileUrl} target="_blank" rel="noreferrer">
               All repositories <ArrowUpRight size={14} aria-hidden="true" />

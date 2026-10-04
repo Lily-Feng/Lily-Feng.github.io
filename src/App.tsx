@@ -9,7 +9,7 @@ import { JianghuPage } from "./components/JianghuPage";
 import { NotFound } from "./components/NotFound";
 import { WorkPage } from "./components/WorkPage";
 
-// Lazy: keeps the graph code and data out of every other page's bundle.
+// Lazy: histories load on this route; the map has its own optional boundary.
 const KnowledgePage = lazy(() => import("./components/KnowledgePage"));
 
 type Theme = "light" | "dark";
@@ -86,7 +86,7 @@ function App() {
           <Route
             path="/knowledge"
             element={
-              <Suspense fallback={<div className="route-loading">Loading the map…</div>}>
+              <Suspense fallback={<div className="route-loading">Loading the histories…</div>}>
                 <KnowledgePage />
               </Suspense>
             }

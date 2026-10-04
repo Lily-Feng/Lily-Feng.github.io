@@ -94,7 +94,11 @@ tiers (pillars, builds, notes), each with a `status` of `live`, `repo`, or
 
 ## Edit the knowledge map
 
-The map at `/knowledge` is authored, weighted data — one JSON file per domain in
+`/knowledge` opens with six brief history links into Calm Data and AI, maintained
+in `src/data/histories.ts`. A collapsed **Knowledge map** disclosure below the
+histories loads the graph only when opened.
+
+The map is authored, weighted data — one JSON file per domain in
 `src/data/graph/`. Concepts carry a `weight` (0–1), `keyPoints` for the popup,
 and typed links. Notes attach themselves to concepts through their `topics`, so
 publishing a Markdown file grows the map without editing it.
@@ -102,8 +106,8 @@ publishing a Markdown file grows the map without editing it.
 The field reference, the weight-to-tier table, and how to add a style pack are in
 [`docs/knowledge-graph-schema.md`](docs/knowledge-graph-schema.md).
 
-The map is reachable from `/work` rather than the main navigation — it is a
-reference room, not the front of the house.
+The page is reachable from `/work` and the home module row rather than the main
+navigation. Its path stays `/knowledge` to preserve links from sibling repositories.
 
 ## Design system
 

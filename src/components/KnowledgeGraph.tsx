@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Maximize2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { documentPath } from "../lib/format";
 import { buildGraph, specForDomain } from "../data/graph";
 import { createGraphEngine, type GraphEngine, type ScreenPoint } from "../graph/engine";
 import type { GraphTheme } from "../graph/styles";
@@ -10,7 +12,6 @@ import { ConceptPopup } from "./ConceptPopup";
 type KnowledgeGraphProps = {
   domain: string;
   documents: ContentDocument[];
-  onOpen: (slug: string) => void;
 };
 
 type PopupPosition = { x: number; y: number; flip: boolean };
@@ -31,7 +32,7 @@ function readTheme(): GraphTheme {
   };
 }
 
-export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProps) {
+export function KnowledgeGraph({ domain, documents }: KnowledgeGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<GraphEngine | null>(null);
@@ -165,7 +166,6 @@ export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProp
             node={selected}
             related={related}
             position={popupPosition}
-            onOpen={onOpen}
             onSelect={selectNode}
             onClose={close}
           />
@@ -194,7 +194,7 @@ export function KnowledgeGraph({ domain, documents, onOpen }: KnowledgeGraphProp
         ))}
         {notes.map((node) => (
           <li key={node.id}>
-            <button onClick={() => node.slug && onOpen(node.slug)}>Read {node.label}</button>
+            {node.slug && <Link to={documentPath(node.slug)}>Read {node.label}</Link>}
           </li>
         ))}
       </ul>

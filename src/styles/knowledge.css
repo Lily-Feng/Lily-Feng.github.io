@@ -1,0 +1,68 @@
+/* Brief histories lead; the map stays behind a quiet disclosure. */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-7) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-grid > li { min-width: 0; }
+
+.history-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  text-decoration: none;
+}
+
+.history-link:hover { background: var(--surface-raised); }
+
+.history-link__symbol {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+}
+
+.history-link h2 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--text-xl);
+}
+
+.history-link p {
+  margin: 0 0 var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.history-link__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.knowledge-disclosure {
+  padding-bottom: var(--space-11);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.knowledge-disclosure > summary {
+  width: fit-content;
+  padding: var(--space-4) 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.knowledge-disclosure > summary:hover { color: var(--text-strong); }
+.knowledge-disclosure .knowledge-section { padding: var(--space-4) 0 0; }
+#knowledge-map-panel { min-width: 0; }

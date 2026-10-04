@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, BookOpen, Network, UserRound, Wrench } from "lucide-react";
+import { ArrowUpRight, BookOpen, History, UserRound, Wrench } from "lucide-react";
 import { profile } from "../data/resume";
 import { workTiers } from "../data/work";
-import { documents, domains } from "../lib/content";
+import { documents } from "../lib/content";
+import { briefHistories } from "../data/histories";
 import { BootTerminal } from "./BootTerminal";
 
 const COMMAND = "> ./workbench.sh";
@@ -36,12 +37,11 @@ export function HomePage() {
 
   const repos = workTiers.reduce((total, tier) => total + tier.repos.length, 0);
   const posts = documents.filter((document) => document.kind !== "note").length;
-  const notes = documents.filter((document) => document.kind === "note").length;
 
   const modules: Module[] = [
     { id: "work", route: "/work", icon: Wrench, title: "Learning by doing", meta: `${repos} repos`, to: "/work" },
     { id: "blogs", route: "/blogs", icon: BookOpen, title: "My Blog", meta: `${posts} published`, to: "/blogs" },
-    { id: "knowledge", route: "/knowledge", icon: Network, title: "Knowledge map", meta: `${domains.length} domains · ${notes} notes`, to: "/knowledge" },
+    { id: "knowledge", route: "/knowledge", icon: History, title: "Brief histories", meta: `${briefHistories.length} illustrated timelines`, to: "/knowledge" },
     { id: "about", route: "/about", icon: UserRound, title: "About me", meta: "career", to: "/about" },
   ];
 

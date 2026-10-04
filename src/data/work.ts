@@ -49,10 +49,12 @@ export const workTiers: WorkTier[] = [
       {
         id: "calm-data-and-ai",
         name: "Calm Data and AI",
-        tagline: "A slow feed for a fast field.",
+        tagline: "Trace the terrain from silicon to story.",
         description:
-          "A connected engineering atlas for cloud systems, data platforms, SQL, Python, and Go — one concept at a time, small enough to finish with a coffee. This is the detailed layer beneath the knowledge map on this site.",
-        topics: ["Data platforms", "Cloud", "SQL", "Python", "Go"],
+          "A seven-layer Data & AI Field Atlas, from infrastructure and storage to intelligence and consumption. Follow role-based trails, explore connected concepts, or dive into practical cloud, data platform, SQL, Python, and Go field notes. Illustrated timelines trace the ideas that shaped computing.",
+        topics: ["Data & AI atlas", "Field notes", "Role trails", "Timelines"],
+        cover: "/images/work/calm-data-and-ai.png",
+        coverAlt: "Data & AI Field Atlas cover showing seven connected layers from hardware to presentation",
         status: "live",
         repoUrl: "https://github.com/Lily-Feng/Calm.Data.and.AI",
         siteUrl: "https://lily-feng.github.io/Calm.Data.and.AI/",
@@ -62,8 +64,10 @@ export const workTiers: WorkTier[] = [
         name: "Enterprise Data & AI Architecture Atlas",
         tagline: "Where two systems designed separately have to meet.",
         description:
-          "The infrastructure counterpart: hybrid on-prem/cloud networking, GPU interconnect and parallelism, agentic operations, and cost-tiered log intelligence. Topology, integration, and the knobs — rather than how any one system works internally.",
-        topics: ["Hybrid network", "AI infra", "Agentic ops", "AIOps"],
+          "An infrastructure knowledge base about how systems are set up, connected, and tuned: on-prem/cloud routing and DNS, GPU fabrics and parallelism, agent toolsets and permission boundaries, and cost-tiered log analysis. Architecture notes connect topology decisions to operational tradeoffs.",
+        topics: ["Hybrid network", "GPU fabrics", "Agentic ops", "Log intelligence"],
+        cover: "/images/work/enterprise-atlas.svg",
+        coverAlt: "Cross Connect architecture diagram linking on-prem and cloud networks, GPU fabrics, scoped agents, and tiered log analysis",
         status: "repo",
         repoUrl: "https://github.com/Lily-Feng/Enterprise-Data-AI-Architecture-Atlas",
       },

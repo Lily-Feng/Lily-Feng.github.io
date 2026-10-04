@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <title>Cross Connect — Enterprise Data &amp; AI Architecture Atlas</title>
+  <desc>Four infrastructure domains connected through topology, integration, and operational tradeoffs.</desc>
+  <rect width="1200" height="600" fill="#f5f3ed"/>
+  <g font-family="system-ui, sans-serif" fill="#243c3b">
+    <text x="60" y="67" font-size="18" letter-spacing="3">ENTERPRISE DATA &amp; AI ARCHITECTURE ATLAS</text>
+    <text x="60" y="124" font-size="44" font-weight="650">Cross Connect</text>
+    <text x="60" y="163" font-size="22" fill="#596963">Set up. Connect. Tune.</text>
+    <g fill="none" stroke="#7d9690" stroke-width="3">
+      <path d="M330 287 H870 M330 474 H870 M330 287 V474 M870 287 V474"/>
+      <path d="M600 287 V474" stroke-dasharray="7 8"/>
+    </g>
+    <g fill="#fffdf8" stroke="#a4b6ab" stroke-width="2">
+      <rect x="60" y="216" width="440" height="142" rx="12"/>
+      <rect x="700" y="216" width="440" height="142" rx="12"/>
+      <rect x="60" y="403" width="440" height="142" rx="12"/>
+      <rect x="700" y="403" width="440" height="142" rx="12"/>
+    </g>
+    <g font-size="27" font-weight="600">
+      <text x="90" y="261">Hybrid networks</text>
+      <text x="730" y="261">GPU fabrics</text>
+      <text x="90" y="448">Agentic operations</text>
+      <text x="730" y="448">Log intelligence</text>
+    </g>
+    <g font-size="21" fill="#596963">
+      <text x="90" y="300">On-prem ↔ cloud</text>
+      <text x="90" y="331">Routing · DNS · identity</text>
+      <text x="730" y="300">HBM ↔ NVLink ↔ fabric</text>
+      <text x="730" y="331">Parallelism follows topology</text>
+      <text x="90" y="487">Scoped tools · permissions</text>
+      <text x="90" y="518">Read / write boundaries</text>
+      <text x="730" y="487">Parse → screen → infer</text>
+      <text x="730" y="518">Cost determines the pipeline</text>
+    </g>
+    <circle cx="600" cy="380" r="22" fill="#315e55"/>
+    <path d="M588 380 H612 M600 368 V392" stroke="#fffdf8" stroke-width="3"/>
+  </g>
+</svg>

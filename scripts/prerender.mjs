@@ -75,8 +75,8 @@ const routes = [
   },
   {
     path: "/knowledge",
-    title: `Knowledge map — ${SITE_NAME}`,
-    description: "A weighted map of the concepts behind the writing, across AI, data, and strategy.",
+    title: `Brief histories — ${SITE_NAME}`,
+    description: "Six illustrated timelines of computing, languages, storage, machine learning, reinforcement learning, and infrastructure, with an optional knowledge map.",
   },
   ...readDocuments().map((document) => ({
     path: `/blogs/${document.slug}`,

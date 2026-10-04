@@ -1,58 +1,44 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { documents } from "../lib/content";
-import { graphSpecs } from "../data/graph";
-import { documentPath } from "../lib/format";
-import { KnowledgeGraph } from "./KnowledgeGraph";
+import { lazy, Suspense, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { briefHistories } from "../data/histories";
 
-/**
- * The knowledge map. Reached from /work rather than the main nav.
- *
- * This module is the lazy boundary — src/graph/ and src/data/graph/ load only
- * when someone opens this page.
- */
+// The graph engine and its data load only when the disclosure is opened.
+const KnowledgeMap = lazy(() => import("./KnowledgeMap"));
+
 export function KnowledgePage() {
-  const navigate = useNavigate();
-  const [activeDomain, setActiveDomain] = useState(graphSpecs[0]?.domain ?? "Knowledge");
-
-  const graphDocuments = useMemo(
-    () => documents.filter((item) => item.domain === activeDomain),
-    [activeDomain],
-  );
+  const [mapOpen, setMapOpen] = useState(false);
 
   return (
     <>
       <section className="page-intro">
         <div>
-          <span className="eyebrow">Knowledge map</span>
-          <h1>How the ideas connect.</h1>
+          <span className="eyebrow">Taste of the Past</span>
+          <h1>Brief histories.</h1>
         </div>
-        <p>A weighted map of the concepts behind the writing. Notes attach themselves to concepts through their topics, so publishing grows the map.</p>
+        <p>Learn a little history. Find inspiration for what comes next.</p>
       </section>
 
-      <section className="knowledge-section">
-        <div className="domain-tabs" role="tablist" aria-label="Knowledge domains">
-          {graphSpecs.map(({ domain }) => (
-            <button
-              key={domain}
-              className={domain === activeDomain ? "active" : ""}
-              onClick={() => setActiveDomain(domain)}
-              role="tab"
-              aria-selected={domain === activeDomain}
-            >
-              {domain}
-            </button>
-          ))}
-        </div>
-        <KnowledgeGraph
-          domain={activeDomain}
-          documents={graphDocuments}
-          onOpen={(slug) => navigate(documentPath(slug))}
-        />
-        <div className="graph-help">
-          <span>Click</span> a concept for key knowledge and links · <span>Drag</span> to pan · <span>Scroll</span> to zoom once engaged · <span>Tab</span> reveals a keyboard list
-        </div>
-      </section>
+      <ul className="history-grid" aria-label="Brief histories">
+        {briefHistories.map((history) => (
+          <li key={history.id}>
+            <a className="history-link" href={history.url}>
+              <span className="history-link__symbol" aria-hidden="true">{history.symbol}</span>
+              <h2>{history.label}</h2>
+              <p>{history.summary}</p>
+              <span className="history-link__action">Explore the timeline <ArrowUpRight size={14} aria-hidden="true" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <details className="knowledge-disclosure" onToggle={(event) => setMapOpen(event.currentTarget.open)}>
+        <summary>Knowledge map</summary>
+        {mapOpen && (
+          <Suspense fallback={<p className="route-loading" role="status">Loading the map…</p>}>
+            <KnowledgeMap />
+          </Suspense>
+        )}
+      </details>
     </>
   );
 }

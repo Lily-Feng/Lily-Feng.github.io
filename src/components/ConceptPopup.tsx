@@ -1,4 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { documentPath } from "../lib/format";
 import { ArrowUpRight, BookMarked, Boxes, ExternalLink, FileText, Terminal, X } from "lucide-react";
 import { RESOURCE_ORDER, RESOURCE_STYLES } from "../graph/resources";
 import type { GraphNode, ResolvedResource, ResourceType } from "../graph/types";
@@ -15,12 +17,11 @@ type ConceptPopupProps = {
   node: GraphNode;
   related: { node: GraphNode; weight: number; note?: string }[];
   position: { x: number; y: number; flip: boolean } | null;
-  onOpen: (slug: string) => void;
   onSelect: (id: string) => void;
   onClose: () => void;
 };
 
-function ResourceLink({ resource, onOpen }: { resource: ResolvedResource; onOpen: (slug: string) => void }) {
+function ResourceLink({ resource }: { resource: ResolvedResource }) {
   const style = RESOURCE_STYLES[resource.type];
   const Icon = ICONS[style.icon];
   const className = `res-link res-link--${style.variant}`;
@@ -37,9 +38,9 @@ function ResourceLink({ resource, onOpen }: { resource: ResolvedResource; onOpen
 
   if (resource.internal && resource.slug) {
     return (
-      <button type="button" className={className} onClick={() => onOpen(resource.slug!)}>
+      <Link className={className} to={documentPath(resource.slug)}>
         {body}
-      </button>
+      </Link>
     );
   }
   return (
@@ -49,7 +50,7 @@ function ResourceLink({ resource, onOpen }: { resource: ResolvedResource; onOpen
   );
 }
 
-export function ConceptPopup({ node, related, position, onOpen, onSelect, onClose }: ConceptPopupProps) {
+export function ConceptPopup({ node, related, position, onSelect, onClose }: ConceptPopupProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   // Anchoring happens before the card is measured, so nudge it back inside the
@@ -115,13 +116,24 @@ export function ConceptPopup({ node, related, position, onOpen, onSelect, onClos
           <section className="popup-block">
             <h4>Connected concepts</h4>
             <div className="related-chips">
-              {related.map(({ node: item, weight, note }) => (
+              {related.map(({ node: item, weight, note }) => item.kind === "note" && item.slug ? (
+                <Link
+                  key={item.id}
+                  className="related-chip"
+                  style={{ "--cluster-accent": item.cluster.accent } as React.CSSProperties}
+                  to={documentPath(item.slug)}
+                  title={note ?? item.summary}
+                >
+                  <i style={{ opacity: 0.35 + weight * 0.65 }} />
+                  {item.label}
+                </Link>
+              ) : (
                 <button
                   key={item.id}
                   type="button"
                   className="related-chip"
                   style={{ "--cluster-accent": item.cluster.accent } as React.CSSProperties}
-                  onClick={() => (item.kind === "note" && item.slug ? onOpen(item.slug) : onSelect(item.id))}
+                  onClick={() => onSelect(item.id)}
                   title={note ?? item.summary}
                 >
                   <i style={{ opacity: 0.35 + weight * 0.65 }} />
@@ -137,7 +149,7 @@ export function ConceptPopup({ node, related, position, onOpen, onSelect, onClos
             <h4>{group.style.group} <small>{group.style.hint}</small></h4>
             <div className="res-links">
               {group.items.map((resource) => (
-                <ResourceLink key={`${resource.type}:${resource.slug ?? resource.href}`} resource={resource} onOpen={onOpen} />
+                <ResourceLink key={`${resource.type}:${resource.slug ?? resource.href}`} resource={resource} />
               ))}
             </div>
           </section>

@@ -26,6 +26,7 @@
   .bench-modules { grid-template-columns: repeat(2, 1fr); }
 
   .knowledge-section { grid-template-columns: 1fr; }
+  .history-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .domain-tabs {
     flex-direction: row;
     padding: 0 0 var(--space-3);
@@ -164,6 +165,7 @@
     min-height: 420px;
     aspect-ratio: 0.82;
   }
+  .history-grid { grid-template-columns: minmax(0, 1fr); }
   /* On a narrow screen the popup becomes a sheet pinned to the bottom. */
   .concept-popup {
     left: var(--space-3) !important;

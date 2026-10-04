@@ -15,6 +15,7 @@ or a pixel radius into a component rule, the token is missing, not the rule.
 | `src/styles/components.css` | Search, cards, section headings, article page, Markdown. |
 | `src/styles/home.css` | Home page sections, route-loading state, the 404. |
 | `src/styles/work.css` | Work page tiers, repo cards, status chips. |
+| `src/styles/knowledge.css` | Brief history links and the optional map disclosure. |
 | `src/styles/graph.css` | Domain tabs, graph canvas, concept popup, resource links. |
 | `src/styles/resume.css` | About page, resume timeline, journey globe. |
 | `src/styles/responsive.css` | Breakpoints and print. Layout only — no new colour. |

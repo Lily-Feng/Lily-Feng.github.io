@@ -22,7 +22,7 @@ function buildLines(): Line[] {
   return [
     { kind: "head", text: "latest achievements" },
     { kind: "entry", href: "https://www.credly.com/badges/f05563fe-19bb-42b8-8c97-3c3fba108300", label: "Claude Certified Architect — Professional", meta: "Credly" },
-    { kind: "log", tag: "earned", text: "Databricks Certified Data Engineer — Professional (credential link to be added)", tone: "ok" },
+    { kind: "entry", href: "https://credentials.databricks.com/2e2529b8-37b7-44ce-a4e2-b7234fe47208#acc.6KT9qkrz", label: "Databricks Certified Data Engineer — Professional", meta: "Databricks" },
     { kind: "head", text: "recent from /blogs" },
     ...posts.slice(0, 3).map((document): Line => (
       isExternal(document)

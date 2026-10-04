@@ -164,6 +164,8 @@ export const workTiers: WorkTier[] = [
         status: "live",
         repoUrl: "https://github.com/Lily-Feng/Reinforcement-Learning",
         siteUrl: "https://lily-feng.github.io/Reinforcement-Learning/",
+        cover: "/images/work/reinforcement-learning-book.jpg",
+        coverAlt: "Reinforcement Learning: An Introduction, second edition by Richard S. Sutton and Andrew G. Barto, with colorful ribbons on its white cover",
       },
       {
         id: "claude-architect",
@@ -186,6 +188,8 @@ export const workTiers: WorkTier[] = [
         topics: ["Agents", "Tooling", "Python"],
         status: "repo",
         repoUrl: "https://github.com/Lily-Feng/skills",
+        cover: "/images/work/skills-learning-chain.jpg",
+        coverAlt: "Full System Chain: Learning Ladder, 20 Hours, Signal in Noise, Study session, Quiz Me, and Cheat Sheet, with a Feynman Loop for finding gaps",
       },
     ],
   },

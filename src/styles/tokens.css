@@ -129,6 +129,26 @@
   --focus-ring-color: var(--accent);
 }
 
+/* Terminal section roles stay readable on its dark surface in either theme. */
+.terminal {
+  --term-bg: oklch(23% 0.055 var(--hue-neutral));
+  --term-bar: oklch(29% 0.060 var(--hue-neutral));
+  --term-line: oklch(40% 0.060 var(--hue-neutral));
+  --term-text: oklch(88% 0.010 var(--hue-neutral));
+  --term-dim: var(--term-muted);
+  --term-accent: oklch(80% 0.125 var(--hue-accent));
+  --term-go: var(--term-work);
+  --term-achievement: oklch(84% 0.125 var(--hue-highlight));
+  --term-writing: oklch(82% 0.110 var(--hue-accent));
+  --term-work: oklch(82% 0.150 145);
+  --term-learning: oklch(82% 0.110 var(--hue-secondary));
+  --term-muted: oklch(70% 0.015 var(--hue-neutral));
+  --term-close: oklch(75% 0.155 25);
+}
+.terminal [data-tone] {
+  --term-section-surface: color-mix(in oklch, var(--term-section) 9%, var(--term-bg));
+}
+
 /* ── 2 + 3. Semantic roles — LIGHT (also the pre-JS default) ─────────────── */
 :root,
 :root[data-theme="light"] {

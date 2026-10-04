@@ -83,19 +83,10 @@
    local scope — the same exception .globe-shell takes. Documented in
    docs/design-system.md. */
 .terminal {
-  --term-bg:      oklch(16% 0.020 var(--hue-neutral));
-  --term-bar:     oklch(21% 0.022 var(--hue-neutral));
-  --term-line:    oklch(28% 0.022 var(--hue-neutral));
-  --term-text:    oklch(88% 0.010 var(--hue-neutral));
-  --term-dim:     oklch(58% 0.015 var(--hue-neutral));
-  --term-accent:  oklch(80% 0.125 var(--hue-accent));
-  --term-go:      oklch(82% 0.150 145);
-
   display: flex;
   flex-direction: column;
-  /* Sized for the most lines the log can ever hold (3 posts + 3 notes + a
-     two-line NOW), not for however much content exists today. */
-  height: 420px;
+  /* Keep the home page compact; longer activity logs scroll inside the panel. */
+  height: 445px;
   border: 1px solid var(--term-line);
   border-radius: var(--radius-lg);
   background: var(--term-bg);
@@ -121,6 +112,9 @@
   border-radius: var(--radius-circle);
   background: var(--term-line);
 }
+.terminal-dots i:nth-child(1) { background: var(--term-close); }
+.terminal-dots i:nth-child(2) { background: var(--term-achievement); }
+.terminal-dots i:nth-child(3) { background: var(--term-work); }
 .terminal-name,
 .terminal-live {
   color: var(--term-dim);
@@ -172,12 +166,29 @@
   color: var(--term-accent);
   text-transform: uppercase;
 }
+.term-head,
+.term-entry { --term-section: var(--term-accent); }
+.terminal [data-tone="achievement"] { --term-section: var(--term-achievement); }
+.terminal [data-tone="writing"] { --term-section: var(--term-writing); }
+.terminal [data-tone="work"] { --term-section: var(--term-work); }
+.terminal [data-tone="learning"] { --term-section: var(--term-learning); }
+
 .term-head {
-  margin-top: var(--space-3);
-  color: var(--term-dim);
-  opacity: 0.7;
+  margin: var(--space-3) calc(var(--space-2) * -1) var(--space-1);
+  padding: 0 var(--space-2);
+  border-left: 2px solid var(--term-section);
+  border-radius: var(--radius-xs);
+  background: var(--term-section-surface);
+  color: var(--term-section);
+  font-weight: var(--weight-semibold);
 }
 .term-head::before { content: "── "; }
+.term-star {
+  color: var(--term-dim);
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+}
+
 
 /* The entries are the point: real links into the newest writing. */
 .term-entry {
@@ -188,18 +199,19 @@
   margin: 0 calc(var(--space-2) * -1);
   padding: 1px var(--space-2);
   border-radius: var(--radius-xs);
-  color: var(--term-text);
+  color: var(--term-section);
   text-decoration: none;
+  background: var(--term-section-surface);
 }
 .term-entry:hover {
   background: var(--term-bar);
-  color: var(--term-go);
+  color: var(--term-text);
 }
 .term-entry:focus-visible {
   outline: 2px solid var(--term-go);
   outline-offset: 1px;
 }
-.term-bullet { color: var(--term-go); }
+.term-bullet { color: var(--term-section); }
 .term-label {
   overflow: hidden;
   white-space: nowrap;
@@ -220,7 +232,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--term-text);
+  color: var(--term-achievement);
   font: inherit;
   text-align: left;
   cursor: pointer;

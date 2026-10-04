@@ -2,41 +2,52 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { documents, isExternal } from "../lib/content";
 import { documentPath } from "../lib/format";
-import { profile } from "../data/resume";
+import { workTiers } from "../data/work";
 import { terminalCommand } from "../data/terminalCommands";
 
 /**
- * Recent achievements and writing. Credential and content entries are real
- * links; credentials awaiting a URL remain plain text.
+ * Recent achievements, writing, and active work, with real links to each entry.
  */
+type SectionTone = "achievement" | "writing" | "work" | "learning";
+
 type Line =
   | { kind: "log"; tag: string; text: string; tone?: "ok" | "dim" }
-  | { kind: "head"; text: string }
-  | { kind: "entry"; to?: string; href?: string; label: string; meta: string }
+  | { kind: "head"; text: string; tone: SectionTone }
+  | { kind: "entry"; to?: string; href?: string; label: string; meta: string; tone: SectionTone }
   | { kind: "prompt" };
 
 function buildLines(): Line[] {
   const posts = documents.filter((document) => document.kind !== "note");
-  const notes = documents.filter((document) => document.kind === "note");
+  const activeProjects = workTiers.flatMap((tier) => tier.repos)
+    .filter((repo) => repo.development === "active" && repo.repoUrl);
+  const reinforcementLearning = workTiers.find((tier) => tier.id === "notes")?.repos
+    .find((repo) => repo.id === "reinforcement-learning");
+  const learning: Line[] = [];
+
+  if (reinforcementLearning?.siteUrl) {
+    learning.push({ kind: "entry", href: reinforcementLearning.siteUrl, label: reinforcementLearning.name, meta: "simulations", tone: "learning" });
+  }
 
   return [
-    { kind: "head", text: "latest achievements" },
-    { kind: "entry", href: "https://www.credly.com/badges/f05563fe-19bb-42b8-8c97-3c3fba108300", label: "Claude Certified Architect — Professional", meta: "Credly" },
-    { kind: "entry", href: "https://credentials.databricks.com/2e2529b8-37b7-44ce-a4e2-b7234fe47208#acc.6KT9qkrz", label: "Databricks Certified Data Engineer — Professional", meta: "Databricks" },
-    { kind: "head", text: "recent from /blogs" },
+    { kind: "head", text: "latest achievements", tone: "achievement" },
+    { kind: "entry", href: "https://www.credly.com/badges/f05563fe-19bb-42b8-8c97-3c3fba108300", label: "Claude Certified Architect — Professional", meta: "Credly", tone: "achievement" },
+    { kind: "entry", href: "https://credentials.databricks.com/2e2529b8-37b7-44ce-a4e2-b7234fe47208#acc.6KT9qkrz", label: "Databricks Certified Data Engineer — Professional", meta: "Databricks", tone: "achievement" },
+    { kind: "head", text: "recent from /blogs", tone: "writing" },
     ...posts.slice(0, 3).map((document): Line => (
       isExternal(document)
-        ? { kind: "entry", href: document.url, label: document.title, meta: document.source ?? "external" }
-        : { kind: "entry", to: documentPath(document.slug), label: document.title, meta: `${document.readingMinutes} min` }
+        ? { kind: "entry", href: document.url, label: document.title, meta: document.source ?? "external", tone: "writing" }
+        : { kind: "entry", to: documentPath(document.slug), label: document.title, meta: `${document.readingMinutes} min`, tone: "writing" }
     )),
-    { kind: "head", text: "latest notes" },
-    ...notes.slice(0, 3).map((document): Line => ({
+    { kind: "head", text: "active open source", tone: "work" },
+    ...activeProjects.map((repo): Line => ({
       kind: "entry",
-      to: documentPath(document.slug),
-      label: document.title,
-      meta: document.domain,
+      href: repo.repoUrl,
+      label: repo.name,
+      meta: "GitHub",
+      tone: "work",
     })),
-    { kind: "log", tag: "now", text: profile.now, tone: "ok" },
+    { kind: "head", text: "active learning", tone: "learning" },
+    ...learning,
     { kind: "prompt" },
   ];
 }
@@ -80,7 +91,7 @@ export function BootTerminal() {
         className="terminal-body"
         ref={bodyRef}
         tabIndex={0}
-        aria-label="Latest achievements and recent entries"
+        aria-label="Latest achievements, writing, active open source, and active learning"
         onKeyDown={(event) => {
           if (event.key === "Enter" && event.target === event.currentTarget && shown >= lines.length) {
             event.preventDefault();
@@ -90,7 +101,10 @@ export function BootTerminal() {
       >
         {lines.slice(0, shown).map((line, index) => {
           if (line.kind === "head") {
-            return <p className="term-head" key={index}>{line.text}</p>;
+            const label = line.tone === "achievement"
+              ? <><span className="term-star" aria-hidden="true">·:*:·</span>{" "}{line.text}{" "}<span className="term-star" aria-hidden="true">·:*:·</span></>
+              : line.text;
+            return <p className="term-head" data-tone={line.tone} key={index}>{label}</p>;
           }
           if (line.kind === "entry") {
             const body = (
@@ -101,8 +115,8 @@ export function BootTerminal() {
               </>
             );
             return line.href
-              ? <a className="term-entry" href={line.href} target="_blank" rel="noreferrer" key={index}>{body}</a>
-              : <Link className="term-entry" to={line.to!} key={index}>{body}</Link>;
+              ? <a className="term-entry" data-tone={line.tone} href={line.href} target="_blank" rel="noreferrer" key={index}>{body}</a>
+              : <Link className="term-entry" data-tone={line.tone} to={line.to!} key={index}>{body}</Link>;
           }
           if (line.kind === "prompt") {
             return (

@@ -52,10 +52,10 @@ export function HomePage() {
           <p className="bench-command">
             {command}<i className="bench-caret" />
           </p>
-          <h1>A workbench,<br />not a portfolio.</h1>
+          <h1>Data, AI,<br />and the thinking behind.</h1>
           <p className="bench-copy">
-            I build data and AI systems, take them apart to see why they work, and
-            write down what the building taught me — in the open.
+            I build data and AI systems and write about the decisions, tradeoffs,
+            and lessons that shape them — in the open.
           </p>
           <div className="bench-links">
             <a href={profile.links.github} target="_blank" rel="noreferrer">

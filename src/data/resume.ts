@@ -30,7 +30,7 @@ export const profile = {
   title: "Senior Staff Software Engineer — Data & AI Platforms",
   summary: "Senior Staff Software Engineer with 15+ years of experience evolving from enterprise BI and performance engineering to Data & AI platform architecture and agentic AI systems. Designs enterprise-scale AI and analytics platforms spanning agentic workflows, MCP and tool integration, semantic layers, Databricks, Power BI, Azure, security, and observability. Hands-on experience building agentic workforce solutions for enterprise infrastructure operations and developing AI products in a rapid changing small AI micro-pod style.",
   // Shown on the home page.
-  now: "Making enterprise AI systems useful, governable, and legible — with evaluation as the part everyone skips.",
+  now: "Building open-source projects, learning by doing, and sharing what I learn.",
   links: {
     linkedin: "https://www.linkedin.com/in/lilyf/",
     github: "https://github.com/Lily-Feng",

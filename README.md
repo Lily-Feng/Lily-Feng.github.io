@@ -94,7 +94,7 @@ tiers (pillars, builds, notes), each with a `status` of `live`, `repo`, or
 
 ## Edit the knowledge map
 
-`/knowledge` opens with six brief history links into Calm Data and AI, maintained
+`/knowledge` opens with seven brief history links into Calm Data and AI, maintained
 in `src/data/histories.ts`. A collapsed **Knowledge map** disclosure below the
 histories loads the graph only when opened.
 

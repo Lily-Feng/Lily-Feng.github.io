@@ -21,6 +21,12 @@ export const briefHistories = [
     summary: "The recurring trade between structure and scale, through the history of data storage.",
   },
   {
+    id: "data-platforms",
+    symbol: "◈",
+    label: "Data platforms",
+    summary: "Hadoop, Hive, Spark, Databricks, and Snowflake: two roads that ended up in the same place.",
+  },
+  {
     id: "machine-learning",
     symbol: "◉",
     label: "Machine learning",

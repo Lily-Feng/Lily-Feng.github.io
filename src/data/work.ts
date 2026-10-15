@@ -19,6 +19,7 @@ export type WorkRepo = {
   repoUrl?: string;
   reference?: { label: string; url: string };
   siteUrl?: string;
+  siteLabel?: string;
   articlePath?: string;
   cover?: string;
   coverAlt?: string;
@@ -102,8 +103,10 @@ export const workTiers: WorkTier[] = [
         description:
           "A personal analysis platform in active development that ingests diabetes pump data from Tidepool into Databricks. Starting with twiist pump data, the project explores how to organize health records and understand patterns in insulin delivery and glucose over time.",
         topics: ["Tidepool", "twiist", "Databricks", "Personal analytics"],
-        status: "repo",
+        status: "live",
         repoUrl: "https://github.com/Lily-Feng/Tidepool-data-intelligence",
+        siteUrl: "https://lily-feng.github.io/Tidepool-data-intelligence/",
+        siteLabel: "Explore project",
         reference: { label: "Tidepool", url: "https://www.tidepool.org/" },
         cover: "/images/work/tidepool-data-intelligence.jpg",
         coverAlt: "Diabetes pump data flows through Tidepool into Databricks for personal analysis",

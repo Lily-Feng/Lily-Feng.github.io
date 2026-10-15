@@ -41,9 +41,9 @@ function buildLines(): Line[] {
     { kind: "head", text: "active open source", tone: "work" },
     ...activeProjects.map((repo): Line => ({
       kind: "entry",
-      href: repo.repoUrl,
+      href: repo.siteUrl ?? repo.repoUrl,
       label: repo.name,
-      meta: "GitHub",
+      meta: repo.siteUrl ? "Project site" : "GitHub",
       tone: "work",
     })),
     { kind: "head", text: "active learning", tone: "learning" },

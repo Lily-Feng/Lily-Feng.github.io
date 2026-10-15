@@ -52,7 +52,7 @@ export function RepoCard({ repo, feature }: { repo: WorkRepo; feature?: boolean 
           {repo.articlePath && <Link to={repo.articlePath}>Read the notebook <ArrowUpRight size={13} aria-hidden="true" /></Link>}
           {repo.siteUrl && (
             <a href={repo.siteUrl} target="_blank" rel="noreferrer">
-              Play Demo <ArrowUpRight size={13} aria-hidden="true" />
+              {repo.siteLabel ?? "Play Demo"} <ArrowUpRight size={13} aria-hidden="true" />
             </a>
           )}
           {repo.repoUrl && (

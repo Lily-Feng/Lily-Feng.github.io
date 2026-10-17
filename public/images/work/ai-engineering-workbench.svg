@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Lily's AI Engineering Workbench</title>
+  <desc id="desc">Five layers spanning model principles, application intelligence, model systems, production engineering, and enterprise delivery.</desc>
+  <rect width="1200" height="600" fill="#f5f3ed"/>
+  <g font-family="system-ui, sans-serif" fill="#243c3b">
+    <text x="58" y="68" font-size="17" letter-spacing="3">LILY'S WORKBENCH</text>
+    <text x="58" y="128" font-size="43" font-weight="650">AI Engineering Workbench</text>
+    <text x="58" y="168" font-size="21" fill="#596963">18 modules · five layers · from principles to delivery</text>
+    <g font-size="22" font-weight="600">
+      <rect x="58" y="210" width="1084" height="61" rx="10" fill="#e2e9e1"/>
+      <text x="82" y="249">L1</text><text x="152" y="249">Model principles</text><text x="800" y="249" font-size="17" font-weight="400">01–03</text>
+      <rect x="58" y="279" width="1084" height="61" rx="10" fill="#d8e5df"/>
+      <text x="82" y="318">L2</text><text x="152" y="318">Application intelligence</text><text x="800" y="318" font-size="17" font-weight="400">04–07</text>
+      <rect x="58" y="348" width="1084" height="61" rx="10" fill="#cbded9"/>
+      <text x="82" y="387">L3</text><text x="152" y="387">Model systems</text><text x="800" y="387" font-size="17" font-weight="400">08–11</text>
+      <rect x="58" y="417" width="1084" height="61" rx="10" fill="#bed5cf"/>
+      <text x="82" y="456">L4</text><text x="152" y="456">Production engineering</text><text x="800" y="456" font-size="17" font-weight="400">12–15</text>
+      <rect x="58" y="486" width="1084" height="61" rx="10" fill="#abcac1"/>
+      <text x="82" y="525">L5</text><text x="152" y="525">Enterprise delivery</text><text x="800" y="525" font-size="17" font-weight="400">16–18</text>
+    </g>
+  </g>
+</svg>

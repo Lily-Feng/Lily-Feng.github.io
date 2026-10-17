@@ -6,9 +6,9 @@ front door for a Staff/Principal job search: who Lily is, what she has built, wh
 she thinks, how to reach her.
 
 The depth lives in sibling repositories — [Calm Data and AI](https://github.com/Lily-Feng/Calm.Data.and.AI)
-for data and AI from the software side, the [Enterprise Data & AI Architecture
-Atlas](https://github.com/Lily-Feng/Enterprise-Data-AI-Architecture-Atlas) for
-infrastructure. This site points at them; it does not duplicate them.
+for data and AI field notes, and [Lily's AI Engineering
+Workbench](https://github.com/Lily-Feng/Lily-AI-Engineering-Workbench) for
+the 18-module AI engineering framework. This site points at them; it does not duplicate them.
 
 ## Scope boundary
 

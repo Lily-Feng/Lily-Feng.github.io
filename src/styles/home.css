@@ -19,15 +19,6 @@
 }
 
 /* ── Intro ───────────────────────────────────────────────────────────────── */
-.bench-command {
-  margin: 0;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  min-height: 1.2em;
-}
-.bench-caret,
 .term-caret {
   display: inline-block;
   width: 7px;
@@ -43,10 +34,37 @@
 }
 
 .bench-intro h1 {
-  margin: var(--space-4) 0 var(--space-4);
+  margin: 0 0 var(--space-4);
   font-size: var(--text-4xl);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tighter);
+}
+/* "Data, AI," is the way into the Calm Data and AI companion site. The link is
+   quiet at rest — a hairline accent underline and a small arrow — and the
+   whole phrase lights up on hover. */
+.headline-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.14em;
+  transition: color var(--dur-base) var(--ease-out),
+              text-decoration-color var(--dur-base) var(--ease-out);
+}
+.headline-link-arrow {
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.08em;
+  vertical-align: 0.75em;
+  color: var(--accent);
+  transition: var(--transition-transform);
+}
+.headline-link:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.headline-link:hover .headline-link-arrow {
+  transform: translate(0.08em, -0.08em);
 }
 .bench-copy {
   max-width: 30rem;

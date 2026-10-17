@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, BookOpen, History, UserRound, Wrench } from "lucide-react";
 import { profile } from "../data/resume";
@@ -6,22 +5,6 @@ import { workTiers } from "../data/work";
 import { documents } from "../lib/content";
 import { briefHistories } from "../data/histories";
 import { BootTerminal } from "./BootTerminal";
-
-const COMMAND = "> ./workbench.sh";
-
-function useTypedCommand() {
-  const reduced = typeof window !== "undefined"
-    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const [typed, setTyped] = useState(() => (reduced ? COMMAND.length : 0));
-
-  useEffect(() => {
-    if (typed >= COMMAND.length) return;
-    const timer = window.setTimeout(() => setTyped((count) => count + 1), 55);
-    return () => window.clearTimeout(timer);
-  }, [typed]);
-
-  return COMMAND.slice(0, typed);
-}
 
 type Module = {
   id: string;
@@ -33,8 +16,6 @@ type Module = {
 };
 
 export function HomePage() {
-  const command = useTypedCommand();
-
   const repos = workTiers.reduce((total, tier) => total + tier.repos.length, 0);
   const posts = documents.filter((document) => document.kind !== "note").length;
 
@@ -49,10 +30,18 @@ export function HomePage() {
     <div className="home-page">
       <div className="bench-top">
         <section className="bench-intro">
-          <p className="bench-command">
-            {command}<i className="bench-caret" />
-          </p>
-          <h1>Data, AI,<br />and the thinking behind.</h1>
+          <h1>
+            <a
+              className="headline-link"
+              href="https://lily-feng.github.io/Calm.Data.and.AI/index.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Data, AI — Calm Data and AI (opens in a new tab)"
+            >
+              Data, AI,<ArrowUpRight className="headline-link-arrow" aria-hidden="true" />
+            </a>
+            <br />and the thinking behind.
+          </h1>
           <p className="bench-copy">
             I build data and AI systems and write about the decisions, tradeoffs,
             and lessons that shape them — in the open.

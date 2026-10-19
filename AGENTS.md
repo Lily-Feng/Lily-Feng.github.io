@@ -1,9 +1,7 @@
 # Lily’s Workbench — Agent Guide
 
 This repository is the entry point. It is a React + TypeScript + Vite static site
-deployed to GitHub Pages at `https://lily-feng.github.io`, and it exists to be the
-front door for a Staff/Principal job search: who Lily is, what she has built, what
-she thinks, how to reach her.
+deployed to GitHub Pages at `https://lily-feng.github.io`, and it exists to be the frontdoor for people want to know projects Lily is building as open source and knowledge being shared. 
 
 The depth lives in sibling repositories — [Calm Data and AI](https://github.com/Lily-Feng/Calm.Data.and.AI)
 for data and AI field notes, and [Lily's AI Engineering

@@ -160,3 +160,13 @@ Check light and dark, and check 390px — no page may scroll horizontally.
 
 If you touched content handling, break a front-matter block on purpose and
 confirm `npm run build` **fails** rather than shipping a blank page.
+
+## Review before commit
+
+Lily verifies every change herself before it reaches GitHub.
+
+1. **Do not commit or push until Lily has reviewed the change.** Pushing is a
+   separate step that needs her explicit go-ahead, even after she approves a
+   commit.
+2. **When the work is finished, launch a local view for her review**
+   (`npm run dev`), give her the URL, and list what to check. Stop there.
